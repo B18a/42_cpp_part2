@@ -26,7 +26,7 @@ Form::Form(const std::string& name, int gradeSign, int gradeExecute) :
 
 // Copy Constructor
 Form::Form(const Form& other) : 
-	_name(other._name), _gradeToSign(other._gradeToSign), _gradeToExecute(other._gradeToExecute), _isSigned(other._isSigned){}
+	_name(other._name), _gradeToSign(other._gradeToSign), _gradeToExecute(other._gradeToExecute), _isSigned(false){}
 
 // Assignment Operator
 Form& Form::operator=(const Form& other)
@@ -56,8 +56,14 @@ bool 		Form::getIsSigned(void) const {return _isSigned;}
 
 void		Form::beSigned(Bureaucrat& bureau)
 {
+	if(_isSigned)
+	{
+		throw AlreadySignedException();
+	}
 	if(bureau.getGrade() > _gradeToSign)
+	{
 		throw GradeTooLowException();
+	}
 	_isSigned = true;
 }
 
@@ -73,6 +79,11 @@ const char* Form::GradeTooHighException::what() const noexcept
 const char* Form::GradeTooLowException::what() const noexcept
 {
 	return "Form Grade too low";
+}
+
+const char* Form::AlreadySignedException::what() const noexcept
+{
+	return "Form already signed";
 }
 
 /****************************************************/

@@ -6,7 +6,7 @@
 /*   By: ajehle <ajehle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 15:13:08 by ajehle            #+#    #+#             */
-/*   Updated: 2024/12/17 15:13:13 by ajehle           ###   ########.fr       */
+/*   Updated: 2024/12/17 17:33:15 by ajehle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ Bureaucrat& Bureaucrat::operator=(const Bureaucrat& other)
 /****************************************/
 /*				Destructor				*/
 /****************************************/
-Bureaucrat::~Bureaucrat(void){}
+Bureaucrat::~Bureaucrat(){}
 
 /****************************************/
 /*			Member Functions			*/

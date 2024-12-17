@@ -6,13 +6,11 @@
 /*   By: ajehle <ajehle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 15:13:08 by ajehle            #+#    #+#             */
-/*   Updated: 2024/12/17 15:13:13 by ajehle           ###   ########.fr       */
+/*   Updated: 2024/12/17 18:03:14 by ajehle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"../include/Bureaucrat.hpp"
-
-
+#include"../include/Form.hpp"
 
 /****************************************/
 /*				Constructor				*/
@@ -40,7 +38,7 @@ Bureaucrat& Bureaucrat::operator=(const Bureaucrat& other)
 /****************************************/
 /*				Destructor				*/
 /****************************************/
-Bureaucrat::~Bureaucrat(void){}
+Bureaucrat::~Bureaucrat(){}
 
 /****************************************/
 /*			Member Functions			*/
@@ -89,3 +87,20 @@ std::ostream& operator<<(std::ostream& output, const Bureaucrat& other)
 	return output;
 }
 
+/****************************************/
+/*				EX01					*/
+/****************************************/
+void		Bureaucrat::signForm(Form& form)
+{
+	try
+	{
+		form.beSigned(*this);
+	}
+	catch(const std::exception& e )
+	{
+		std::cout << getName() << " couldn`t sign " << form.getName() << " because " << e.what() << std::endl;
+		// throw;
+		return;
+	}
+	std::cout << getName() << " signed " << form.getName() << std::endl;
+}

@@ -12,10 +12,10 @@
 
 #include <iostream>
 #include <exception>
+
 #include "Bureaucrat.hpp"
 
-#define HIGHEST_GRADE 1
-#define LOWEST_GRADE 150
+class Bureaucrat;
 
 class Form
 {
@@ -46,6 +46,11 @@ class Form
 		};
 
 		class GradeTooLowException : public std::exception {
+			public:
+				const char *what() const noexcept override;
+		};
+
+		class AlreadySignedException : public std::exception {
 			public:
 				const char *what() const noexcept override;
 		};

@@ -6,7 +6,7 @@
 /*   By: ajehle <ajehle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 15:12:56 by ajehle            #+#    #+#             */
-/*   Updated: 2024/12/17 15:14:14 by ajehle           ###   ########.fr       */
+/*   Updated: 2024/12/17 17:43:58 by ajehle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 #define HIGHEST_GRADE 1
 #define LOWEST_GRADE 150
 
+class Form;
+
 class Bureaucrat
 {
 	private:
@@ -24,7 +26,7 @@ class Bureaucrat
 
 	public:
 		Bureaucrat(const std::string& name, int grade);
-		~Bureaucrat(void);
+		~Bureaucrat();
 		Bureaucrat(const Bureaucrat& other);
 		Bureaucrat& operator=(const Bureaucrat& other);
 
@@ -32,6 +34,12 @@ class Bureaucrat
 		int 		getGrade(void) const;
 		void 		increment_Grade();
 		void		decrement_Grade();
+
+
+/****************************************/
+/*				EX01					*/
+/****************************************/
+		void		signForm(Form& form);
 
 /****************************************/
 /*				EXCEPTIONS				*/

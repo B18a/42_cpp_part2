@@ -6,7 +6,7 @@
 /*   By: ajehle <ajehle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 15:13:03 by ajehle            #+#    #+#             */
-/*   Updated: 2024/12/17 15:13:05 by ajehle           ###   ########.fr       */
+/*   Updated: 2024/12/17 16:27:53 by ajehle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,11 @@
 /****************************************************/
 /*					EXEPTIONS						*/
 /****************************************************/
+
+void    printErrorMessage(const std::exception& e)
+{
+        std::cerr << "Error: " << e.what() << std::endl;    
+}
 
 void createBureaucrat() {
     Bureaucrat b1("Alice", 0);
@@ -37,19 +42,9 @@ int	main(void)
         Bureaucrat b2("Bob", 200);
         Bureaucrat b1("Alice", 0);
     }
-    catch (const Bureaucrat::GradeTooHighException& e) 
-    {
-        std::cerr << "Caught: " << e.what() << std::endl;
-    }
-    catch (const Bureaucrat::GradeTooLowException& e) 
-    {
-        std::cerr << "Caught: " << e.what() << std::endl;
-    }
-    catch (const std::exception& e) 
-    {
-        std::cerr << "Caught an unknown exception: " << e.what() << std::endl;
-    }
-
+    catch (const Bureaucrat::GradeTooHighException& e) {printErrorMessage(e);}
+    catch (const Bureaucrat::GradeTooLowException& e)  {printErrorMessage(e);}
+    catch (const std::exception& e)  {printErrorMessage(e);}
 
 /****************************************************/
 /*		 Exception get thrown to the caller			*/
@@ -59,10 +54,7 @@ std::cout << "Exception get thrown to the caller" << std::endl;
     {
         createBureaucrat();
     }
-    catch (const std::exception& e) 
-    {
-        std::cerr << "Error: " << e.what() << std::endl;
-    }
+    catch (const std::exception& e)  {printErrorMessage(e);}
 
 /****************************************************/
 /*		        Increment Exeptions        			*/
@@ -72,17 +64,14 @@ std::cout << "Increment Exeptions" << std::endl;
         Bureaucrat b1("Alice", 1);
         b1.increment_Grade();
     }
-    catch (const std::exception& e) {
-        std::cerr << "Error: " << e.what() << std::endl;
-    }
+    catch (const std::exception& e) {printErrorMessage(e);}
+
     try {
         Bureaucrat b1("Alice", 150);
         std::cout << b1;
         b1.decrement_Grade();
     }
-    catch (const std::exception& e) {
-        std::cerr << "Error: " << e.what() << std::endl;
-    }
+    catch (const std::exception& e)  {printErrorMessage(e);}
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: ajehle <ajehle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 15:13:03 by ajehle            #+#    #+#             */
-/*   Updated: 2024/12/17 16:31:39 by ajehle           ###   ########.fr       */
+/*   Updated: 2024/12/17 18:09:29 by ajehle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,17 @@ int	main(void)
 {
     try 
     {
-        Bureaucrat b1("Alice", 5);
-        Form f1("f1", 2, 3);
+        Bureaucrat b1("Alice", 1);
+        Bureaucrat b2("Mike", 5);
+        Form f1("f1",2, 3);
 
         std::cout << f1;
         std::cout << b1;
 
-        f1.beSigned(b1);
-        
+
+        b2.signForm(f1);
+        b1.signForm(f1);
+        b1.signForm(f1);
     }
     catch (const std::exception& e)  {printErrorMessage(e);}
 
