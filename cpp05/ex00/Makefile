@@ -1,6 +1,7 @@
 CXX			= c++
-CXXFLAGS	= -Wall -Wextra -Werror #-std=c++98
-NAME		= animal
+CXXFLAGS	= -Wall -Wextra -Werror -std=c++17
+
+NAME		= bureaucrat
 OBJ_DIR		= obj
 SRC_DIR		= src
 INC_DIR		= include
@@ -8,6 +9,7 @@ REMOVE		= rm -rf
 
 # INTERNAL FUNCTIONS
 FUNCTIONS	=	$(SRC_DIR)/main.cpp \
+				$(SRC_DIR)/Bureaucrat.cpp \
 
 
 # INTERNAL OBJECT

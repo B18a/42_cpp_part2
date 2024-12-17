@@ -1,6 +1,6 @@
 
 
-# include <iostream>
+#include <iostream>
 #include <exception>
 
 
@@ -9,8 +9,12 @@
 
 class Bureaucrat
 {
+	private:
+		const std::string _name;
+		int		_grade;
+
 	public:
-		Bureaucrat(void);
+		Bureaucrat(std::string name, int grade);
 		~Bureaucrat(void);
 
 
@@ -26,25 +30,19 @@ class Bureaucrat
 /*
 	Inheritance (: public std::exception):
 
-    By inheriting from std::exception, the custom exception becomes compatible with the standard C++ exception-handling mechanism (e.g., try-catch blocks).
+    By inheriting from std::exception, the custom exception becomes 
+	compatible with the standard C++ exception-handling mechanism (e.g., try-catch blocks).
     It also provides a default implementation of methods like what().
 */
-		class GradeTooHighException : public std::exception
-		{
+		class GradeTooHighException : public std::exception {
 			public:
-				// virtual const char *what() const throw();
-				virtual const char *what() const noexcept;
-
-		};
-		class GradeTooLowException : public std::exception
-		{
-			public:
-				// virtual const char *what() const throw();
-				virtual const char *what() const noexcept;
+				const char *what() const noexcept override;
 		};
 
-	private:
-		const std::string _name;
-		int		_grade;
+		class GradeTooLowException : public std::exception {
+			public:
+				const char *what() const noexcept override;
+		};
 
-}
+
+};
