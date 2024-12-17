@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.cpp                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ajehle <ajehle@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/17 15:13:03 by ajehle            #+#    #+#             */
+/*   Updated: 2024/12/17 15:13:05 by ajehle           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include <iostream>
 #include"../include/Bureaucrat.hpp"
@@ -21,17 +32,21 @@ int	main(void)
 // catch block in the current scope.
 
     std::cout << "Exception Check" << std::endl;
-    try {
+    try 
+    {
         Bureaucrat b2("Bob", 200);
         Bureaucrat b1("Alice", 0);
     }
-    catch (const Bureaucrat::GradeTooHighException& e) {
+    catch (const Bureaucrat::GradeTooHighException& e) 
+    {
         std::cerr << "Caught: " << e.what() << std::endl;
     }
-    catch (const Bureaucrat::GradeTooLowException& e) {
+    catch (const Bureaucrat::GradeTooLowException& e) 
+    {
         std::cerr << "Caught: " << e.what() << std::endl;
     }
-    catch (const std::exception& e) {
+    catch (const std::exception& e) 
+    {
         std::cerr << "Caught an unknown exception: " << e.what() << std::endl;
     }
 
@@ -40,10 +55,12 @@ int	main(void)
 /*		 Exception get thrown to the caller			*/
 /****************************************************/
 std::cout << "Exception get thrown to the caller" << std::endl;
-    try {
+    try 
+    {
         createBureaucrat();
     }
-    catch (const std::exception& e) {
+    catch (const std::exception& e) 
+    {
         std::cerr << "Error: " << e.what() << std::endl;
     }
 
@@ -66,7 +83,6 @@ std::cout << "Increment Exeptions" << std::endl;
     catch (const std::exception& e) {
         std::cerr << "Error: " << e.what() << std::endl;
     }
-
 	return (0);
 }
 

@@ -1,8 +1,17 @@
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   Bureaucrat.hpp                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ajehle <ajehle@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/17 15:12:56 by ajehle            #+#    #+#             */
+/*   Updated: 2024/12/17 15:14:14 by ajehle           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include <iostream>
 #include <exception>
-
 
 #define HIGHEST_GRADE 1
 #define LOWEST_GRADE 150
@@ -14,15 +23,15 @@ class Bureaucrat
 		int		_grade;
 
 	public:
-		Bureaucrat(std::string name, int grade);
+		Bureaucrat(const std::string& name, int grade);
 		~Bureaucrat(void);
+		Bureaucrat(const Bureaucrat& other);
+		Bureaucrat& operator=(const Bureaucrat& other);
 
 		std::string getName(void) const;
 		int 		getGrade(void) const;
-		void 		increment_Grade(void);
-		void		decrement_Grade(void);
-
-
+		void 		increment_Grade();
+		void		decrement_Grade();
 
 /****************************************/
 /*				EXCEPTIONS				*/
