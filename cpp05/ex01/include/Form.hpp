@@ -12,6 +12,7 @@
 
 #include <iostream>
 #include <exception>
+#include "Bureaucrat.hpp"
 
 #define HIGHEST_GRADE 1
 #define LOWEST_GRADE 150
@@ -20,8 +21,8 @@ class Form
 {
 	private:
 		const std::string	_name;
-		const int			_gradeSign;
-		const int			_gradeExecute;
+		const int			_gradeToSign;
+		const int			_gradeToExecute;
 		bool				_isSigned;
 
 	public:
@@ -31,10 +32,11 @@ class Form
 		Form& operator=(const Form& other);
 
 		std::string getName(void) const;
-		int 		getGradeSign(void) const;
-		int 		getGradeExecute(void) const;
+		int 		getGradeToSign(void) const;
+		int 		getGradeToExecute(void) const;
 		bool 		getIsSigned(void) const;
 
+		void		beSigned(Bureaucrat& bureau);
 /****************************************/
 /*				EXCEPTIONS				*/
 /****************************************/

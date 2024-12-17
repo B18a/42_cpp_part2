@@ -6,83 +6,33 @@
 /*   By: ajehle <ajehle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 15:13:03 by ajehle            #+#    #+#             */
-/*   Updated: 2024/12/17 15:13:05 by ajehle           ###   ########.fr       */
+/*   Updated: 2024/12/17 16:31:39 by ajehle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
-#include"../include/Bureaucrat.hpp"
+#include"../include/Form.hpp"
 
-/****************************************************/
-/*					EXEPTIONS						*/
-/****************************************************/
-
-void createBureaucrat() {
-    Bureaucrat b1("Alice", 0);
+void    printErrorMessage(const std::exception& e)
+{
+        std::cerr << "Error: " << e.what() << std::endl;    
 }
 
 int	main(void)
 {
-
-/****************************************************/
-/*			Exception Check			            	*/
-/****************************************************/
-// First exception that is thrown stops the normal flow of
-// execution and immediately looks for the nearest matching 
-// catch block in the current scope.
-
-    std::cout << "Exception Check" << std::endl;
     try 
     {
-        Bureaucrat b2("Bob", 200);
-        Bureaucrat b1("Alice", 0);
-    }
-    catch (const Bureaucrat::GradeTooHighException& e) 
-    {
-        std::cerr << "Caught: " << e.what() << std::endl;
-    }
-    catch (const Bureaucrat::GradeTooLowException& e) 
-    {
-        std::cerr << "Caught: " << e.what() << std::endl;
-    }
-    catch (const std::exception& e) 
-    {
-        std::cerr << "Caught an unknown exception: " << e.what() << std::endl;
-    }
+        Bureaucrat b1("Alice", 5);
+        Form f1("f1", 2, 3);
 
-
-/****************************************************/
-/*		 Exception get thrown to the caller			*/
-/****************************************************/
-std::cout << "Exception get thrown to the caller" << std::endl;
-    try 
-    {
-        createBureaucrat();
-    }
-    catch (const std::exception& e) 
-    {
-        std::cerr << "Error: " << e.what() << std::endl;
-    }
-
-/****************************************************/
-/*		        Increment Exeptions        			*/
-/****************************************************/
-std::cout << "Increment Exeptions" << std::endl;
-    try {
-        Bureaucrat b1("Alice", 1);
-        b1.increment_Grade();
-    }
-    catch (const std::exception& e) {
-        std::cerr << "Error: " << e.what() << std::endl;
-    }
-    try {
-        Bureaucrat b1("Alice", 150);
+        std::cout << f1;
         std::cout << b1;
-        b1.decrement_Grade();
+
+        f1.beSigned(b1);
+        
     }
-    catch (const std::exception& e) {
-        std::cerr << "Error: " << e.what() << std::endl;
-    }
+    catch (const std::exception& e)  {printErrorMessage(e);}
+
 	return (0);
 }
 

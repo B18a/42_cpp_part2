@@ -16,17 +16,17 @@
 /*				Constructor				*/
 /****************************************/
 Form::Form(const std::string& name, int gradeSign, int gradeExecute) : 
-	_name(name), _gradeSign(gradeSign), _gradeExecute(gradeExecute), _isSigned(false)
+	_name(name), _gradeToSign(gradeSign), _gradeToExecute(gradeExecute), _isSigned(false)
 {
-    if (_gradeSign < HIGHEST_GRADE || _gradeExecute < HIGHEST_GRADE)
-        throw GradeTooHighException();
-    if (_gradeSign < LOWEST_GRADE || _gradeExecute < LOWEST_GRADE)
-        throw GradeTooLowException();
+	if (_gradeToSign < HIGHEST_GRADE || _gradeToExecute < HIGHEST_GRADE)
+		throw GradeTooHighException();
+	if (_gradeToSign > LOWEST_GRADE || _gradeToExecute > LOWEST_GRADE)
+		throw GradeTooLowException();
 }
 
 // Copy Constructor
 Form::Form(const Form& other) : 
-	_name(other._name), _gradeSign(other._gradeSign), _gradeExecute(other._gradeExecute), _isSigned(other._isSigned){}
+	_name(other._name), _gradeToSign(other._gradeToSign), _gradeToExecute(other._gradeToExecute), _isSigned(other._isSigned){}
 
 // Assignment Operator
 Form& Form::operator=(const Form& other)
@@ -42,13 +42,24 @@ Form& Form::operator=(const Form& other)
 Form::~Form(void){}
 
 /****************************************/
-/*			Member Functions			*/
+/*			Getter & Setter				*/
 /****************************************/
 
 std::string	Form::getName(void) const{return _name;}
-int			Form::getGradeSign(void) const{return _gradeSign;}
-int			Form::getGradeExecute(void) const{return _gradeExecute;}
+int			Form::getGradeToSign(void) const{return _gradeToSign;}
+int			Form::getGradeToExecute(void) const{return _gradeToExecute;}
 bool 		Form::getIsSigned(void) const {return _isSigned;}
+
+/****************************************/
+/*			Member Functions			*/
+/****************************************/
+
+void		Form::beSigned(Bureaucrat& bureau)
+{
+	if(bureau.getGrade() > _gradeToSign)
+		throw GradeTooLowException();
+	_isSigned = true;
+}
 
 /****************************************/
 /*				EXCEPTIONS				*/
@@ -56,12 +67,12 @@ bool 		Form::getIsSigned(void) const {return _isSigned;}
 
 const char* Form::GradeTooHighException::what() const noexcept
 {
-	return "Grade too high";
+	return "Form Grade too high";
 }
 
 const char* Form::GradeTooLowException::what() const noexcept
 {
-	return "Grade too low";
+	return "Form Grade too low";
 }
 
 /****************************************************/
@@ -71,9 +82,9 @@ const char* Form::GradeTooLowException::what() const noexcept
 std::ostream& operator<<(std::ostream& output, const Form& other)
 {
 	output
-	<< ", Form  " << other.getName() 
-	<< ", gradeSign " << other.getGradeSign() 
-	<< ", gradeExecute " << other.getGradeExecute() 
+	<< "Form  " << other.getName() 
+	<< ", gradeToSign " << other.getGradeToSign() 
+	<< ", gradeToExecute " << other.getGradeToExecute() 
 	<< ", is signed " << other.getIsSigned() 	
 	<< std::endl;
 	return output;
