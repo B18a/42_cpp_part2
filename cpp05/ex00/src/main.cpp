@@ -60,6 +60,7 @@ std::cout << "Increment Exeptions" << std::endl;
     }
     try {
         Bureaucrat b1("Alice", 150);
+        std::cout << b1;
         b1.decrement_Grade();
     }
     catch (const std::exception& e) {

@@ -17,11 +17,12 @@ class Bureaucrat
 		Bureaucrat(std::string name, int grade);
 		~Bureaucrat(void);
 
-
-		std::string getName(void);
-		int 		getGrade(void);
+		std::string getName(void) const;
+		int 		getGrade(void) const;
 		void 		increment_Grade(void);
 		void		decrement_Grade(void);
+
+
 
 /****************************************/
 /*				EXCEPTIONS				*/
@@ -42,6 +43,11 @@ class Bureaucrat
 			public:
 				const char *what() const noexcept override;
 		};
-
-
 };
+
+
+/****************************************/
+/*			Operator Overload			*/
+/****************************************/
+
+std::ostream& operator<<(std::ostream& output, const Bureaucrat& other);

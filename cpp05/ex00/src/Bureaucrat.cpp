@@ -2,6 +2,7 @@
 
 #include"../include/Bureaucrat.hpp"
 #include <stdexcept>
+#include <iostream>
 
 
 /****************************************/
@@ -23,9 +24,9 @@ Bureaucrat::~Bureaucrat(void){}
 /****************************************/
 /*			Member Functions			*/
 /****************************************/
-std::string	Bureaucrat::getName(void){return _name;}
+std::string	Bureaucrat::getName(void) const{return _name;}
 
-int			Bureaucrat::getGrade(void){return _grade;}
+int			Bureaucrat::getGrade(void) const{return _grade;}
 
 void Bureaucrat::increment_Grade(void)
 {
@@ -61,4 +62,15 @@ const char* Bureaucrat::GradeTooLowException::what() const noexcept
 	return ("Grade too low");
 }
 
+
+
+/****************************************************/
+/*				Operator Overload					*/
+/****************************************************/
+
+std::ostream& operator<<(std::ostream& output, const Bureaucrat& other)
+{
+	output << other.getName() << ", bureaucrat grade " << other.getGrade() << std::endl;
+	return (output);
+}
 
