@@ -6,11 +6,12 @@
 /*   By: ajehle <ajehle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 15:13:08 by ajehle            #+#    #+#             */
-/*   Updated: 2024/12/17 18:03:14 by ajehle           ###   ########.fr       */
+/*   Updated: 2024/12/18 10:20:10 by ajehle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"../include/Form.hpp"
+#include"../include/Color.hpp"
 
 /****************************************/
 /*				Constructor				*/
@@ -83,7 +84,11 @@ const char* Bureaucrat::GradeTooLowException::what() const noexcept
 
 std::ostream& operator<<(std::ostream& output, const Bureaucrat& other)
 {
-	output << other.getName() << ", bureaucrat grade " << other.getGrade() << std::endl;
+	output
+	<< YELLOW << other.getName() 
+	<< RESET << ", bureaucrat grade " 
+	<< GREEN << other.getGrade() 
+	<< RESET << std::endl;
 	return output;
 }
 
@@ -98,9 +103,18 @@ void		Bureaucrat::signForm(Form& form)
 	}
 	catch(const std::exception& e )
 	{
-		std::cout << getName() << " couldn`t sign " << form.getName() << " because " << e.what() << std::endl;
-		// throw;
+		std::cout 
+		<< YELLOW << getName()
+		<< RESET << " couldn`t sign " 
+		<< MAGENTA << form.getName() 
+		<< RESET << " because " 
+		<< CYAN << e.what() 
+		<< RESET << std::endl;
 		return;
 	}
-	std::cout << getName() << " signed " << form.getName() << std::endl;
+	std::cout 
+	<< YELLOW << getName()
+	<< RESET << " signed "
+	<< MAGENTA << form.getName() 
+	<< RESET << std::endl;
 }

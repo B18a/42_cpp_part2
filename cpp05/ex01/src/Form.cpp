@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include"../include/Form.hpp"
+#include"../include/Color.hpp"
 
 /****************************************/
 /*				Constructor				*/
@@ -93,11 +94,15 @@ const char* Form::AlreadySignedException::what() const noexcept
 std::ostream& operator<<(std::ostream& output, const Form& other)
 {
 	output
-	<< "Form  " << other.getName() 
-	<< ", gradeToSign " << other.getGradeToSign() 
-	<< ", gradeToExecute " << other.getGradeToExecute() 
-	<< ", is signed " << other.getIsSigned() 	
-	<< std::endl;
+	<< "Form  " 
+	<< MAGENTA << other.getName() 
+	<< RESET << ", gradeToSign " 
+	<< RED 	<< other.getGradeToSign() 
+	<< RESET << ", gradeToExecute " 
+	<< BLUE << other.getGradeToExecute() 
+	<< RESET ", is signed "
+	<< GREEN << other.getIsSigned() 	
+	<< RESET << std::endl;
 	return output;
 }
 
