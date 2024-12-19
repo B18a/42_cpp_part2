@@ -82,6 +82,23 @@ void		AForm::beSigned(Bureaucrat& bureau)
 	_isSigned = true;
 }
 
+
+void AForm::execute(Bureaucrat const & executor) const
+{
+	std::cout 
+	<< YELLOW << executor.getName() 
+	<< RESET << " tries to execute Form "
+	<< MAGENTA << getName() 
+	<< RESET << std::endl;
+	if(!getIsSigned() )
+		throw NotSignedException();
+	if(executor.getGrade() > this->getGradeToExecute())
+		throw GradeTooHighException();
+	performExecution(executor);
+}
+
+
+
 /****************************************/
 /*				EXCEPTIONS				*/
 /****************************************/

@@ -6,7 +6,7 @@
 /*   By: ajehle <ajehle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 15:13:03 by ajehle            #+#    #+#             */
-/*   Updated: 2024/12/19 08:28:53 by ajehle           ###   ########.fr       */
+/*   Updated: 2024/12/19 10:00:32 by ajehle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,30 +30,24 @@
 
 void    printErrorMessage(const std::exception& e)
 {
-        std::cerr 
-        << RED << "Error: " 
-        << RESET << e.what() 
-        << std::endl;    
+	std::cerr 
+	<< RED << "Error: " 
+	<< RESET << e.what() 
+	<< std::endl;    
 }
 
 int	main(void)
 {
-    try 
-    {
-        Bureaucrat b1("b1", 150);
-        Bureaucrat b2("b2", 40);
-        ShrubberyCreationForm f1("Human");
-        
-        std::cout << b1;
-        std::cout << b2;
-        std::cout << f1;
+	Bureaucrat b1("b1", 150);
+	Bureaucrat b2("b2", 40);
+	ShrubberyCreationForm f1("Christmas");
+	
+	std::cout << b1;
+	std::cout << b2;
+	std::cout << f1;
 
-        b2.signForm(f1);
-        
-        f1.execute(b1);
-
-    }
-    catch (const std::exception& e)  {printErrorMessage(e);}
+	b1.signForm(f1);
+	b2.executeForm(f1);
 
 	return (0);
 }

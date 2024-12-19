@@ -6,7 +6,7 @@
 /*   By: ajehle <ajehle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 11:35:03 by ajehle            #+#    #+#             */
-/*   Updated: 2024/12/19 08:28:05 by ajehle           ###   ########.fr       */
+/*   Updated: 2024/12/19 09:57:16 by ajehle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,20 +59,21 @@ std::string ShrubberyCreationForm::getTarget()
 /*			Member Functions			*/
 /****************************************/
 
-void ShrubberyCreationForm::execute(Bureaucrat const & executor) const
+void ShrubberyCreationForm::performExecution(Bureaucrat const & executor) const
 {
+	std::ofstream NewFile(getName());
+	NewFile 
+	<< "    *    " << "\n"
+	<< "   ***   " << "\n"
+	<< "  *****  " << "\n"
+	<< " ******* " << "\n"
+	<< "*********" << "\n"
+	<< "    |    ";
+	NewFile.close();
+	
 	std::cout 
 	<< YELLOW << executor.getName() 
-	<< RESET << " tries to execute Form "
-	<< MAGENTA << getName() 
-	<< RESET << std::endl;
-	if(!getIsSigned() )
-		throw NotSignedException();
-	if(executor.getGrade() > this->getGradeToExecute())
-		throw GradeTooHighException();
-	std::cout 
-	<< YELLOW << executor.getName() 
-	<< RESET << " executes Form "
+	<< RESET << " executed "
 	<< MAGENTA << getName() 
 	<< RESET << std::endl;
 }

@@ -12,6 +12,7 @@
 
 #include <iostream>
 #include <exception>
+#include <fstream>
 
 #include "Bureaucrat.hpp"
 
@@ -42,8 +43,9 @@ class AForm
 /****************************************/
 /*				EX02					*/
 /****************************************/
-		virtual void execute(Bureaucrat const & executor) const = 0;
-		
+		void 			execute(Bureaucrat const & executor) const;
+		virtual void 	performExecution(Bureaucrat const & executor) const = 0;
+
 /****************************************/
 /*				EXCEPTIONS				*/
 /****************************************/
