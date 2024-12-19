@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Form.cpp                                     :+:      :+:    :+:   */
+/*   AForm.cpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ajehle <ajehle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"../include/Form.hpp"
+#include"../include/AForm.hpp"
 
 /****************************************/
 /*			Text Colors 				*/
@@ -30,7 +30,7 @@
 /****************************************/
 /*				Constructor				*/
 /****************************************/
-Form::Form(const std::string& name, int gradeSign, int gradeExecute) : 
+AForm::AForm(const std::string& name, int gradeSign, int gradeExecute) : 
 	_name(name), _gradeToSign(gradeSign), _gradeToExecute(gradeExecute), _isSigned(false)
 {
 	if (_gradeToSign < HIGHEST_GRADE || _gradeToExecute < HIGHEST_GRADE)
@@ -40,11 +40,11 @@ Form::Form(const std::string& name, int gradeSign, int gradeExecute) :
 }
 
 // Copy Constructor
-Form::Form(const Form& other) : 
+AForm::AForm(const AForm& other) : 
 	_name(other._name), _gradeToSign(other._gradeToSign), _gradeToExecute(other._gradeToExecute), _isSigned(false){}
 
 // Assignment Operator
-Form& Form::operator=(const Form& other)
+AForm& AForm::operator=(const AForm& other)
 {
 	if(this != &other)
 		this->_isSigned = other.getIsSigned();
@@ -54,22 +54,22 @@ Form& Form::operator=(const Form& other)
 /****************************************/
 /*				Destructor				*/
 /****************************************/
-Form::~Form(void){}
+AForm::~AForm(void){}
 
 /****************************************/
 /*			Getter & Setter				*/
 /****************************************/
 
-std::string	Form::getName(void) const{return _name;}
-int			Form::getGradeToSign(void) const{return _gradeToSign;}
-int			Form::getGradeToExecute(void) const{return _gradeToExecute;}
-bool 		Form::getIsSigned(void) const {return _isSigned;}
+std::string	AForm::getName(void) const{return _name;}
+int			AForm::getGradeToSign(void) const{return _gradeToSign;}
+int			AForm::getGradeToExecute(void) const{return _gradeToExecute;}
+bool 		AForm::getIsSigned(void) const {return _isSigned;}
 
 /****************************************/
 /*			Member Functions			*/
 /****************************************/
 
-void		Form::beSigned(Bureaucrat& bureau)
+void		AForm::beSigned(Bureaucrat& bureau)
 {
 	if(_isSigned)
 	{
@@ -86,32 +86,37 @@ void		Form::beSigned(Bureaucrat& bureau)
 /*				EXCEPTIONS				*/
 /****************************************/
 
-const char* Form::GradeTooHighException::what() const noexcept
+const char* AForm::GradeTooHighException::what() const noexcept
 {
-	return "Form Grade too high";
+	return "AForm Grade too high";
 }
 
-const char* Form::GradeTooLowException::what() const noexcept
+const char* AForm::GradeTooLowException::what() const noexcept
 {
-	return "Form Grade too low";
+	return "AForm Grade too low";
 }
 
-const char* Form::AlreadySignedException::what() const noexcept
+const char* AForm::AlreadySignedException::what() const noexcept
 {
-	return "Form already signed";
+	return "AForm already signed";
+}
+
+const char* AForm::NotSignedException::what() const noexcept
+{
+	return "AForm NOT signed";
 }
 
 /****************************************************/
 /*				Operator Overload					*/
 /****************************************************/
 
-std::ostream& operator<<(std::ostream& output, const Form& other)
+std::ostream& operator<<(std::ostream& output, const AForm& other)
 {
 	output
-	<< "Form  " 
+	<< "AForm  " 
 	<< MAGENTA << other.getName() 
 	<< RESET << ", gradeToSign " 
-	<< RED 	<< other.getGradeToSign() 
+	<< CYAN << other.getGradeToSign() 
 	<< RESET << ", gradeToExecute " 
 	<< BLUE << other.getGradeToExecute() 
 	<< RESET ", is signed "

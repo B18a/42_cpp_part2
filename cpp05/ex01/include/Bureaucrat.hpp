@@ -6,7 +6,7 @@
 /*   By: ajehle <ajehle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 15:12:56 by ajehle            #+#    #+#             */
-/*   Updated: 2024/12/17 17:43:58 by ajehle           ###   ########.fr       */
+/*   Updated: 2024/12/18 10:41:14 by ajehle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,9 @@ class Bureaucrat
 
 	public:
 		Bureaucrat(const std::string& name, int grade);
-		~Bureaucrat();
 		Bureaucrat(const Bureaucrat& other);
+		~Bureaucrat();
+		
 		Bureaucrat& operator=(const Bureaucrat& other);
 
 		std::string getName(void) const;

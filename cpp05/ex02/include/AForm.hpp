@@ -1,49 +1,52 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Bureaucrat.hpp                                     :+:      :+:    :+:   */
+/*   AForm.hpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ajehle <ajehle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 15:12:56 by ajehle            #+#    #+#             */
-/*   Updated: 2024/12/18 10:41:23 by ajehle           ###   ########.fr       */
+/*   Updated: 2024/12/17 15:14:14 by ajehle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
 #include <exception>
 
-#define HIGHEST_GRADE 1
-#define LOWEST_GRADE 150
+#include "Bureaucrat.hpp"
 
-class Bureaucrat
+class Bureaucrat;
+
+class AForm
 {
 	private:
-		const std::string _name;
-		int		_grade;
+		const std::string	_name;
+		const int			_gradeToSign;
+		const int			_gradeToExecute;
+		bool				_isSigned;
 
 	public:
-		Bureaucrat(const std::string& name, int grade);
-		Bureaucrat(const Bureaucrat& other);
-		~Bureaucrat();
+		AForm(const std::string& name, int gradeSign, int gradeExecute);
+		AForm(const AForm& other);
+		virtual ~AForm(void);
 		
-		Bureaucrat& operator=(const Bureaucrat& other);
+		AForm& operator=(const AForm& other);
 
 		std::string getName(void) const;
-		int 		getGrade(void) const;
-		void 		increment_Grade();
-		void		decrement_Grade();
+		int 		getGradeToSign(void) const;
+		int 		getGradeToExecute(void) const;
+		bool 		getIsSigned(void) const;
 
+		void		beSigned(Bureaucrat& bureau);
+
+/****************************************/
+/*				EX02					*/
+/****************************************/
+		virtual void execute(Bureaucrat const & executor) const = 0;
+		
 /****************************************/
 /*				EXCEPTIONS				*/
 /****************************************/
-/*
-	Inheritance (: public std::exception):
-
-    By inheriting from std::exception, the custom exception becomes 
-	compatible with the standard C++ exception-handling mechanism (e.g., try-catch blocks).
-    It also provides a default implementation of methods like what().
-*/
 		class GradeTooHighException : public std::exception {
 			public:
 				const char *what() const noexcept override;
@@ -53,11 +56,20 @@ class Bureaucrat
 			public:
 				const char *what() const noexcept override;
 		};
-};
 
+		class AlreadySignedException : public std::exception {
+			public:
+				const char *what() const noexcept override;
+		};
+
+		class NotSignedException : public std::exception {
+			public:
+				const char *what() const noexcept override;
+		};
+};
 
 /****************************************/
 /*			Operator Overload			*/
 /****************************************/
 
-std::ostream& operator<<(std::ostream& output, const Bureaucrat& other);
+std::ostream& operator<<(std::ostream& output, const AForm& other);

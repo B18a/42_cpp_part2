@@ -6,7 +6,7 @@
 /*   By: ajehle <ajehle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 15:12:56 by ajehle            #+#    #+#             */
-/*   Updated: 2024/12/18 10:41:23 by ajehle           ###   ########.fr       */
+/*   Updated: 2024/12/19 08:29:09 by ajehle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 #define HIGHEST_GRADE 1
 #define LOWEST_GRADE 150
+
+class AForm;
 
 class Bureaucrat
 {
@@ -34,16 +36,15 @@ class Bureaucrat
 		void 		increment_Grade();
 		void		decrement_Grade();
 
+
+/****************************************/
+/*				EX01					*/
+/****************************************/
+		void		signForm(AForm& form);
+
 /****************************************/
 /*				EXCEPTIONS				*/
 /****************************************/
-/*
-	Inheritance (: public std::exception):
-
-    By inheriting from std::exception, the custom exception becomes 
-	compatible with the standard C++ exception-handling mechanism (e.g., try-catch blocks).
-    It also provides a default implementation of methods like what().
-*/
 		class GradeTooHighException : public std::exception {
 			public:
 				const char *what() const noexcept override;

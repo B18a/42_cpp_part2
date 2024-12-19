@@ -27,8 +27,9 @@ class Form
 
 	public:
 		Form(const std::string& name, int gradeSign, int gradeExecute);
-		~Form(void);
 		Form(const Form& other);
+		~Form(void);
+		
 		Form& operator=(const Form& other);
 
 		std::string getName(void) const;
