@@ -6,7 +6,7 @@
 /*   By: ajehle <ajehle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 15:13:08 by ajehle            #+#    #+#             */
-/*   Updated: 2024/12/19 10:03:16 by ajehle           ###   ########.fr       */
+/*   Updated: 2024/12/19 10:03:48 by ajehle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,6 +154,5 @@ void	Bureaucrat::executeForm(AForm const & form)
 		<< RESET << " because " 
 		<< CYAN << e.what() 
 		<< RESET << std::endl;
-	}
-		
+	}	
 }

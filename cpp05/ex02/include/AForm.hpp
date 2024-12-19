@@ -16,6 +16,8 @@
 
 #include "Bureaucrat.hpp"
 
+#pragma once
+
 class Bureaucrat;
 
 class AForm
@@ -25,6 +27,12 @@ class AForm
 		const int			_gradeToSign;
 		const int			_gradeToExecute;
 		bool				_isSigned;
+		
+/****************************************/
+/*				EX02					*/
+/****************************************/
+	protected:
+		virtual void 	performExecution(Bureaucrat const & executor) const = 0;
 
 	public:
 		AForm(const std::string& name, int gradeSign, int gradeExecute);
@@ -44,7 +52,6 @@ class AForm
 /*				EX02					*/
 /****************************************/
 		void 			execute(Bureaucrat const & executor) const;
-		virtual void 	performExecution(Bureaucrat const & executor) const = 0;
 
 /****************************************/
 /*				EXCEPTIONS				*/

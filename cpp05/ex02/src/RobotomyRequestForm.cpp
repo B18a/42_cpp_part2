@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ShrubberyCreationForm.cpp                          :+:      :+:    :+:   */
+/*   RobotomyRequestForm.cpp                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ajehle <ajehle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 11:35:03 by ajehle            #+#    #+#             */
-/*   Updated: 2024/12/19 11:27:13 by ajehle           ###   ########.fr       */
+/*   Updated: 2024/12/19 10:30:48 by ajehle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
-#include "../include/ShrubberyCreationForm.hpp"
+#include "../include/RobotomyRequestForm.hpp"
 
 /****************************************/
 /*			Text Colors 				*/
@@ -32,11 +32,11 @@
 /*		Constructor/Destructor			*/
 /****************************************/
 
-ShrubberyCreationForm::ShrubberyCreationForm(std::string target) : AForm(target + "_shrubbery", DEFAULT_SHRUBBERY_SIGN, DEFAULT_SHRUBBERY_EXEC), _target(target){}
-ShrubberyCreationForm::~ShrubberyCreationForm(){}
-ShrubberyCreationForm::ShrubberyCreationForm(const ShrubberyCreationForm& other): AForm(other), _target(other._target){}
+RobotomyRequestForm::RobotomyRequestForm(std::string target) : AForm(target, DEFAULT_ROBO_SIGN, DEFAULT_ROBO_EXEC), _target(target){}
+RobotomyRequestForm::~RobotomyRequestForm(){}
+RobotomyRequestForm::RobotomyRequestForm(const RobotomyRequestForm& other): AForm(other), _target(other._target){}
 
-ShrubberyCreationForm& ShrubberyCreationForm::operator=(const ShrubberyCreationForm& other)
+RobotomyRequestForm& RobotomyRequestForm::operator=(const RobotomyRequestForm& other)
 {
 	if(this != &other)
 	{
@@ -50,7 +50,7 @@ ShrubberyCreationForm& ShrubberyCreationForm::operator=(const ShrubberyCreationF
 /*			Getter & Setter				*/
 /****************************************/
 
-std::string ShrubberyCreationForm::getTarget() const
+std::string RobotomyRequestForm::getTarget() const
 {
 	return _target;
 }
@@ -59,20 +59,21 @@ std::string ShrubberyCreationForm::getTarget() const
 /*			Member Functions			*/
 /****************************************/
 
-void ShrubberyCreationForm::performExecution(Bureaucrat const & executor) const
+void RobotomyRequestForm::performExecution(Bureaucrat const & executor) const
 {
-	std::ofstream NewFile(getName());
-	NewFile.close();
-	// if(!NewFile.is_open())
-	// 	throw OpeningFileException();
-	NewFile 
-	<< "    *    " << "\n"
-	<< "   ***   " << "\n"
-	<< "  *****  " << "\n"
-	<< " ******* " << "\n"
-	<< "*********" << "\n"
-	<< "    |    ";
-	NewFile.close();
+	// <target> has been robotomized successfully 50% of the time
+	int gamble;
+
+	// gamble = rand() % 2;
+	gamble = 1;
+
+	if(gamble)
+	{
+		std::cout 
+		<< MAGENTA << getTarget()
+		<< RESET << " has been robotomized successfully 50% of the time"
+		<< RESET << std::endl;
+	}
 	
 	std::cout 
 	<< YELLOW << executor.getName() 
@@ -85,7 +86,7 @@ void ShrubberyCreationForm::performExecution(Bureaucrat const & executor) const
 /*				EXCEPTIONS				*/
 /****************************************/
 
-const char* ShrubberyCreationForm::OpeningFileException::what() const noexcept
+const char* RobotomyRequestForm::RobotomyFailException::what() const noexcept
 {
-	return "Couldnt open File";
+	return "Robotomy Failed";
 }

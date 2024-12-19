@@ -6,12 +6,13 @@
 /*   By: ajehle <ajehle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 15:13:03 by ajehle            #+#    #+#             */
-/*   Updated: 2024/12/19 10:00:32 by ajehle           ###   ########.fr       */
+/*   Updated: 2024/12/19 11:28:23 by ajehle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
 #include"../include/ShrubberyCreationForm.hpp"
+#include"../include/RobotomyRequestForm.hpp"
 
 /****************************************/
 /*			Text Colors 				*/
@@ -28,27 +29,20 @@
 #define DEFAULT "\033[39m"
 #define RESET   "\033[0m" 
 
-void    printErrorMessage(const std::exception& e)
-{
-	std::cerr 
-	<< RED << "Error: " 
-	<< RESET << e.what() 
-	<< std::endl;    
-}
 
 int	main(void)
 {
 	Bureaucrat b1("b1", 150);
 	Bureaucrat b2("b2", 40);
 	ShrubberyCreationForm f1("Christmas");
+	RobotomyRequestForm f2("Robo");
 	
 	std::cout << b1;
 	std::cout << b2;
 	std::cout << f1;
 
-	b1.signForm(f1);
-	b2.executeForm(f1);
-
+	b2.signForm(f2);
+	b2.executeForm(f2);
 	return (0);
 }
 
