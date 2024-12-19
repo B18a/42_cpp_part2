@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   RobotomyRequestForm.cpp                          :+:      :+:    :+:   */
+/*   PresidentialPardonForm.cpp                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ajehle <ajehle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 
-#include "../include/RobotomyRequestForm.hpp"
+#include "../include/PresidentialPardonForm.hpp"
 
 /****************************************/
 /*			Text Colors 				*/
@@ -32,11 +32,11 @@
 /*		Constructor/Destructor			*/
 /****************************************/
 
-RobotomyRequestForm::RobotomyRequestForm(std::string target) : AForm("RobotomyRequestForm_" + target, DEFAULT_ROBO_SIGN, DEFAULT_ROBO_EXEC), _target(target){}
-RobotomyRequestForm::~RobotomyRequestForm(){}
-RobotomyRequestForm::RobotomyRequestForm(const RobotomyRequestForm& other): AForm(other), _target(other._target){}
+PresidentialPardonForm::PresidentialPardonForm(std::string target) : AForm("PresidentialPardonForm_" + target, DEFAULT_PRESIDENT_SIGN, DEFAULT_PRESIDENT_EXEC), _target(target){}
+PresidentialPardonForm::~PresidentialPardonForm(){}
+PresidentialPardonForm::PresidentialPardonForm(const PresidentialPardonForm& other): AForm(other), _target(other._target){}
 
-RobotomyRequestForm& RobotomyRequestForm::operator=(const RobotomyRequestForm& other)
+PresidentialPardonForm& PresidentialPardonForm::operator=(const PresidentialPardonForm& other)
 {
 	if(this != &other)
 	{
@@ -50,7 +50,7 @@ RobotomyRequestForm& RobotomyRequestForm::operator=(const RobotomyRequestForm& o
 /*			Getter & Setter				*/
 /****************************************/
 
-std::string RobotomyRequestForm::getTarget() const
+std::string PresidentialPardonForm::getTarget() const
 {
 	return _target;
 }
@@ -59,35 +59,18 @@ std::string RobotomyRequestForm::getTarget() const
 /*			Member Functions			*/
 /****************************************/
 
-void RobotomyRequestForm::performExecution(Bureaucrat const & executor) const
+void PresidentialPardonForm::performExecution(Bureaucrat const & executor) const
 {
-	int gamble;
-    std::srand(std::time(0));
-	gamble = std::rand() % 2;
 
-	if(gamble)
-	{
-		std::cout 
-		<< RESET << "BEEP BE BE BEEEP "
-		<< MAGENTA << getTarget()
-		<< RESET << " has been robotomized successfully 50% of the time"
-		<< RESET << std::endl;
-	}
-	else
-		throw RobotomyFailException();
+	std::cout 
+	<< MAGENTA << getTarget()
+	<< RESET << " has been pardoned by Zaphod Beeblebrox."
+	<< RESET << std::endl;
+
 	
 	std::cout 
 	<< YELLOW << executor.getName() 
 	<< RESET << " executed "
 	<< MAGENTA << getName() 
 	<< RESET << std::endl;
-}
-
-/****************************************/
-/*				EXCEPTIONS				*/
-/****************************************/
-
-const char* RobotomyRequestForm::RobotomyFailException::what() const noexcept
-{
-	return "Robotomy Failed";
 }

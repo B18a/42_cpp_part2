@@ -6,7 +6,7 @@
 /*   By: ajehle <ajehle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 11:35:03 by ajehle            #+#    #+#             */
-/*   Updated: 2024/12/19 11:27:13 by ajehle           ###   ########.fr       */
+/*   Updated: 2024/12/19 11:33:23 by ajehle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,8 @@ void ShrubberyCreationForm::performExecution(Bureaucrat const & executor) const
 {
 	std::ofstream NewFile(getName());
 	NewFile.close();
-	// if(!NewFile.is_open())
-	// 	throw OpeningFileException();
+	if(!NewFile.is_open())
+		throw OpeningFileException();
 	NewFile 
 	<< "    *    " << "\n"
 	<< "   ***   " << "\n"
