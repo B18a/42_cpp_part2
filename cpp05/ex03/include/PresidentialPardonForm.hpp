@@ -12,6 +12,8 @@
 
 #include "AForm.hpp"
 
+#pragma once
+
 #define DEFAULT_PRESIDENT_SIGN 25
 #define DEFAULT_PRESIDENT_EXEC 5
 

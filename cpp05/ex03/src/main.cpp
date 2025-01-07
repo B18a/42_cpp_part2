@@ -35,13 +35,24 @@
 int	main(void)
 {
 	Intern someRandomIntern;
-	 /*
 	
-	Form* rrf;
+	AForm* rrf;
+
 	rrf = someRandomIntern.makeForm("robotomy request", "Bender");
-		
-	 */
-	someRandomIntern.makeForm("PresidentialPardonForm", "Bender");
+	if(rrf)
+		std::cout << rrf->getName() << std::endl;	
+	
+	rrf= someRandomIntern.makeForm("PresidentialPardonForm", "Bender");
+	if(rrf)
+		std::cout << rrf->getName() << std::endl;	
+	
+	rrf= someRandomIntern.makeForm("RobotomyRequestForm", "Bender");
+	if(rrf)
+		std::cout << rrf->getName() << std::endl;	
+	
+	rrf= someRandomIntern.makeForm("ShrubberyCreationForm", "Bender");
+	if(rrf)
+		std::cout << rrf->getName() << std::endl;	
 
 	return (0);
 }

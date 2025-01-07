@@ -12,6 +12,8 @@
 
 #include "AForm.hpp"
 
+#pragma once
+
 #define DEFAULT_ROBO_SIGN 72
 #define DEFAULT_ROBO_EXEC 45
 

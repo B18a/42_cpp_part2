@@ -12,6 +12,8 @@
 
 #include "AForm.hpp"
 
+#pragma once
+
 #define DEFAULT_SHRUBBERY_SIGN 145
 #define DEFAULT_SHRUBBERY_EXEC 137
 
