@@ -62,7 +62,7 @@ std::string ShrubberyCreationForm::getTarget() const
 void ShrubberyCreationForm::performExecution(Bureaucrat const & executor) const
 {
 	std::ofstream NewFile(getName());
-	NewFile.close();
+	//NewFile.close();
 	if(!NewFile.is_open())
 		throw OpeningFileException();
 	NewFile 

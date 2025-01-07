@@ -28,6 +28,7 @@ int	main(void)
 
         std::cout << f1;
         std::cout << b1;
+        std::cout << b2;
 
 
         b2.signForm(f1);

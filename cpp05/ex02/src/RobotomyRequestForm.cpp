@@ -62,7 +62,8 @@ std::string RobotomyRequestForm::getTarget() const
 void RobotomyRequestForm::performExecution(Bureaucrat const & executor) const
 {
 	int gamble;
-    std::srand(std::time(0));
+    std::srand(time(0));
+    //std::srand(std::time(0));
 	gamble = std::rand() % 2;
 
 	if(gamble)

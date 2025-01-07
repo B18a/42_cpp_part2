@@ -35,6 +35,7 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp | $(OBJ_DIR)
 clean :
 	$(REMOVE) $(OBJECTS)
 	$(REMOVE) $(OBJ_DIR)
+	$(REMOVE) Christmas_shrubbery
 
 fclean : clean
 	$(REMOVE) $(NAME)

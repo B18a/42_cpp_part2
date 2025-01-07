@@ -33,21 +33,35 @@
 
 int	main(void)
 {
-	Bureaucrat b1("b1", 150);
-	Bureaucrat b2("b2", 40);
-	Bureaucrat b3("b2", 2);
+	Bureaucrat bureaucrat1("bureaucrat1", 150);
+	Bureaucrat bureaucrat2("bureaucrat2", 40);
+	Bureaucrat bureaucrat3("bureaucrat3", 2);
 	ShrubberyCreationForm f1("Christmas");
 	RobotomyRequestForm f2("Transformation");
 	PresidentialPardonForm f3("Marvin");
 	
-	std::cout << b1;
-	std::cout << b2;
+	std::cout << bureaucrat1;
+	std::cout << bureaucrat2;
+	std::cout << bureaucrat3;
 	std::cout << f1;
 	std::cout << f2;
 	std::cout << f3;
 
-	b3.signForm(f3);
-	b3.executeForm(f3);
+	bureaucrat3.signForm(f1);
+	bureaucrat3.signForm(f2);
+	bureaucrat3.signForm(f3);
+
+	
+	bureaucrat1.executeForm(f1);
+	bureaucrat3.executeForm(f1);
+
+	bureaucrat1.executeForm(f2);
+	bureaucrat3.executeForm(f2);
+
+	bureaucrat1.executeForm(f3);
+	bureaucrat3.executeForm(f3);
+
+
 	return (0);
 }
 
