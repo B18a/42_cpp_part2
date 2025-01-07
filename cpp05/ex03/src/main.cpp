@@ -14,6 +14,7 @@
 #include"../include/ShrubberyCreationForm.hpp"
 #include"../include/RobotomyRequestForm.hpp"
 #include"../include/PresidentialPardonForm.hpp"
+#include"../include/Intern.hpp"
 
 /****************************************/
 /*			Text Colors 				*/
@@ -33,34 +34,14 @@
 
 int	main(void)
 {
-	Bureaucrat bureaucrat1("bureaucrat1", 150);
-	Bureaucrat bureaucrat2("bureaucrat2", 40);
-	Bureaucrat bureaucrat3("bureaucrat3", 2);
-	ShrubberyCreationForm f1("Christmas");
-	RobotomyRequestForm f2("Transformation");
-	PresidentialPardonForm f3("Marvin");
+	Intern someRandomIntern;
+	 /*
 	
-	std::cout << bureaucrat1;
-	std::cout << bureaucrat2;
-	std::cout << bureaucrat3;
-	std::cout << f1;
-	std::cout << f2;
-	std::cout << f3;
-
-	bureaucrat3.signForm(f1);
-	bureaucrat3.signForm(f2);
-	bureaucrat3.signForm(f3);
-
-	
-	bureaucrat1.executeForm(f1);
-	bureaucrat3.executeForm(f1);
-
-	bureaucrat1.executeForm(f2);
-	bureaucrat3.executeForm(f2);
-
-	bureaucrat1.executeForm(f3);
-	bureaucrat3.executeForm(f3);
-
+	Form* rrf;
+	rrf = someRandomIntern.makeForm("robotomy request", "Bender");
+		
+	 */
+	someRandomIntern.makeForm("PresidentialPardonForm", "Bender");
 
 	return (0);
 }
