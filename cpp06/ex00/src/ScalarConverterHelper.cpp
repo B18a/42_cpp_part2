@@ -4,6 +4,25 @@
 
 #include "../include/ScalarConverter.hpp"
 
+
+/****************************************/
+/*			Compare Functions			*/
+/****************************************/
+
+bool ScalarConverter::isFloat(const std::string& value)
+{
+	if(value.find('f') != std::string::npos)
+		return true;
+	return false;
+}
+
+bool ScalarConverter::isDouble(const std::string& value)
+{
+	if(value.find('f') != std::string::npos)
+		return true;
+	return false;
+}
+
 bool ScalarConverter::isInt(const std::string& value)
 {
 	int i = 0;
@@ -18,47 +37,20 @@ bool ScalarConverter::isInt(const std::string& value)
 	return true;
 }
 
-float ScalarConverter::getInt(const std::string& value)
-{
-	return (std::stoi(value));
-}
 
-
-bool ScalarConverter::isFloat(const std::string& value)
+bool ScalarConverter::isNegativeInfinite(const std::string& value)
 {
-	if(value.find('f') != std::string::npos)
+	if(value == "-inff" || value == "-inf")
 		return true;
 	return false;
 }
 
-float ScalarConverter::getFloat(const std::string& value)
+bool ScalarConverter::isPositiveInfinite(const std::string& value)
 {
-	return (std::stof(value));
-}
-
-
-bool ScalarConverter::isDouble(const std::string& value)
-{
-	if(value.find('f') != std::string::npos)
+	if(value == "+inff" || value == "+inf")
 		return true;
 	return false;
 }
-
-float ScalarConverter::getDouble(const std::string& value)
-{
-	return (std::stod(value));
-}
-
-
-
-
-bool ScalarConverter::isInfinite(const std::string& value)
-{
-	if(value == "-inff" || value == "-inf" || value == "+inff" || value == "+inf")
-		return true;
-	return false;
-}
-
 
 bool ScalarConverter::isUndefined(const std::string& value)
 {
@@ -67,10 +59,30 @@ bool ScalarConverter::isUndefined(const std::string& value)
 	return false;
 }
 
+/****************************************/
+/*			Converter Functions			*/
+/****************************************/
 
+float ScalarConverter::ConvertToFloat(const std::string& value)
+{
+	return (std::stof(value));
+}
 
+float ScalarConverter::ConvertToDouble(const std::string& value)
+{
+	return (std::stod(value));
+}
 
-void ScalarConverter::printFloat(const float& value)
+float ScalarConverter::ConvertToInt(const std::string& value)
+{
+	return (std::stoi(value));
+}
+
+/****************************************/
+/*			Print Functions				*/
+/****************************************/
+
+void ScalarConverter::printAsFloat(const float& value)
 {
 	
 }

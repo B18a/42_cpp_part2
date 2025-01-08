@@ -1,12 +1,4 @@
-#include<iostream>
 #include"../include/ScalarConverter.hpp"
-
-
-#include <iostream>
-#include <cstring>
-#include <cstdlib>
-#include "limits.h"
-
 
 int main(int argc, char** argv)
 {
@@ -14,7 +6,7 @@ int main(int argc, char** argv)
 	(void)argc;
 	std::cout << argv[1] << std::endl;
 
-	ScalarConverter::convert(argv[1]);
+	// ScalarConverter::convert(argv[1]);
 }
 
 

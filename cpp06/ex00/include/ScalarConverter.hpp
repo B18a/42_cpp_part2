@@ -2,6 +2,10 @@
 
 #include<iostream>
 
+#pragma once
+
+#ifndef SCALARCONVERTER_HPP
+#define SCALARCONVERTER_HPP
 
 class ScalarConverter
 {
@@ -17,22 +21,20 @@ class ScalarConverter
 		static double transform_value(const std::string& value_as_string);
 
 
+		static float ConvertToFloat(const std::string& value);
+		static float ConvertToDouble(const std::string& value);
+		static float ConvertToInt(const std::string& value);
+
 		static bool isFloat(const std::string& value);
-		static float getFloat(const std::string& value);
-
 		static bool isDouble(const std::string& value);
-		static float getDouble(const std::string& value);
-
 		static bool isInt(const std::string& value);
-		static float getInt(const std::string& value);
 
-		static bool isInfinite(const std::string& value);
-		// float getInt(const std::string& value);
-
+		static bool isNegativeInfinite(const std::string& value);
+		static bool isPositiveInfinite(const std::string& value);
 		static bool isUndefined(const std::string& value);
 
 
-		static void printFloat(const float& value);
+		static void printAsFloat(const float& value);
 
 
 
@@ -42,6 +44,8 @@ class ScalarConverter
 	
 };
 
+
+#endif
 
 
 
