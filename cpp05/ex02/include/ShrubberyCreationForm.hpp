@@ -12,6 +12,9 @@
 
 #include "AForm.hpp"
 
+#ifndef SHRUBBERYCREATIONFORM_HPP
+#define SHRUBBERYCREATIONFORM_HPP
+
 #define DEFAULT_SHRUBBERY_SIGN 145
 #define DEFAULT_SHRUBBERY_EXEC 137
 
@@ -40,3 +43,5 @@ class ShrubberyCreationForm : public AForm
 				const char *what() const noexcept override;
 		};
 };
+
+#endif

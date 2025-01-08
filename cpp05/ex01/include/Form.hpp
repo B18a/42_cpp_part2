@@ -17,6 +17,9 @@
 
 class Bureaucrat;
 
+#ifndef FORM_HPP
+#define  FORM_HPP
+
 class Form
 {
 	private:
@@ -57,6 +60,7 @@ class Form
 		};
 };
 
+#endif
 
 /****************************************/
 /*			Operator Overload			*/

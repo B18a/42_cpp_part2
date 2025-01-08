@@ -16,6 +16,9 @@
 #define HIGHEST_GRADE 1
 #define LOWEST_GRADE 150
 
+#ifndef BUREAUCRAT_HPP
+#define  BUREAUCRAT_HPP
+
 class Bureaucrat
 {
 	private:
@@ -55,6 +58,7 @@ class Bureaucrat
 		};
 };
 
+#endif
 
 /****************************************/
 /*			Operator Overload			*/

@@ -14,6 +14,9 @@
 
 #pragma once
 
+#ifndef PRESIDENTIALPARDONFORM_HPP
+#define PRESIDENTIALPARDONFORM_HPP
+
 #define DEFAULT_PRESIDENT_SIGN 25
 #define DEFAULT_PRESIDENT_EXEC 5
 
@@ -34,3 +37,5 @@ class PresidentialPardonForm : public AForm
 
 		std::string getTarget() const;
 };
+
+#endif

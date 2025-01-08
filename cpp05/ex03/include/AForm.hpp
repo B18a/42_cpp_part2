@@ -20,6 +20,9 @@
 
 class Bureaucrat;
 
+#ifndef AFORM_HPP
+#define  AFORM_HPP
+
 class AForm
 {
 	private:
@@ -76,6 +79,8 @@ class AForm
 				const char *what() const noexcept override;
 		};
 };
+
+#endif
 
 /****************************************/
 /*			Operator Overload			*/

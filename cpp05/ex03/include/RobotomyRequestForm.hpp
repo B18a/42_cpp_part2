@@ -14,6 +14,9 @@
 
 #pragma once
 
+#ifndef ROBOTOMYREQUESTFORM_HPP
+#define ROBOTOMYREQUESTFORM_HPP
+
 #define DEFAULT_ROBO_SIGN 72
 #define DEFAULT_ROBO_EXEC 45
 
@@ -42,3 +45,5 @@ class RobotomyRequestForm : public AForm
 				const char *what() const noexcept override;
 		};
 };
+
+#endif

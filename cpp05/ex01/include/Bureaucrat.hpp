@@ -18,6 +18,9 @@
 
 class Form;
 
+#ifndef BUREAUCRAT_HPP
+#define  BUREAUCRAT_HPP
+
 class Bureaucrat
 {
 	private:
@@ -63,6 +66,7 @@ class Bureaucrat
 		};
 };
 
+#endif
 
 /****************************************/
 /*			Operator Overload			*/
