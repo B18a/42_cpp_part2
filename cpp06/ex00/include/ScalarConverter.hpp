@@ -1,6 +1,11 @@
 
 
 #include<iostream>
+#include<cmath>
+#include<iomanip>
+// #include<limits.h>
+
+#include"Color.hpp"
 
 #pragma once
 
@@ -21,20 +26,26 @@ class ScalarConverter
 		static double transform_value(const std::string& value_as_string);
 
 
-		static float ConvertToFloat(const std::string& value);
-		static float ConvertToDouble(const std::string& value);
-		static float ConvertToInt(const std::string& value);
+		static double ConvertToChar(const std::string& value);
+		static double ConvertToFloat(const std::string& value);
+		static double ConvertToDouble(const std::string& value);
+		static double ConvertToInt(const std::string& value);
 
+		static bool isChar(const std::string& value);
 		static bool isFloat(const std::string& value);
 		static bool isDouble(const std::string& value);
 		static bool isInt(const std::string& value);
 
 		static bool isNegativeInfinite(const std::string& value);
 		static bool isPositiveInfinite(const std::string& value);
-		static bool isUndefined(const std::string& value);
+		static bool isNotANumber(const std::string& value);
+		static bool isNotANumber(const double& value);
 
-
-		static void printAsFloat(const float& value);
+		static void printAsFloat(const double& value);
+		// TO DO
+		// static void printAsInt(const double& value);
+		// static void printAsDouble(const double& value);
+		// static void printAsChar(const double& value);
 
 
 

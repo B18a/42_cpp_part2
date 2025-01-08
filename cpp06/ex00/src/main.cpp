@@ -4,9 +4,9 @@ int main(int argc, char** argv)
 {
 
 	(void)argc;
-	std::cout << argv[1] << std::endl;
-
-	// ScalarConverter::convert(argv[1]);
+	// std::cout << argv[1] << std::endl;
+	if(argc == 2)
+		ScalarConverter::convert(argv[1]);
 }
 
 

@@ -25,12 +25,14 @@ ScalarConverter& ScalarConverter::operator=(const ScalarConverter& other)
 
 double ScalarConverter::transform_value(const std::string& value_as_string)
 {
-	if(isUndefined(value_as_string))
+	if(isNotANumber(value_as_string))
 		return 0; // TO DO
 	else if(isPositiveInfinite(value_as_string))
 		return 0; // TO DO
 	else if(isNegativeInfinite(value_as_string))
 		return 0; // TO DO
+	else if(isChar(value_as_string))
+		return ConvertToChar(value_as_string);
 	else if(isFloat(value_as_string))
 		return ConvertToFloat(value_as_string);
 	else if(isDouble(value_as_string))
@@ -52,7 +54,7 @@ void ScalarConverter::convert(const std::string& value_as_string)
 	}
 	catch (const std::exception& e)
 	{
-		std::cerr << "Error: " << e.what() << std::endl;
+		std::cerr << RED << "Error: " << e.what() << RESET << std::endl;
 		return ;
 	}
 	printAsFloat(value);
