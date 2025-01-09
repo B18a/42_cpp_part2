@@ -8,7 +8,7 @@
 /*			Compare Functions			*/
 /****************************************/
 /****************************************/
-/*			 isNegativeInfinite			*/
+/*			 isInfinite			*/
 /****************************************/
 bool ScalarConverter::isNegativeInfinite(const std::string& value)
 {
@@ -17,16 +17,6 @@ bool ScalarConverter::isNegativeInfinite(const std::string& value)
 	return false;
 }
 
-bool ScalarConverter::isNegativeInfinite(const double& value)
-{
-	if(std::isinf(value))
-		return true;
-	return false;
-}
-
-/****************************************/
-/*			 isPositiveInfinite			*/
-/****************************************/
 bool ScalarConverter::isPositiveInfinite(const std::string& value)
 {
 	if(value == "+inff" || value == "+inf")
@@ -34,7 +24,7 @@ bool ScalarConverter::isPositiveInfinite(const std::string& value)
 	return false;
 }
 
-bool ScalarConverter::isPositiveInfinite(const double& value)
+bool ScalarConverter::isInfinite(const double& value)
 {
 	if(std::isinf(value))
 		return true;
@@ -56,4 +46,14 @@ bool ScalarConverter::isNotANumber(const double& value)
 	if(std::isnan(value))
 		return true;
 	return false;
+}
+
+
+/****************************************/
+/*			 printErrorMessage			*/
+/****************************************/
+
+void ScalarConverter::printErrorMessage(const std::string message)
+{
+	std::cout << RED << message << std::endl;
 }

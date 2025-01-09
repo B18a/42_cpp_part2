@@ -79,7 +79,7 @@ echo "char: impossible\nint: -42\nfloat: -42.0f\ndouble: -42.0\n"
 
 echo "Testing with value [+inf]"
 printf "\033[0;35mResult:\n\033[0m"
-./scalarconverter "-inf"
+./scalarconverter "+inf"
 printf "\033[0;35mSolution:\n\033[0m"
 echo "char: impossible\nint: impossible\nfloat: +inff\ndouble: +inf\n"
 
@@ -87,7 +87,7 @@ echo "Testing with value [-inf]"
 printf "\033[0;35mResult:\n\033[0m"
 ./scalarconverter "-inf"
 printf "\033[0;35mSolution:\n\033[0m"
-echo "-inf", "char: impossible\nint: impossible\nfloat: -inff\ndouble: -inf\n"
+echo "char: impossible\nint: impossible\nfloat: -inff\ndouble: -inf\n"
 
 # /* Test cases for impossible conversions */
 

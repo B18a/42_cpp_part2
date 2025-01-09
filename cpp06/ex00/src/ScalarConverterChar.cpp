@@ -35,15 +35,9 @@ void ScalarConverter::printAsChar(const double& value)
 				<< RESET;
 
 	if(std::isnan(value) || value < 0 || value > 127)
-		std::cout 	<< RED
-					<< "impossible"
-					<< RESET
-					<< std::endl;
+		printErrorMessage("impossible");
 	else if(!std::isprint(static_cast<int>(value)))
-		std::cout 	<< RED
-					<< "not displayable"
-					<< RESET
-					<< std::endl;
+		printErrorMessage("not displayable");
 	else 
 		std::cout 	<<"'"
 					<< static_cast<char>(value) 

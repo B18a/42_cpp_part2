@@ -34,17 +34,12 @@ void ScalarConverter::printAsFloat(const double& value)
 				<< "float: "
 				<< RESET;		
 	if(isNotANumber(value))
-		std::cout 	<< RED
-					<< "nanf"
-					<< std::endl;
-	else if(isNegativeInfinite(value))
-		std::cout 	<< RED
-					<< "-inff"
-					<< std::endl;
-	else if(isPositiveInfinite(value))
-		std::cout 	<< RED
-					<< "+inff"
-					<< std::endl;
+		printErrorMessage("nanf");
+	else if(isInfinite(value))
+		if(value < 0)
+			printErrorMessage("-inff");
+		else
+			printErrorMessage("+inff");
 	else 
 		std::cout 	<< std::fixed << std::setprecision( 1 )
 					<< static_cast<float>(value) 

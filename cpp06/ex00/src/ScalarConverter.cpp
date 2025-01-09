@@ -28,9 +28,9 @@ double ScalarConverter::transform_value(const std::string& value_as_string)
 	if(isNotANumber(value_as_string))
 		return std::numeric_limits<double>::quiet_NaN();
 	else if(isNegativeInfinite(value_as_string))
-		return 0; // TO DO
+		return -std::numeric_limits<double>::infinity();
 	else if(isPositiveInfinite(value_as_string))
-		return 0; // TO DO
+		return std::numeric_limits<double>::infinity();
 	else if(isChar(value_as_string))
 		return ConvertToChar(value_as_string);
 	else if(isFloat(value_as_string))
@@ -55,9 +55,12 @@ void ScalarConverter::convert(const std::string& value_as_string)
 	catch (const std::exception& e)
 	{
 		std::cerr << RED << "Error: " << e.what() << RESET << std::endl;
+		std::cout << GREEN << "char: " << RED << "impossible" << RESET << std::endl;
+		std::cout << GREEN << "int: " << RED << "impossible" << RESET << std::endl;
+		std::cout << GREEN << "float: " << RED << "impossible" << RESET << std::endl;
+		std::cout << GREEN << "double: " << RED << "impossible" << RESET << std::endl;
 		return ;
 	}
-	// TO DO
 	printAsChar(value);
 	printAsInt(value);
 	printAsFloat(value);

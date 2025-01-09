@@ -34,20 +34,12 @@ void ScalarConverter::printAsDouble(const double& value)
 				<< "double: "
 				<< RESET;
 	if(isNotANumber(value))
-		std::cout 	<< RED
-					<< "nan"
-					<< RESET
-					<< std::endl;
-	else if(isNegativeInfinite(value))
-		std::cout 	<< RED
-					<< "-inf"
-					<< RESET
-					<< std::endl;
-	else if(isPositiveInfinite(value))
-		std::cout 	<< RED
-					<< "+inf"
-					<< RESET
-					<< std::endl;
+		printErrorMessage("nan");
+	else if(isInfinite(value))
+		if(value < 0)
+			printErrorMessage("-inf");
+		else
+			printErrorMessage("+inf");
 	else 
 		std::cout 	<< std::fixed << std::setprecision( 1 )
 					<< static_cast<double>(value) 

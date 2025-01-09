@@ -22,8 +22,6 @@ class ScalarConverter
 
 		ScalarConverter& operator=(const ScalarConverter& other);
 
-
-
 		static double transform_value(const std::string& value_as_string);
 
 
@@ -38,10 +36,8 @@ class ScalarConverter
 		static bool isInt(const std::string& value);
 
 		static bool isNegativeInfinite(const std::string& value);
-		static bool isNegativeInfinite(const double& value);
-
 		static bool isPositiveInfinite(const std::string& value);
-		static bool isPositiveInfinite(const double& value);
+		static bool isInfinite(const double& value);
 
 		static bool isNotANumber(const std::string& value);
 		static bool isNotANumber(const double& value);
@@ -52,6 +48,7 @@ class ScalarConverter
 		static void printAsFloat(const double& value);
 		static void printAsDouble(const double& value);
 
+		static void printErrorMessage(const std::string message);
 
 
 
