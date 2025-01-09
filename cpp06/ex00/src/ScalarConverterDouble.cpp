@@ -36,14 +36,17 @@ void ScalarConverter::printAsDouble(const double& value)
 	if(isNotANumber(value))
 		std::cout 	<< RED
 					<< "nan"
+					<< RESET
 					<< std::endl;
 	else if(isNegativeInfinite(value))
 		std::cout 	<< RED
 					<< "-inf"
+					<< RESET
 					<< std::endl;
 	else if(isPositiveInfinite(value))
 		std::cout 	<< RED
 					<< "+inf"
+					<< RESET
 					<< std::endl;
 	else 
 		std::cout 	<< std::fixed << std::setprecision( 1 )

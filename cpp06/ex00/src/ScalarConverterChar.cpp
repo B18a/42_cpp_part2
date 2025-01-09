@@ -45,7 +45,9 @@ void ScalarConverter::printAsChar(const double& value)
 					<< RESET
 					<< std::endl;
 	else 
-		std::cout 	<< static_cast<char>(value) 
+		std::cout 	<<"'"
+					<< static_cast<char>(value) 
+					<<"'"
 					<< std::endl;	
 }
 

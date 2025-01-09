@@ -56,7 +56,7 @@ void ScalarConverter::printAsInt(const double& value)
 				<< "int: "
 				<< RESET;
 
-	if(std::isnan(value) && isValidInt(value))
+	if(std::isnan(value) || !isValidInt(value))
 		std::cout 	<< RED
 					<< "impossible"
 					<< RESET

@@ -26,7 +26,7 @@ ScalarConverter& ScalarConverter::operator=(const ScalarConverter& other)
 double ScalarConverter::transform_value(const std::string& value_as_string)
 {
 	if(isNotANumber(value_as_string))
-		return 0; // TO DO
+		return std::numeric_limits<double>::quiet_NaN();
 	else if(isNegativeInfinite(value_as_string))
 		return 0; // TO DO
 	else if(isPositiveInfinite(value_as_string))
