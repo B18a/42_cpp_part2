@@ -3,7 +3,8 @@
 #include<iostream>
 #include<cmath>
 #include<iomanip>
-// #include<limits.h>
+#include<cctype>
+#include<limits>
 
 #include"Color.hpp"
 
@@ -37,15 +38,19 @@ class ScalarConverter
 		static bool isInt(const std::string& value);
 
 		static bool isNegativeInfinite(const std::string& value);
+		static bool isNegativeInfinite(const double& value);
+
 		static bool isPositiveInfinite(const std::string& value);
+		static bool isPositiveInfinite(const double& value);
+
 		static bool isNotANumber(const std::string& value);
 		static bool isNotANumber(const double& value);
 
-		static void printAsFloat(const double& value);
 		// TO DO
-		// static void printAsInt(const double& value);
-		// static void printAsDouble(const double& value);
-		// static void printAsChar(const double& value);
+		static void printAsChar(const double& value);
+		static void printAsInt(const double& value);
+		static void printAsFloat(const double& value);
+		static void printAsDouble(const double& value);
 
 
 

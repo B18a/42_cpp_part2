@@ -27,9 +27,9 @@ double ScalarConverter::transform_value(const std::string& value_as_string)
 {
 	if(isNotANumber(value_as_string))
 		return 0; // TO DO
-	else if(isPositiveInfinite(value_as_string))
-		return 0; // TO DO
 	else if(isNegativeInfinite(value_as_string))
+		return 0; // TO DO
+	else if(isPositiveInfinite(value_as_string))
 		return 0; // TO DO
 	else if(isChar(value_as_string))
 		return ConvertToChar(value_as_string);
@@ -57,11 +57,11 @@ void ScalarConverter::convert(const std::string& value_as_string)
 		std::cerr << RED << "Error: " << e.what() << RESET << std::endl;
 		return ;
 	}
-	printAsFloat(value);
 	// TO DO
-	// printAsInt(value);
-	// printAsDouble(value);
-	// printAsChar(value);
+	printAsChar(value);
+	printAsInt(value);
+	printAsFloat(value);
+	printAsDouble(value);
 }
 
 

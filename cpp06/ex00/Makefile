@@ -1,5 +1,5 @@
 CXX			= c++
-CXXFLAGS	= -Wall -Wextra -Werror -std=c++17
+# CXXFLAGS	= -Wall -Wextra -Werror -std=c++17
 
 NAME		= scalarconverter
 OBJ_DIR		= obj
@@ -10,7 +10,11 @@ REMOVE		= rm -rf
 # INTERNAL FUNCTIONS
 FUNCTIONS	=	$(SRC_DIR)/main.cpp \
 				$(SRC_DIR)/ScalarConverter.cpp \
-				$(SRC_DIR)/ScalarConverterHelper.cpp
+				$(SRC_DIR)/ScalarConverterChar.cpp \
+				$(SRC_DIR)/ScalarConverterDouble.cpp \
+				$(SRC_DIR)/ScalarConverterFloat.cpp \
+				$(SRC_DIR)/ScalarConverterHelper.cpp \
+				$(SRC_DIR)/ScalarConverterInt.cpp \
 
 # INTERNAL OBJECT
 OBJECTS		= $(addprefix $(OBJ_DIR)/, $(notdir $(FUNCTIONS:.cpp=.o)))
