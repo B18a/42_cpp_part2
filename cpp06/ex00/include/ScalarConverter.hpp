@@ -49,6 +49,7 @@ class ScalarConverter
 		static void printAsDouble(const double& value);
 
 		static void printErrorMessage(const std::string message);
+		static void printLiteralName(const std::string name);
 
 
 

@@ -16,7 +16,7 @@ bool ScalarConverter::isDouble(const std::string& value)
 }
 
 /****************************************/
-/*			Converter Functions			*/
+/*			Converter Function			*/
 /****************************************/
 
 double ScalarConverter::ConvertToDouble(const std::string& value)
@@ -25,14 +25,12 @@ double ScalarConverter::ConvertToDouble(const std::string& value)
 }
 
 /****************************************/
-/*			Print Functions				*/
+/*			Print Function					*/
 /****************************************/
 
 void ScalarConverter::printAsDouble(const double& value)
 {
-	std::cout 	<< GREEN
-				<< "double: "
-				<< RESET;
+	printLiteralName("double");
 	if(isNotANumber(value))
 		printErrorMessage("nan");
 	else if(isInfinite(value))

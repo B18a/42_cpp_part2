@@ -16,7 +16,7 @@ bool ScalarConverter::isFloat(const std::string& value)
 }
 
 /****************************************/
-/*			Converter Functions			*/
+/*			Converter Function			*/
 /****************************************/
 
 double ScalarConverter::ConvertToFloat(const std::string& value)
@@ -25,14 +25,12 @@ double ScalarConverter::ConvertToFloat(const std::string& value)
 }
 
 /****************************************/
-/*			Print Functions				*/
+/*			Print Function					*/
 /****************************************/
 
 void ScalarConverter::printAsFloat(const double& value)
 {
-	std::cout 	<< GREEN
-				<< "float: "
-				<< RESET;		
+	printLiteralName("float");
 	if(isNotANumber(value))
 		printErrorMessage("nanf");
 	else if(isInfinite(value))

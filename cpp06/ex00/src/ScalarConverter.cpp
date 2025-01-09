@@ -55,10 +55,14 @@ void ScalarConverter::convert(const std::string& value_as_string)
 	catch (const std::exception& e)
 	{
 		std::cerr << RED << "Error: " << e.what() << RESET << std::endl;
-		std::cout << GREEN << "char: " << RED << "impossible" << RESET << std::endl;
-		std::cout << GREEN << "int: " << RED << "impossible" << RESET << std::endl;
-		std::cout << GREEN << "float: " << RED << "impossible" << RESET << std::endl;
-		std::cout << GREEN << "double: " << RED << "impossible" << RESET << std::endl;
+		printLiteralName("char");
+		printErrorMessage("impossible");
+		printLiteralName("int");
+		printErrorMessage("impossible");
+		printLiteralName("float");
+		printErrorMessage("impossible");
+		printLiteralName("double");
+		printErrorMessage("impossible");
 		return ;
 	}
 	printAsChar(value);

@@ -57,3 +57,12 @@ void ScalarConverter::printErrorMessage(const std::string message)
 {
 	std::cout << RED << message << std::endl;
 }
+
+/****************************************/
+/*			 printLiteralName			*/
+/****************************************/
+
+void ScalarConverter::printLiteralName(const std::string name)
+{
+	std::cout << GREEN << name << ":	" << RESET;
+}

@@ -31,30 +31,22 @@ bool ScalarConverter::isInt(const std::string& value)
 	return true;
 }
 
-
-
 /****************************************/
-/*			Converter Functions			*/
+/*			Converter Function			*/
 /****************************************/
-
 
 double ScalarConverter::ConvertToInt(const std::string& value)
 {
 	return (std::stoi(value));
 }
 
-
-
 /****************************************/
-/*			Print Functions				*/
+/*			Print Function					*/
 /****************************************/
-
 
 void ScalarConverter::printAsInt(const double& value)
 {
-	std::cout 	<< GREEN
-				<< "int: "
-				<< RESET;
+	printLiteralName("int");
 	if(std::isnan(value) || !isValidInt(value))
 		printErrorMessage("impossible");
 	else 
