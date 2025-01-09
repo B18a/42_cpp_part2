@@ -15,8 +15,6 @@ bool ScalarConverter::isChar(const std::string& value)
 	return false;
 }
 
-
-
 /****************************************/
 /*			Converter Functions			*/
 /****************************************/
@@ -26,21 +24,17 @@ double ScalarConverter::ConvertToChar(const std::string& value)
 	return (static_cast<double>(value[1]));
 }
 
-
-
 /****************************************/
 /*			Print Functions				*/
 /****************************************/
 
-
 void ScalarConverter::printAsChar(const double& value)
 {
-
 	std::cout 	<< GREEN
 				<< "char: "
 				<< RESET;
 
-	if(std::isnan(value) || value < 0 || value > 32)
+	if(std::isnan(value) || value < 0 || value > 127)
 		std::cout 	<< RED
 					<< "impossible"
 					<< RESET
@@ -53,7 +47,5 @@ void ScalarConverter::printAsChar(const double& value)
 	else 
 		std::cout 	<< static_cast<char>(value) 
 					<< std::endl;	
-
-
 }
 
