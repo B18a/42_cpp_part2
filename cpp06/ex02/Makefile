@@ -9,7 +9,7 @@ REMOVE		= rm -rf
 
 # INTERNAL FUNCTIONS
 FUNCTIONS	=	$(SRC_DIR)/main.cpp \
-				$(SRC_DIR)/Base.cpp \
+				$(SRC_DIR)/Classes.cpp \
 
 
 # INTERNAL OBJECT
