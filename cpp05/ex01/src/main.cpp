@@ -13,7 +13,7 @@
 #include <iostream>
 #include"../include/Form.hpp"
 
-void    printErrorMessage(const std::exception& e)
+void    printErrorMessageMessage(const std::exception& e)
 {
         std::cerr << "Error: " << e.what() << std::endl;    
 }
@@ -35,7 +35,7 @@ int	main(void)
         b1.signForm(f1);
         b1.signForm(f1);
     }
-    catch (const std::exception& e)  {printErrorMessage(e);}
+    catch (const std::exception& e)  {printErrorMessageMessage(e);}
 
 	return (0);
 }
