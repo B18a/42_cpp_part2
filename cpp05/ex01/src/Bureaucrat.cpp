@@ -6,7 +6,7 @@
 /*   By: ajehle <ajehle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 15:13:08 by ajehle            #+#    #+#             */
-/*   Updated: 2024/12/19 10:04:14 by ajehle           ###   ########.fr       */
+/*   Updated: 2025/01/17 09:27:40 by ajehle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ std::ostream& operator<<(std::ostream& output, const Bureaucrat& other)
 /****************************************/
 /*				EX01					*/
 /****************************************/
-void		Bureaucrat::signForm(AForm& form)
+void		Bureaucrat::signForm(Form& form)
 {
 	try
 	{
