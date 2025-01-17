@@ -1,4 +1,14 @@
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ScalarConverter.hpp                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ajehle <ajehle@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/17 09:39:00 by ajehle            #+#    #+#             */
+/*   Updated: 2025/01/17 09:39:02 by ajehle           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include<iostream>
 #include<cmath>
@@ -24,7 +34,6 @@ class ScalarConverter
 
 		static double transform_value(const std::string& value_as_string);
 
-
 		static double ConvertToChar(const std::string& value);
 		static double ConvertToFloat(const std::string& value);
 		static double ConvertToDouble(const std::string& value);
@@ -42,7 +51,6 @@ class ScalarConverter
 		static bool isNotANumber(const std::string& value);
 		static bool isNotANumber(const double& value);
 
-		// TO DO
 		static void printAsChar(const double& value);
 		static void printAsInt(const double& value);
 		static void printAsFloat(const double& value);
@@ -51,21 +59,12 @@ class ScalarConverter
 		static void printErrorMessage(const std::string message);
 		static void printLiteralName(const std::string name);
 
-
-
 	public:
 		static void convert(const std::string& value_as_string);
 	
 };
 
-
 #endif
-
-
-
-
-
-
 
 /*
 

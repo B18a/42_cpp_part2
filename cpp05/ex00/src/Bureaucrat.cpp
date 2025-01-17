@@ -6,7 +6,7 @@
 /*   By: ajehle <ajehle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 15:13:08 by ajehle            #+#    #+#             */
-/*   Updated: 2025/01/17 08:17:35 by ajehle           ###   ########.fr       */
+/*   Updated: 2025/01/17 10:34:03 by ajehle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,9 @@
 /****************************************/
 /*				Constructor				*/
 /****************************************/
-Bureaucrat::Bureaucrat(const std::string& name, int grade) : _name(name), _grade(LOWEST_GRADE)
+Bureaucrat::Bureaucrat() : _name("noname"), _grade(LOWEST_GRADE){}
+
+Bureaucrat::Bureaucrat(const std::string& name, int grade) : _name(name)
 {
     if (grade < HIGHEST_GRADE)
         throw GradeTooHighException();
@@ -47,7 +49,7 @@ std::string	Bureaucrat::getName(void) const{return _name;}
 
 int			Bureaucrat::getGrade(void) const{return _grade;}
 
-void Bureaucrat::increment_Grade()
+void Bureaucrat::incrementGrade()
 {
 	if(this->_grade - 1 < HIGHEST_GRADE)
 		throw GradeTooHighException();
@@ -55,7 +57,7 @@ void Bureaucrat::increment_Grade()
 		this->_grade--;
 }
 
-void Bureaucrat::decrement_Grade()
+void Bureaucrat::decrementGrade()
 {
 	if(this->_grade + 1 > LOWEST_GRADE)
 		throw GradeTooLowException();

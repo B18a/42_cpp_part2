@@ -1,10 +1,19 @@
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   Classes.cpp                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ajehle <ajehle@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/17 09:41:29 by ajehle            #+#    #+#             */
+/*   Updated: 2025/01/17 09:42:28 by ajehle           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include"../include/Classes.hpp"
 #include<iostream>
 #include<cstdlib>
 #include<ctime>
-
 
 /****************************************/
 /*			Member Functions			*/
@@ -14,11 +23,11 @@ static int	getRandomNumber(int range)
 {
 	int 		randomNumber;
 	static bool	seeded = false;
-    if (!seeded) 
+	if (!seeded) 
 	{
-        std::srand(std::time(0));
-        seeded = true;
-    }
+		std::srand(std::time(0));
+		seeded = true;
+	}
 	randomNumber = std::rand() % range;
 	return randomNumber;
 }
@@ -42,7 +51,6 @@ Base*	Base::generate(void)
 // Dynamic Cast to get Type object
 // Use of Template to avoid redundancy of isClassFunction
 template <typename T>
-
 static bool isClass(Base* p)
 {
 	if(T* t = dynamic_cast<T*>(p))
@@ -63,7 +71,6 @@ static bool isClass(Base& p)
 		return false;
 	}
 }
-
 
 /****************************************/
 /*			Identifier Functions		*/
