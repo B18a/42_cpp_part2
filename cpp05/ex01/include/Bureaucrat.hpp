@@ -6,7 +6,7 @@
 /*   By: ajehle <ajehle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 15:12:56 by ajehle            #+#    #+#             */
-/*   Updated: 2024/12/18 10:41:14 by ajehle           ###   ########.fr       */
+/*   Updated: 2025/01/17 10:54:50 by ajehle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ class Bureaucrat
 		int		_grade;
 
 	public:
+		Bureaucrat();
 		Bureaucrat(const std::string& name, int grade);
 		Bureaucrat(const Bureaucrat& other);
 		~Bureaucrat();
@@ -36,8 +37,8 @@ class Bureaucrat
 
 		std::string getName(void) const;
 		int 		getGrade(void) const;
-		void 		increment_Grade();
-		void		decrement_Grade();
+		void 		incrementGrade();
+		void		decrementGrade();
 
 
 /****************************************/

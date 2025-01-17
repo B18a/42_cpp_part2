@@ -6,7 +6,7 @@
 /*   By: ajehle <ajehle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 15:13:03 by ajehle            #+#    #+#             */
-/*   Updated: 2024/12/19 11:44:42 by ajehle           ###   ########.fr       */
+/*   Updated: 2025/01/17 12:06:41 by ajehle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,11 @@ int	main(void)
 	std::cout << f2;
 	std::cout << f3;
 
-	bureaucrat3.signForm(f1);
 	bureaucrat3.signForm(f2);
 	bureaucrat3.signForm(f3);
 
-	
 	bureaucrat1.executeForm(f1);
+	bureaucrat3.signForm(f1);
 	bureaucrat3.executeForm(f1);
 
 	bureaucrat1.executeForm(f2);

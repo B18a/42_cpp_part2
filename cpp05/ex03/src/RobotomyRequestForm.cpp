@@ -31,6 +31,7 @@
 /****************************************/
 /*		Constructor/Destructor			*/
 /****************************************/
+RobotomyRequestForm::RobotomyRequestForm() : AForm(), _target("notarget"){}
 
 RobotomyRequestForm::RobotomyRequestForm(std::string target) : AForm("RobotomyRequestForm_" + target, DEFAULT_ROBO_SIGN, DEFAULT_ROBO_EXEC), _target(target){}
 RobotomyRequestForm::~RobotomyRequestForm(){}

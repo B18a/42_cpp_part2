@@ -6,7 +6,7 @@
 /*   By: ajehle <ajehle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 10:51:34 by ajehle            #+#    #+#             */
-/*   Updated: 2024/12/19 11:27:22 by ajehle           ###   ########.fr       */
+/*   Updated: 2025/01/17 12:40:15 by ajehle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ class ShrubberyCreationForm : public AForm
 {
 	private:
 		std::string _target;
+		ShrubberyCreationForm();
 		
 	protected:
 		void performExecution(Bureaucrat const & executor) const;

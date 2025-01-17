@@ -38,6 +38,7 @@ class AForm
 		virtual void 	performExecution(Bureaucrat const & executor) const = 0;
 
 	public:
+		AForm();
 		AForm(const std::string& name, int gradeSign, int gradeExecute);
 		AForm(const AForm& other);
 		virtual ~AForm(void);
@@ -54,7 +55,7 @@ class AForm
 /****************************************/
 /*				EX02					*/
 /****************************************/
-		void 			execute(Bureaucrat const & executor) const;
+		void 		execute(Bureaucrat const & executor) const;
 
 /****************************************/
 /*				EXCEPTIONS				*/

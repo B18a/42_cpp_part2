@@ -29,6 +29,7 @@ class Form
 		bool				_isSigned;
 
 	public:
+		Form();
 		Form(const std::string& name, int gradeSign, int gradeExecute);
 		Form(const Form& other);
 		~Form(void);

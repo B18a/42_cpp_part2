@@ -6,7 +6,7 @@
 /*   By: ajehle <ajehle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 11:35:03 by ajehle            #+#    #+#             */
-/*   Updated: 2024/12/19 11:33:23 by ajehle           ###   ########.fr       */
+/*   Updated: 2025/01/17 12:46:34 by ajehle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@
 /****************************************/
 /*		Constructor/Destructor			*/
 /****************************************/
+ShrubberyCreationForm::ShrubberyCreationForm() : AForm(), _target("notarget"){}
 
 ShrubberyCreationForm::ShrubberyCreationForm(std::string target) : AForm(target + "_shrubbery", DEFAULT_SHRUBBERY_SIGN, DEFAULT_SHRUBBERY_EXEC), _target(target){}
 ShrubberyCreationForm::~ShrubberyCreationForm(){}

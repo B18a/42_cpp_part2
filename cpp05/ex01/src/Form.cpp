@@ -30,6 +30,8 @@
 /****************************************/
 /*				Constructor				*/
 /****************************************/
+Form::Form() : _name("noname"), _gradeToSign(LOWEST_GRADE), _gradeToExecute(LOWEST_GRADE), _isSigned(false){}
+
 Form::Form(const std::string& name, int gradeSign, int gradeExecute) : 
 	_name(name), _gradeToSign(gradeSign), _gradeToExecute(gradeExecute), _isSigned(false)
 {

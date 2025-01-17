@@ -31,6 +31,7 @@
 /****************************************/
 /*		Constructor/Destructor			*/
 /****************************************/
+PresidentialPardonForm::PresidentialPardonForm() : AForm(), _target("notarget"){}
 
 PresidentialPardonForm::PresidentialPardonForm(std::string target) : AForm("PresidentialPardonForm_" + target, DEFAULT_PRESIDENT_SIGN, DEFAULT_PRESIDENT_EXEC), _target(target){}
 PresidentialPardonForm::~PresidentialPardonForm(){}
@@ -67,7 +68,6 @@ void PresidentialPardonForm::performExecution(Bureaucrat const & executor) const
 	<< RESET << " has been pardoned by Zaphod Beeblebrox."
 	<< RESET << std::endl;
 
-	
 	std::cout 
 	<< YELLOW << executor.getName() 
 	<< RESET << " executed "

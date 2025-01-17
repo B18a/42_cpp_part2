@@ -6,7 +6,7 @@
 /*   By: ajehle <ajehle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 10:45:05 by ajehle            #+#    #+#             */
-/*   Updated: 2024/12/19 11:27:18 by ajehle           ###   ########.fr       */
+/*   Updated: 2025/01/17 12:47:00 by ajehle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ class RobotomyRequestForm : public AForm
 {
 	private:
 		std::string _target;
+		RobotomyRequestForm();
 
 	protected:
 		void performExecution(Bureaucrat const & executor) const;
