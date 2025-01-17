@@ -6,7 +6,7 @@
 /*   By: ajehle <ajehle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 15:13:08 by ajehle            #+#    #+#             */
-/*   Updated: 2024/12/19 08:27:41 by ajehle           ###   ########.fr       */
+/*   Updated: 2024/12/19 10:04:14 by ajehle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ std::ostream& operator<<(std::ostream& output, const Bureaucrat& other)
 /****************************************/
 /*				EX01					*/
 /****************************************/
-void		Bureaucrat::signForm(Form& form)
+void		Bureaucrat::signForm(AForm& form)
 {
 	try
 	{
@@ -117,7 +117,8 @@ void		Bureaucrat::signForm(Form& form)
 	}
 	catch(const std::exception& e )
 	{
-		std::cout 
+		std::cerr 
+        << RED << "Error: " 
 		<< YELLOW << getName()
 		<< RESET << " couldn`t sign " 
 		<< MAGENTA << form.getName() 
@@ -132,5 +133,3 @@ void		Bureaucrat::signForm(Form& form)
 	<< MAGENTA << form.getName() 
 	<< RESET << std::endl;
 }
-
-
