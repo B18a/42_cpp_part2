@@ -13,44 +13,15 @@ class Array
 		T*				_element;
 		unsigned int	_len;
 	public:
-		Array(){};
-		Array(unsigned int n) : _element(new T[n]()), _len(n){}
-		Array(const Array& other) : _element(new T[other._len]()), _len(other._len)
-		{
-			for(unsigned int i = 0; i < _len; i++)
-			{
-				_element[i] = other._element[i];
-			}
-		}
-		Array& operator=(const Array& other)
-		{
-			if(this != other)
-			{
-				delete[] _element;
-				_len = other._len;
-				_element = new T[other._len]();
-				for(int i = 0; i < _len; i++)
-				{
-					_element[i] = other._element[i];
-				}
-			}
-			return *this;
-		}
-		~Array()
-		{
-			delete[] this->_element;
-		}
+		Array();
+		Array(unsigned int n);
+		Array(const Array& other);
+		Array& operator=(const Array& other);
+		~Array();
 
-		T& operator[](unsigned int pos)
-		{
-			if(pos >= _len)
-				throw std::out_of_range("Index out of range");
-			return _element[pos];
-		}
-		int	size(void)
-		{
-			return _len;
-		}
+		T& operator[](unsigned int pos);
+		const T& operator[](unsigned int pos) const;
+		int	size(void);
 
 };
 
