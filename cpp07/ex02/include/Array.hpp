@@ -14,10 +14,10 @@ class Array
 		unsigned int	_len;
 	public:
 		Array(){};
-		Array(unsigned int n) : _len(n), _element = new T[n]();
-		Array(const Array& other) : _len(other._len), _element(new T[other._len]())
+		Array(unsigned int n) : _element(new T[n]()), _len(n){}
+		Array(const Array& other) : _element(new T[other._len]()), _len(other._len)
 		{
-			for(int i = 0; i < _len; i++)
+			for(unsigned int i = 0; i < _len; i++)
 			{
 				_element[i] = other._element[i];
 			}
@@ -41,9 +41,9 @@ class Array
 			delete[] this->_element;
 		}
 
-		T& operator[](int pos)
+		T& operator[](unsigned int pos)
 		{
-			if(pos > this._len)
+			if(pos >= _len)
 				throw std::out_of_range("Index out of range");
 			return _element[pos];
 		}

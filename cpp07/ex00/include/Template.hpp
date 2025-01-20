@@ -1,4 +1,8 @@
- 
+// template: This keyword is used to define a function or class template.
+// <typename T>: This specifies that T is a placeholder for a data type.
+// typename indicates that T will represent a type (like int, float, std::string, etc.). 
+
+
 template  <typename T>
 void swap(T& a, T& b)
 {
