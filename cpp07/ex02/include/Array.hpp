@@ -21,9 +21,11 @@ class Array
 
 		T& operator[](unsigned int pos);
 		const T& operator[](unsigned int pos) const;
-		int	size(void);
+		int	size(void) const;
 
 };
+
+#include "../src/Array.tpp"
 
 #endif
 
