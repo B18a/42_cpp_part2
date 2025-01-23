@@ -6,11 +6,12 @@
 /*   By: ajehle <ajehle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 09:40:05 by ajehle            #+#    #+#             */
-/*   Updated: 2025/01/17 09:40:07 by ajehle           ###   ########.fr       */
+/*   Updated: 2025/01/23 14:39:52 by ajehle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/ScalarConverter.hpp"
+#include "../include/ScalarConverterHelper.hpp"
+#include<cmath>
 
 /****************************************/
 /*			Compare Functions			*/
@@ -25,7 +26,7 @@ static bool isValidInt(const double& value)
 	return false;
 }
 
-bool ScalarConverter::isInt(const std::string& value)
+bool isInt(const std::string& value)
 {
 	size_t i = 0;
     if (value[0] == '+' || value[0] == '-') 
@@ -43,7 +44,7 @@ bool ScalarConverter::isInt(const std::string& value)
 /*			Converter Function			*/
 /****************************************/
 
-double ScalarConverter::ConvertToInt(const std::string& value)
+double ConvertToInt(const std::string& value)
 {
 	return (std::stoi(value));
 }
@@ -52,13 +53,13 @@ double ScalarConverter::ConvertToInt(const std::string& value)
 /*			Print Function					*/
 /****************************************/
 
-void ScalarConverter::printAsInt(const double& value)
+void printAsInt(const double& value)
 {
 	printLiteralName("int");
 	if(std::isnan(value) || !isValidInt(value))
 		printErrorMessage("impossible");
 	else 
-		std::cout 	<< (value) 
+		std::cout 	<< static_cast<int>(value) 
 					<< std::endl;
 
 }

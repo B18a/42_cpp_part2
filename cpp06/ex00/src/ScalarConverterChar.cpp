@@ -6,17 +6,18 @@
 /*   By: ajehle <ajehle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 09:39:34 by ajehle            #+#    #+#             */
-/*   Updated: 2025/01/17 09:39:36 by ajehle           ###   ########.fr       */
+/*   Updated: 2025/01/23 09:52:00 by ajehle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/ScalarConverter.hpp"
+#include "../include/ScalarConverterHelper.hpp"
+#include<cmath>
 
 /****************************************/
 /*			Compare Functions			*/
 /****************************************/
 
-bool ScalarConverter::isChar(const std::string& value)
+bool isChar(const std::string& value)
 {
 	if(value.size() == 3 && value[0] == '\'' && isprint(value[1]) && value[2] == '\'')
 		return true;
@@ -27,7 +28,7 @@ bool ScalarConverter::isChar(const std::string& value)
 /*			Converter Function			*/
 /****************************************/
 
-double ScalarConverter::ConvertToChar(const std::string& value)
+double ConvertToChar(const std::string& value)
 {
 	return (static_cast<double>(value[1]));
 }
@@ -36,7 +37,7 @@ double ScalarConverter::ConvertToChar(const std::string& value)
 /*			Print Function					*/
 /****************************************/
 
-void ScalarConverter::printAsChar(const double& value)
+void printAsChar(const double& value)
 {
 	printLiteralName("char");
 	if(std::isnan(value) || value < 0 || value > 127)

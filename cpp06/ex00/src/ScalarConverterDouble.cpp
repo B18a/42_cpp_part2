@@ -6,19 +6,21 @@
 /*   By: ajehle <ajehle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 09:39:41 by ajehle            #+#    #+#             */
-/*   Updated: 2025/01/17 09:39:43 by ajehle           ###   ########.fr       */
+/*   Updated: 2025/01/23 09:48:34 by ajehle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/ScalarConverter.hpp"
+#include "../include/ScalarConverterHelper.hpp"
+#include<cmath>
+#include<iomanip>
 
 /****************************************/
 /*			Compare Functions			*/
 /****************************************/
 
-bool ScalarConverter::isDouble(const std::string& value)
+bool isDouble(const std::string& value)
 {
-	if(value.find('.') != std::string::npos)
+	if(value.find('.') != std::string::npos || value.find('e') != std::string::npos)
 		return true;
 	return false;
 }
@@ -27,7 +29,7 @@ bool ScalarConverter::isDouble(const std::string& value)
 /*			Converter Function			*/
 /****************************************/
 
-double ScalarConverter::ConvertToDouble(const std::string& value)
+double ConvertToDouble(const std::string& value)
 {
 	return (std::stod(value));
 }
@@ -36,7 +38,7 @@ double ScalarConverter::ConvertToDouble(const std::string& value)
 /*			Print Function					*/
 /****************************************/
 
-void ScalarConverter::printAsDouble(const double& value)
+void printAsDouble(const double& value)
 {
 	printLiteralName("double");
 	if(isNotANumber(value))

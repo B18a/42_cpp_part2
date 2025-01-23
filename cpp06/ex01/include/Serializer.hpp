@@ -6,7 +6,7 @@
 /*   By: ajehle <ajehle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 09:40:48 by ajehle            #+#    #+#             */
-/*   Updated: 2025/01/17 09:40:50 by ajehle           ###   ########.fr       */
+/*   Updated: 2025/01/17 23:57:37 by ajehle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,12 @@ class Serializer
 {
 	private:
 		Serializer(void);
-		// ~Serializer(void);
-		// TO DO
-
-
 
 	public:
+		Serializer(const Serializer& other);
+		Serializer& operator=(const Serializer& other);
+		~Serializer(void);
+		
 		static uintptr_t	serialize(Data* ptr);
 		static Data*		deserialize(uintptr_t raw);
 

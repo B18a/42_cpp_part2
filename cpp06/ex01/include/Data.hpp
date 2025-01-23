@@ -6,7 +6,7 @@
 /*   By: ajehle <ajehle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 09:40:43 by ajehle            #+#    #+#             */
-/*   Updated: 2025/01/17 09:40:45 by ajehle           ###   ########.fr       */
+/*   Updated: 2025/01/17 23:58:50 by ajehle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,6 @@
 
 struct Data
 {
-	int number;
-	std::string name;
+	int			number;
+	std::string	name;
 };

@@ -6,11 +6,16 @@
 /*   By: ajehle <ajehle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 09:39:15 by ajehle            #+#    #+#             */
-/*   Updated: 2025/01/17 09:39:31 by ajehle           ###   ########.fr       */
+/*   Updated: 2025/01/23 12:32:23 by ajehle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/ScalarConverter.hpp"
+#include "../include/ScalarConverterHelper.hpp"
+#include "../include/ScalarConverterChar.hpp"
+#include "../include/ScalarConverterFloat.hpp"
+#include "../include/ScalarConverterDouble.hpp"
+#include "../include/ScalarConverterInt.hpp"
 
 /****************************************/
 /*		Constructor / Destructor		*/
@@ -19,6 +24,10 @@
 ScalarConverter::ScalarConverter(void){}
 ScalarConverter::~ScalarConverter(void){}
 ScalarConverter::ScalarConverter(const ScalarConverter& other){(void)other;}
+
+/****************************************/
+/*		Copy Assignment Operator		*/
+/****************************************/
 ScalarConverter& ScalarConverter::operator=(const ScalarConverter& other)
 {
 	(void)other;
@@ -28,26 +37,6 @@ ScalarConverter& ScalarConverter::operator=(const ScalarConverter& other)
 /****************************************/
 /*			Member Functions			*/
 /****************************************/
-
-double ScalarConverter::transform_value(const std::string& value_as_string)
-{
-	if(isNotANumber(value_as_string))
-		return std::numeric_limits<double>::quiet_NaN();
-	else if(isNegativeInfinite(value_as_string))
-		return -std::numeric_limits<double>::infinity();
-	else if(isPositiveInfinite(value_as_string))
-		return std::numeric_limits<double>::infinity();
-	else if(isChar(value_as_string))
-		return ConvertToChar(value_as_string);
-	else if(isFloat(value_as_string))
-		return ConvertToFloat(value_as_string);
-	else if(isDouble(value_as_string))
-		return ConvertToDouble(value_as_string);
-	else if(isInt(value_as_string))
-		return ConvertToInt(value_as_string);
-	else
-		throw std::invalid_argument("Invalid Input");
-}
 
 void ScalarConverter::convert(const std::string& value_as_string)
 {

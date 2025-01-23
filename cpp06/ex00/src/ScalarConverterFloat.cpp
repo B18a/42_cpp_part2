@@ -6,17 +6,18 @@
 /*   By: ajehle <ajehle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 09:39:47 by ajehle            #+#    #+#             */
-/*   Updated: 2025/01/17 09:39:49 by ajehle           ###   ########.fr       */
+/*   Updated: 2025/01/23 10:28:18 by ajehle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/ScalarConverter.hpp"
+#include "../include/ScalarConverterHelper.hpp"
+#include<iomanip>
 
 /****************************************/
 /*			Compare Functions			*/
 /****************************************/
 
-bool ScalarConverter::isFloat(const std::string& value)
+bool isFloat(const std::string& value)
 {
 	if(value.find('f') != std::string::npos)
 		return true;
@@ -27,7 +28,7 @@ bool ScalarConverter::isFloat(const std::string& value)
 /*			Converter Function			*/
 /****************************************/
 
-double ScalarConverter::ConvertToFloat(const std::string& value)
+double ConvertToFloat(const std::string& value)
 {
 	return (std::stof(value));
 }
@@ -36,7 +37,7 @@ double ScalarConverter::ConvertToFloat(const std::string& value)
 /*			Print Function					*/
 /****************************************/
 
-void ScalarConverter::printAsFloat(const double& value)
+void printAsFloat(const double& value)
 {
 	printLiteralName("float");
 	if(isNotANumber(value))
