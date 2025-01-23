@@ -1,0 +1,12 @@
+git remote add neworigin <link to new repo>
+
+git add .
+git commit -m "commit"
+
+git push neworigin
+
+cd to oldrepo
+git remote remove new-origin
+
+
+git remove -v
