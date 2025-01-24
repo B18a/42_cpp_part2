@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   Array.hpp                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ajehle <ajehle@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/24 09:13:26 by ajehle            #+#    #+#             */
+/*   Updated: 2025/01/24 09:13:28 by ajehle           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include<iostream>
 
@@ -21,7 +32,7 @@ class Array
 
 		T& operator[](unsigned int pos);
 		const T& operator[](unsigned int pos) const;
-		int	size(void) const;
+		unsigned int size(void) const;
 
 };
 

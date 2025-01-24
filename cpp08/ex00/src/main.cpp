@@ -5,24 +5,27 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ajehle <ajehle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/23 17:03:57 by ajehle            #+#    #+#             */
-/*   Updated: 2025/01/24 09:28:10 by ajehle           ###   ########.fr       */
+/*   Created: 2025/01/24 12:21:41 by ajehle            #+#    #+#             */
+/*   Updated: 2025/01/24 13:49:43 by ajehle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"../include/Template.hpp"
-#include<iostream>
+
+#include<array>
+
+
+std::array<int, 3> test;
+
+test[0] = 1;
+
+template <typename T>
+void    easyfind(T first, int second)
+{
+	
+}
+
 
 int main(void)
 {
-	int arr[5] = {5,4,3,1,8};
-	double darr[4] = {1.1,3.3,2.2,9.9};
-	std::string strArray[3] = {"apple", "banana", "cherry"};
 
-	std::cout << "Array of INT" << std::endl;
-	iter(arr, 5, printData<int>);
-	std::cout << "\nArray of DOUBLE" << std::endl;
-	iter(darr, sizeof(darr) / sizeof(darr[0]), printData<double>);
-	std::cout << "\nArray of STRING" << std::endl;
-	iter(strArray, sizeof(strArray) / sizeof(strArray[0]), printData<std::string>);
 }

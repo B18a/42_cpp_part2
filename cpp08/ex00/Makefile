@@ -1,7 +1,7 @@
 CXX			= c++
 CXXFLAGS	= -Wall -Wextra -Werror -std=c++17
 
-NAME		= template
+NAME		= container
 OBJ_DIR		= obj
 SRC_DIR		= src
 INC_DIR		= include
@@ -9,6 +9,7 @@ REMOVE		= rm -rf
 
 # INTERNAL FUNCTIONS
 FUNCTIONS	=	$(SRC_DIR)/main.cpp \
+
 
 # INTERNAL OBJECT
 OBJECTS		= $(addprefix $(OBJ_DIR)/, $(notdir $(FUNCTIONS:.cpp=.o)))

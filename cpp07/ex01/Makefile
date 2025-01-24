@@ -10,7 +10,6 @@ REMOVE		= rm -rf
 # INTERNAL FUNCTIONS
 FUNCTIONS	=	$(SRC_DIR)/main.cpp \
 
-
 # INTERNAL OBJECT
 OBJECTS		= $(addprefix $(OBJ_DIR)/, $(notdir $(FUNCTIONS:.cpp=.o)))
 
