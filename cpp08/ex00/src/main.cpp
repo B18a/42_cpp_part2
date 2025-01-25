@@ -6,26 +6,18 @@
 /*   By: ajehle <ajehle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 12:21:41 by ajehle            #+#    #+#             */
-/*   Updated: 2025/01/24 13:49:43 by ajehle           ###   ########.fr       */
+/*   Updated: 2025/01/25 10:54:06 by ajehle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
-#include<array>
-
-
-std::array<int, 3> test;
-
-test[0] = 1;
-
-template <typename T>
-void    easyfind(T first, int second)
-{
-	
-}
+#include"../include/easyfind.hpp"
+#include <array>
 
 
 int main(void)
 {
-
+    std::array<int, 3> test = {1,2,3};
+    
+    easyfind(test, 2);
 }
