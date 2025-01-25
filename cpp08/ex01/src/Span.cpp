@@ -1,15 +1,18 @@
 
 #include"../include/Span.hpp"
+#include<iostream>
 
-Span::Span(void){}
-Span::Span(unsigned int size)
+template <typename T>Span<T>::Span(void){}
+
+template <typename T>Span<T>::Span(unsigned int size)
 {
-
+	container(size, 3); 
 }
-Span::~Span(void){}
+template <typename T> Span<T>::~Span(void){}
 
-Span::Span(const Span &other){*this = other;}
-Span Span::operator=(const Span &other)
+template <typename T> Span<T>::Span(const Span &other){*this = other;}
+
+template <typename T> Span<T> Span<T>::operator=(const Span &other)
 {
 	if(this != &other)
 	{
@@ -19,18 +22,18 @@ Span Span::operator=(const Span &other)
 }
 
 
-void Span::addNumber()
+template <typename T> void Span<T>::addNumber()
 {
 
 }
 
 
-void Span::shortestSpan()
+template <typename T> void Span<T>::shortestSpan()
 {
 
 }
 
-void Span::longestSpan()
+template <typename T> void Span<T>::longestSpan()
 {
 
 }

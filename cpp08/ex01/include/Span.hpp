@@ -1,11 +1,18 @@
 
+#include <algorithm>
+#include <array>
+// HEADER PROTECTION!!!!!!
 
 // alt + n = ~
 
+
+template <typename T>
 class Span
 {
 	private:
-		unsigned int N;
+		unsigned int	N;
+		std::vector<T>	container;
+
 	public:
 		Span();
 		~Span();
