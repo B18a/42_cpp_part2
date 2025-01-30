@@ -1,0 +1,19 @@
+
+What Else is Good to Know?
+When to Use Which Container
+
+Use vector for fast random access & frequent element access.
+Use list for frequent insertions/deletions at arbitrary positions.
+Use deque for insertions/deletions at both ends.
+Use queue for FIFO behavior.
+Use stack for LIFO behavior.
+Use set when sorted unique elements are needed.
+Use map when you need sorted key-value pairs.
+Choosing Between map and unordered_map
+
+map (Red-Black Tree) → Sorted keys (O(log n))
+unordered_map (Hash Table) → Faster lookup (O(1)) but unordered
+Choosing Between set and unordered_set
+
+set → Ordered elements (O(log n))
+unordered_set → Faster lookup (O(1)) but unordered
