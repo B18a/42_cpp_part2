@@ -1,0 +1,63 @@
+
+// TO-DO
+
+// Parse Input - positive Integers only
+// Optional - Print Numbers
+
+// Sorting Part - must be done 2 times (vector and deque)
+// Start Time - get current time
+// SortingFunction(FJ)
+// {
+	// Parameter : Data and Current BlockSize - Beginning is 1 and then it multiplies by two each iteration
+	// Check if number of elements in Block is less than 2 (no sorting necessary) - all blocks are sorted to a pair of two
+	// get start iterator and end iterator in Block
+	// sort to pairs (tempalte function) - parameter : start iterator, end iterator, blocksize
+		// newIterator = std::advance(start, 2 + blocksize)
+		// while newIterator != end iterator
+		// {
+		// get BlockOneStartIterator
+		// get BlockOneEndIterator
+		// get BlockTwoStartIterator
+		// get BlockTwoEndIterator
+
+		// check if BlockTwoStartIterator or BlockTwoEndIterator are within end iterator
+		// get last elements of each Block and compare sizes
+		// if element in BlockOne is bigger
+		// swap_ranges function
+
+		// }
+	// call SortingFunction(FJ) again
+	// InsertionSort
+// }
+
+
+// Finish Time - get current time
+
+/*
+Feature			std::next															std::advance
+Modification	Returns a new iterator (does not modify the original)				Modifies the given iterator in place
+Return Type		Returns an iterator													Returns void (modifies iterator directly)
+Usage			new_iter = std::next(iter, n);										std::advance(iter, n);
+Example			auto newIter = std::next(iter, 3);									std::advance(iter, 3);
+Use Case		Use when you need a new iterator without modifying the original		Use when you want to move an existing iterator
+*/
+
+/*#include <iostream>
+#include <vector>
+#include <iterator> // for std::next and std::advance
+
+int main() {
+    std::vector<int> vec = {10, 20, 30, 40, 50};
+    auto it = vec.begin();
+
+    // Using std::next (does not modify `it`)
+    auto newIt = std::next(it, 2);  
+    std::cout << "std::next: " << *newIt << std::endl; // 30
+
+    // Using std::advance (modifies `it`)
+    std::advance(it, 2);
+    std::cout << "std::advance: " << *it << std::endl; // 30
+
+    return 0;
+}
+*/
