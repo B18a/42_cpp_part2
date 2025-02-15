@@ -1,7 +1,7 @@
 CXX			= c++
 CXXFLAGS	= -Wall -Wextra -Werror -std=c++17
 
-NAME		= container
+NAME		= PmergeMe
 OBJ_DIR		= obj
 SRC_DIR		= src
 INC_DIR		= include
@@ -9,6 +9,7 @@ REMOVE		= rm -rf
 
 # INTERNAL FUNCTIONS
 FUNCTIONS	=	$(SRC_DIR)/main.cpp \
+				$(SRC_DIR)/PmergeMe.cpp \
 
 
 # INTERNAL OBJECT

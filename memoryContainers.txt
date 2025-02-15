@@ -26,9 +26,9 @@ Conclusion
 Comparison of Memory Layouts in Standard Containers
 Container					Contiguous Memory?		Iterator Type		Notes
 std::array<T, N>				✅ Yes					Pointer-like		Fixed-size, stack-allocated.
-std::vector<T>				✅ Yes					Random Access		Dynamic size, grows in contiguous memory.
-std::deque<T>				❌ No					Random Access		Uses multiple memory blocks (not fully contiguous).
+std::vector<T>				    ✅ Yes					Random Access		Dynamic size, grows in contiguous memory.
+std::deque<T>				    ❌ No					Random Access		Uses multiple memory blocks (not fully contiguous).
 std::list<T>					❌ No					Bidirectional		Doubly linked list, each element separately allocated.
 std::forward_list<T>			❌ No					Forward Iterator	Singly linked list (even less contiguous).
-std::set<T>, std::map<K,V>	❌ No					Bidirectional		Tree-based, elements scattered in memory.
+std::set<T>, std::map<K,V>	    ❌ No					Bidirectional		Tree-based, elements scattered in memory.
 

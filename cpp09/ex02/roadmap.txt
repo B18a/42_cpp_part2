@@ -12,7 +12,7 @@
 	// Check if number of elements in Block is less than 2 (no sorting necessary) - all blocks are sorted to a pair of two
 	// get start iterator and end iterator in Block
 	// sort to pairs (tempalte function) - parameter : start iterator, end iterator, blocksize
-		// newIterator = std::advance(start, 2 + blocksize)
+		// newIterator = std::advance(start, 2 * blocksize)
 		// while newIterator != end iterator
 		// {
 		// get BlockOneStartIterator
@@ -32,6 +32,9 @@
 
 
 // Finish Time - get current time
+
+
+/***********************************************************************************************************/
 
 /*
 Feature			std::next															std::advance
