@@ -72,7 +72,7 @@ template <typename T> void PmergeMe::sorting(T& ref)
 	this->_compareCounter = 0;
 	this->_levelOfRecursion = 0;
 	this->_jakobNumber = 1;
-	this->_jakobNumberIdx = 1;
+	this->_jakobNumberIdx = 2;
 	// auto start = std::chrono::high_resolution_clock::now();
 	pairing(ref, 1);
 	// auto stop = std::chrono::high_resolution_clock::now();
@@ -154,26 +154,25 @@ template <typename T> void PmergeMe::sortWithInsertion(T& ref,size_t nbrsInEleme
 	}
 	ref.size();
 	this->_jakobNumber = jakobsthal_recursive(this->_jakobNumberIdx);
-	std::cout << "JakobIDX " << this->_jakobNumber << ":" << this->_jakobNumber << std::endl;
+	std::cout << YELLOW << "JakobIDX " << this->_jakobNumberIdx << ":" << this->_jakobNumber << RESET << std::endl;
 	
 	// TO-DO
 	// temp container pend with bs starting at b2
 	// 
-	// T pend;
-	// auto newIt = ref.begin();
+	T pend;
 	auto BlockJakobStartIt = ref.begin();
 	auto BlockJakobEndIt = ref.begin();
-	// printIterators<T>("BlockJakobStartIt", BlockJakobStartIt, BlockJakobEndIt);
-	// if(this->_jakobNumber == 1)
-	// {
-		// std::cout << YELLOW << "_jakobNumber == 1" << RESET << std::endl;
-		std::cout << YELLOW << _jakobNumber << RESET << std::endl;
-		std::advance(BlockJakobStartIt, _jakobNumber * 2 * (nbrsInElement));
-		BlockJakobEndIt = std::next(BlockJakobStartIt, nbrsInElement - 1);
-	// }
+	std::advance(BlockJakobStartIt, _jakobNumber * 2 * (nbrsInElement));
+	BlockJakobEndIt = std::next(BlockJakobStartIt, nbrsInElement - 1);
 	printIterators<T>("-->BlockJakobStartIt", BlockJakobStartIt, BlockJakobEndIt);
-	// printContainer(ref);
 	
+
+
+
+
+
+
+
 	this->_jakobNumberIdx++;
 }
 
@@ -198,7 +197,7 @@ template <typename T> void PmergeMe::pairing(T& ref, size_t amountOfElements)
 	pairing(ref, amountOfElements * 2);
 	printContainer<T>(ref);
 	this->_levelOfRecursion--;
-	std::cout << RED << "_levelOfRecursion " << _levelOfRecursion << RESET << std::endl;
+	std::cout << RED << "Start sortWithInsertion " << "_levelOfRecursion " << _levelOfRecursion << RESET << std::endl;
 	sortWithInsertion(ref, nbrsInElement, amountOfElements);
 }
 
