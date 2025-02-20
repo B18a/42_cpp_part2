@@ -46,7 +46,7 @@ template <typename T> void PmergeMe::printContainer(const T& ref) const
 template <typename T>	
 void PmergeMe::printIterators(const std::string message, typename T::iterator StartIt, typename T::iterator EndIt) const
 {
-	std::cout << message << "\n"	
+	std::cout << BLUE << message << RESET << "\n"	
 	<< "BlockStartIt		" << &(*StartIt)	<< " " << *(StartIt)	<< '\n'
 	<< "BlockEndIt		" << &(*EndIt)	<< " " << *(EndIt)	<< "\n\n";
 }
@@ -71,6 +71,8 @@ template <typename T> void PmergeMe::sorting(T& ref)
 {
 	this->_compareCounter = 0;
 	this->_levelOfRecursion = 0;
+	this->_jakobNumber = 1;
+	this->_jakobNumberIdx = 1;
 	// auto start = std::chrono::high_resolution_clock::now();
 	pairing(ref, 1);
 	// auto stop = std::chrono::high_resolution_clock::now();
@@ -82,17 +84,17 @@ template <typename T> void PmergeMe::sorting(T& ref)
 
 
 template <typename T> 
-void 	PmergeMe::sortToPairs(typename T::iterator startIt, typename T::iterator endIt, size_t amountOfBlocks)
+void 	PmergeMe::sortToPairs(typename T::iterator startIt, typename T::iterator endIt, size_t amountOfElements)
 {
 	auto newIt = startIt;
 	while (newIt != endIt)
 	{
 		printContainer(this->_vector);
-		if(amountOfBlocks * 2 == 2)
+		if(amountOfElements * 2 == 2)
 		{
 			// std::cout << "Update Iterators 2\n";
 			auto BlockOneStartIt = newIt;
-			auto BlockOneEndIt = std::next(BlockOneStartIt, amountOfBlocks);
+			auto BlockOneEndIt = std::next(BlockOneStartIt, amountOfElements);
 			printIterators<T>("Before ONE", BlockOneStartIt, BlockOneEndIt);
 			if(*BlockOneStartIt > *BlockOneEndIt)
 			{
@@ -106,9 +108,9 @@ void 	PmergeMe::sortToPairs(typename T::iterator startIt, typename T::iterator e
 		{
 			// std::cout << "Update Iterators\n";
 			auto BlockOneStartIt = newIt;
-			auto BlockOneEndIt = std::next(BlockOneStartIt, amountOfBlocks - 1);
-			auto BlockTwoStartIt = std::next(BlockOneStartIt, amountOfBlocks);
-			auto BlockTwoEndIt = std::next(BlockTwoStartIt, amountOfBlocks - 1);
+			auto BlockOneEndIt = std::next(BlockOneStartIt, amountOfElements - 1);
+			auto BlockTwoStartIt = std::next(BlockOneStartIt, amountOfElements);
+			auto BlockTwoEndIt = std::next(BlockTwoStartIt, amountOfElements - 1);
 		
 			printIterators<T>("Before ONE", BlockOneStartIt, BlockOneEndIt);
 			printIterators<T>("Before TWO", BlockTwoStartIt, BlockTwoEndIt);
@@ -129,7 +131,7 @@ void 	PmergeMe::sortToPairs(typename T::iterator startIt, typename T::iterator e
 			printIterators<T>("After ONE", BlockOneStartIt, BlockOneEndIt);
 			printIterators<T>("After TWO", BlockTwoStartIt, BlockTwoEndIt);
 		}		
-		std::advance(newIt, 2 * amountOfBlocks);
+		std::advance(newIt, 2 * amountOfElements);
 	}
 }
 
@@ -140,55 +142,64 @@ unsigned long long PmergeMe::jakobsthal_recursive(int n)
 	return jakobsthal_recursive(n - 1) + 2 * jakobsthal_recursive(n - 2);
 }
 
-template <typename T> void PmergeMe::sortWithInsertion(T& ref,size_t nbrsInBlock, int amountOfBlocks)
+template <typename T> void PmergeMe::sortWithInsertion(T& ref,size_t nbrsInElement, size_t amountOfElements)
 {
 
 	std::cout << "sortWithInsertion" << std::endl;
-	std::cout << "amountOfBlocks " << amountOfBlocks << " - nbrsInBlock " << nbrsInBlock << std::endl;
-	if(nbrsInBlock <= 2) // if numbers in block is 2 or less no compare necessary because already sorted in sortToPairs
+	std::cout << "amountOfElements " << amountOfElements << " - nbrsInElement " << nbrsInElement << std::endl;
+	if(nbrsInElement <= 2) // if numbers in block is 2 or less no compare necessary because already sorted in sortToPairs
 	{
 		std::cout << GREEN << "Block of 2 already sorted in sortToPairs" << RESET << std::endl;
 		return;
 	}
 	ref.size();
+	this->_jakobNumber = jakobsthal_recursive(this->_jakobNumberIdx);
+	std::cout << "JakobIDX " << this->_jakobNumber << ":" << this->_jakobNumber << std::endl;
 	
-
-
 	// TO-DO
 	// temp container pend with bs starting at b2
-	// jakobszahl 1 ist 3. mit 
 	// 
-	// printContainer(ref);
+	// T pend;
 	// auto newIt = ref.begin();
-	// auto BlockOneStartIt = newIt;
-	// auto BlockOneEndIt = std::next(BlockOneStartIt, amountOfBlocks - 1);
-	// auto BlockTwoStartIt = std::next(BlockOneStartIt, amountOfBlocks);
-	// auto BlockTwoEndIt = std::next(BlockTwoStartIt, amountOfBlocks - 1);
-	// printIterators<T>("Before ONE", BlockOneStartIt, BlockOneEndIt);
-	// printIterators<T>("Before TWO", BlockTwoStartIt, BlockTwoEndIt);
+	auto BlockJakobStartIt = ref.begin();
+	auto BlockJakobEndIt = ref.begin();
+	// printIterators<T>("BlockJakobStartIt", BlockJakobStartIt, BlockJakobEndIt);
+	// if(this->_jakobNumber == 1)
+	// {
+		// std::cout << YELLOW << "_jakobNumber == 1" << RESET << std::endl;
+		std::cout << YELLOW << _jakobNumber << RESET << std::endl;
+		std::advance(BlockJakobStartIt, _jakobNumber * 2 * (nbrsInElement));
+		BlockJakobEndIt = std::next(BlockJakobStartIt, nbrsInElement - 1);
+	// }
+	printIterators<T>("-->BlockJakobStartIt", BlockJakobStartIt, BlockJakobEndIt);
+	// printContainer(ref);
+	
+	this->_jakobNumberIdx++;
 }
 
 
-template <typename T> void PmergeMe::pairing(T& ref, int amountOfBlocks)
+template <typename T> void PmergeMe::pairing(T& ref, size_t amountOfElements)
 {
-	size_t nbrsInBlock = ref.size() / amountOfBlocks;
-	if(nbrsInBlock < 2)
+	size_t nbrsInElement = ref.size() / amountOfElements;
+	if(nbrsInElement % 2 != 0)
+		nbrsInElement--;
+	if(nbrsInElement < 2)
 		return;
 	this->_levelOfRecursion++;
 	std::cout << RED << "_levelOfRecursion " << _levelOfRecursion << RESET << std::endl;
-	// std::cout << "amountOfBlocks " << amountOfBlocks << std::endl;
+	std::cout << "amountOfElements " << amountOfElements << CYAN << " - nbrsInElement " << nbrsInElement << RESET << std::endl;
 	// get Start and End Iterator
 	auto startIt = ref.begin();
-	auto endIt = std::next(startIt, amountOfBlocks * nbrsInBlock);
-	if (nbrsInBlock % 2 == 1) 
-	endIt = std::next(startIt, amountOfBlocks * (nbrsInBlock - 1));
+	auto endIt = std::next(startIt, amountOfElements * nbrsInElement);
+	if (nbrsInElement % 2 == 1) 
+	endIt = std::next(startIt, amountOfElements * (nbrsInElement - 1));
 	
-	sortToPairs<T>(startIt, endIt, amountOfBlocks);
-	pairing(ref, amountOfBlocks * 2);
+	sortToPairs<T>(startIt, endIt, amountOfElements);
+	pairing(ref, amountOfElements * 2);
 	printContainer<T>(ref);
 	this->_levelOfRecursion--;
 	std::cout << RED << "_levelOfRecursion " << _levelOfRecursion << RESET << std::endl;
-	sortWithInsertion(ref, nbrsInBlock, amountOfBlocks);
+	sortWithInsertion(ref, nbrsInElement, amountOfElements);
 }
 
 

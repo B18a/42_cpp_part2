@@ -18,6 +18,8 @@ class PmergeMe
 		std::vector<int>	_vector;
 		std::deque<int>		_deque;
 		int					_compareCounter;
+		int					_jakobNumber;
+		int					_jakobNumberIdx;
 		size_t				_levelOfRecursion;
 
 	public:
@@ -31,9 +33,9 @@ class PmergeMe
 		template <typename T>	void printIterators(const std::string message, typename T::iterator StartIt, typename T::iterator EndIt) const;
 
 		template <typename T>	void sorting(T& ref);
-		template <typename T>	void pairing(T& ref, int amountOfBlocks);
-		template <typename T>	void sortToPairs(typename T::iterator startIt, typename T::iterator endIt, size_t amountOfBlocks);
-		template <typename T>	void sortWithInsertion(T& ref,size_t nbrsInBlock, int amountOfBlocks);
+		template <typename T>	void pairing(T& ref, size_t amountOfElements);
+		template <typename T>	void sortToPairs(typename T::iterator startIt, typename T::iterator endIt, size_t amountOfElements);
+		template <typename T>	void sortWithInsertion(T& ref,size_t nbrsInElement, size_t amountOfElements);
 
 
 
