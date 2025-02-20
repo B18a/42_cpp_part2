@@ -133,6 +133,12 @@ void 	PmergeMe::sortToPairs(typename T::iterator startIt, typename T::iterator e
 	}
 }
 
+unsigned long long PmergeMe::jakobsthal_recursive(int n) 
+{
+	if (n == 0) return 0;
+	if (n == 1) return 1;
+	return jakobsthal_recursive(n - 1) + 2 * jakobsthal_recursive(n - 2);
+}
 
 template <typename T> void PmergeMe::sortWithInsertion(T& ref,size_t nbrsInBlock, int amountOfBlocks)
 {
@@ -146,8 +152,11 @@ template <typename T> void PmergeMe::sortWithInsertion(T& ref,size_t nbrsInBlock
 	}
 	ref.size();
 	
+
+
 	// TO-DO
 	// temp container pend with bs starting at b2
+	// jakobszahl 1 ist 3. mit 
 	// 
 	// printContainer(ref);
 	// auto newIt = ref.begin();

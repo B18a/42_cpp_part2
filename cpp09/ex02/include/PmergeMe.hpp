@@ -24,7 +24,9 @@ class PmergeMe
 		void 	run(int argc, char** argv);
 		int 	parseInput(int argc, char** argv);
 		void	fillContainer(int argc, char** argv);
-		
+
+		unsigned long long	jakobsthal_recursive(int n);
+
 		template <typename T>	void printContainer(const T& ref) const;
 		template <typename T>	void printIterators(const std::string message, typename T::iterator StartIt, typename T::iterator EndIt) const;
 
