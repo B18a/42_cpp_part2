@@ -161,10 +161,15 @@ template <typename T> void PmergeMe::sortWithInsertion(T& ref,size_t nbrsInEleme
 	// 
 	T pend;
 	auto BlockJakobStartIt = ref.begin();
-	auto BlockJakobEndIt = ref.begin();
 	std::advance(BlockJakobStartIt, _jakobNumber * 2 * (nbrsInElement));
-	BlockJakobEndIt = std::next(BlockJakobStartIt, nbrsInElement - 1);
+	// auto BlockJakobEndIt = std::next(BlockJakobStartIt, nbrsInElement - 1);
+	auto BlockJakobEndIt = std::next(BlockJakobStartIt, nbrsInElement);
 	printIterators<T>("-->BlockJakobStartIt", BlockJakobStartIt, BlockJakobEndIt);
+
+	std::move(BlockJakobStartIt, BlockJakobEndIt, std::back_inserter(pend));
+	ref.erase(BlockJakobStartIt, BlockJakobEndIt);
+
+	printContainer(pend);
 	
 
 
