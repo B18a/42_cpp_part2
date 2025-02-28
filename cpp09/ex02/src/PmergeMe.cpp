@@ -34,10 +34,18 @@ int PmergeMe::parseInput(int argc, char** argv)
 	return 0;
 }
 
-template <typename T> void PmergeMe::printContainer(const T& ref) const
+template <typename T> void PmergeMe::printContainer(const T& original, int seperator) const
 {
-	for (int x : ref)
+	int y = 1;
+	std::cout << "[";
+	for (int x : original)
+	{
 		std::cout << x << " ";
+		if(seperator != 0 && y % seperator == 0)
+			std::cout << "][";
+		y++;
+	}
+	std::cout << "]";
 	std::cout << "\n";
 	return ;
 }
@@ -47,8 +55,8 @@ template <typename T>
 void PmergeMe::printIterators(const std::string message, typename T::iterator StartIt, typename T::iterator EndIt) const
 {
 	std::cout << BLUE << message << RESET << "\n"	
-	<< "BlockStartIt		" << &(*StartIt)	<< " " << *(StartIt)	<< '\n'
-	<< "BlockEndIt		" << &(*EndIt)	<< " " << *(EndIt)	<< "\n\n";
+	<< "Iter One		" << &(*StartIt)	<< " " << *(StartIt)	<< '\n'
+	<< "Iter Two		" << &(*EndIt)	<< " " << *(EndIt)	<< "\n\n";
 }
 
 
@@ -62,65 +70,80 @@ void PmergeMe::fillContainer(int argc, char** argv)
 		// _deque.push_back(atoi(argv[i]));
 		i++;
 	}
-	printContainer(_vector);
-	// printContainer(_deque);
+	printContainer(_vector, 0);
+	// printContainer(_deque, 0);
 }
 
 
-template <typename T> void PmergeMe::sorting(T& ref)
+template <typename T> void PmergeMe::sorting(T& original)
 {
+	T main;
 	this->_compareCounter = 0;
 	this->_levelOfRecursion = 0;
 	this->_jakobNumber = 1;
 	this->_jakobNumberIdx = 2;
+	this->_SizeOfGroup = 1;
+	this->_bCounter = 0;
 	// auto start = std::chrono::high_resolution_clock::now();
-	pairing(ref, 1);
+	pairing(original, 1);
 	// auto stop = std::chrono::high_resolution_clock::now();
 	// auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
 	// std::cout << "Time to execute : " << duration.count() << " microseconds" << std::endl;
 	// std::cout << "Compares : " << this->_compareCounter << std::endl;
+
+	std::cout << CYAN << "Main Container" << RESET << std::endl;
+	printContainer<T>(main, 0);
+	std::cout << BG_CYAN << "_compareCounter " << this->_compareCounter << RESET << std::endl;
+
 }
 
 
+// for first iteration we have 1 Group so we have to check groups of 2 nbrs (first if condition)
+// all other iterations the nbrs in each group get mulitplied by 2: 2,4,8,16, and so on
 
 template <typename T> 
-void 	PmergeMe::sortToPairs(typename T::iterator startIt, typename T::iterator endIt, size_t amountOfElements)
+void 	PmergeMe::sortToPairs(typename T::iterator startIt, typename T::iterator endIt, size_t amountOfGroups, size_t nbrsInEachGroup)
 {
 	auto newIt = startIt;
 	while (newIt != endIt)
 	{
-		printContainer(this->_vector);
-		if(amountOfElements * 2 == 2)
+		// if(amountOfGroups * 2 == 2)
+		if(this->_SizeOfGroup == 2)
 		{
+			std::cout << CYAN << "ELEMENT OF TWO" << RESET << std::endl;
+			// std::cout << CYAN << "ELEMENT OF TWO" << RESET << std::endl;
 			// std::cout << "Update Iterators 2\n";
 			auto BlockOneStartIt = newIt;
-			auto BlockOneEndIt = std::next(BlockOneStartIt, amountOfElements);
-			printIterators<T>("Before ONE", BlockOneStartIt, BlockOneEndIt);
+			auto BlockOneEndIt = std::next(BlockOneStartIt, amountOfGroups);
+			// printIterators<T>("Before ONE", BlockOneStartIt, BlockOneEndIt);
 			if(*BlockOneStartIt > *BlockOneEndIt)
 			{
 				// std::cout << "Swap " << *BlockOneStartIt << " > " << *BlockOneEndIt << std::endl;
 				std::iter_swap(BlockOneStartIt, BlockOneEndIt);
 			}
 			_compareCounter++;
-			printIterators<T>("After ONE", BlockOneStartIt, BlockOneEndIt);
+			// printIterators<T>("After ONE", BlockOneStartIt, BlockOneEndIt);
 		}
 		else
 		{
+			std::cout << CYAN << "ELEMENT OF MULTIPLE" << RESET << std::endl;
 			// std::cout << "Update Iterators\n";
 			auto BlockOneStartIt = newIt;
-			auto BlockOneEndIt = std::next(BlockOneStartIt, amountOfElements - 1);
-			auto BlockTwoStartIt = std::next(BlockOneStartIt, amountOfElements);
-			auto BlockTwoEndIt = std::next(BlockTwoStartIt, amountOfElements - 1);
+			auto BlockOneEndIt = std::next(BlockOneStartIt, amountOfGroups - 1);
+			auto BlockTwoStartIt = std::next(BlockOneStartIt, amountOfGroups);
+			auto BlockTwoEndIt = std::next(BlockTwoStartIt, amountOfGroups - 1);
 		
-			printIterators<T>("Before ONE", BlockOneStartIt, BlockOneEndIt);
-			printIterators<T>("Before TWO", BlockTwoStartIt, BlockTwoEndIt);
+			// printIterators<T>("Before ONE", BlockOneStartIt, BlockOneEndIt);
+			// printIterators<T>("Before TWO", BlockTwoStartIt, BlockTwoEndIt);
 
-			if (BlockTwoStartIt >= endIt || BlockTwoEndIt > endIt) 
+			// if (BlockTwoStartIt >= endIt || BlockTwoEndIt > endIt) // or line below?!?!? 
+			if (BlockTwoStartIt >= endIt || BlockTwoEndIt > endIt || nbrsInEachGroup <= 2) 
 			{
-				// std::cout << "break\n";
+				std::cout << RED << "              break\n" << RESET;
+				this->_SizeOfGroup = this->_SizeOfGroup / 2;
 				break;
 			}
-			// std::cout << "no break\n";
+			std::cout << RED << "                  no break\n" << RESET;
 			// std::cout << "Comparison " << *BlockOneEndIt << " > " << *BlockTwoEndIt << std::endl;
 			if(*BlockOneEndIt > *BlockTwoEndIt)
 			{
@@ -128,10 +151,10 @@ void 	PmergeMe::sortToPairs(typename T::iterator startIt, typename T::iterator e
 				std::swap_ranges(BlockOneStartIt, BlockTwoStartIt, BlockTwoStartIt);
 			}
 			_compareCounter++;
-			printIterators<T>("After ONE", BlockOneStartIt, BlockOneEndIt);
-			printIterators<T>("After TWO", BlockTwoStartIt, BlockTwoEndIt);
-		}		
-		std::advance(newIt, 2 * amountOfElements);
+			// printIterators<T>("After ONE", BlockOneStartIt, BlockOneEndIt);
+			// printIterators<T>("After TWO", BlockTwoStartIt, BlockTwoEndIt);
+		}	
+		std::advance(newIt, 2 * amountOfGroups);
 	}
 }
 
@@ -142,68 +165,361 @@ unsigned long long PmergeMe::jakobsthal_recursive(int n)
 	return jakobsthal_recursive(n - 1) + 2 * jakobsthal_recursive(n - 2);
 }
 
-template <typename T> void PmergeMe::sortWithInsertion(T& ref,size_t nbrsInElement, size_t amountOfElements)
+
+
+
+template <typename T> typename T::iterator PmergeMe::sortFirstTwoPairsToMain(typename T::iterator startIt, T& main, T& original, size_t nbrsInEachGroup, size_t amountOfGroups)
 {
+	auto BlockOneStartIt = startIt; // StartIt - Start Element of Group
+	auto BlockOneEndIt = std::next(BlockOneStartIt, amountOfGroups); //EndIt - Content of End Iterator is NOT included in Group
+	auto BlockTwoStartIt = std::next(BlockOneStartIt, amountOfGroups); // StartIt - Start Element of Group
+	auto BlockTwoEndIt = std::next(BlockTwoStartIt, amountOfGroups); //EndIt - Content of End Iterator is NOT included in Group
 
-	std::cout << "sortWithInsertion" << std::endl;
-	std::cout << "amountOfElements " << amountOfElements << " - nbrsInElement " << nbrsInElement << std::endl;
-	if(nbrsInElement <= 2) // if numbers in block is 2 or less no compare necessary because already sorted in sortToPairs
+	auto BlockOneLastIt = std::prev(BlockOneEndIt); // LastIt - Contains Last Element of Group
+	auto BlockTwoLastIt = std::prev(BlockTwoEndIt); // LastIt - Contains Last Element of Group
+
+	printIterators<T>("First Pair	", BlockOneStartIt, BlockOneEndIt);
+	printIterators<T>("Second Pair	", BlockTwoStartIt, BlockTwoEndIt);
+	printIterators<T>("BlockLastIt	", BlockOneLastIt, BlockTwoLastIt);
+
+	(void)nbrsInEachGroup;
+
+	if(*BlockOneLastIt > *BlockTwoLastIt)
 	{
-		std::cout << GREEN << "Block of 2 already sorted in sortToPairs" << RESET << std::endl;
-		return;
+		std::cout << *BlockOneLastIt << " > " << *BlockTwoLastIt << std::endl;
+		main.insert(main.end(),BlockTwoStartIt, std::next(BlockTwoLastIt));
+		main.insert(main.end(), BlockOneStartIt, std::next(BlockOneLastIt));
 	}
-	ref.size();
-	this->_jakobNumber = jakobsthal_recursive(this->_jakobNumberIdx);
-	std::cout << YELLOW << "JakobIDX " << this->_jakobNumberIdx << ":" << this->_jakobNumber << RESET << std::endl;
-	
-	// TO-DO
-	// temp container pend with bs starting at b2
-	// 
-	T pend;
-	auto BlockJakobStartIt = ref.begin();
-	std::advance(BlockJakobStartIt, _jakobNumber * 2 * (nbrsInElement));
-	// auto BlockJakobEndIt = std::next(BlockJakobStartIt, nbrsInElement - 1);
-	auto BlockJakobEndIt = std::next(BlockJakobStartIt, nbrsInElement);
-	printIterators<T>("-->BlockJakobStartIt", BlockJakobStartIt, BlockJakobEndIt);
+	else
+	{
+		std::cout << *BlockOneLastIt << " < " << *BlockTwoLastIt << std::endl;
+		main.insert(main.end(),BlockOneStartIt, std::next(BlockOneLastIt));
+		main.insert(main.end() ,BlockTwoStartIt, std::next(BlockTwoLastIt));
+	}
+	this->_compareCounter++;
+	std::cout << MAGENTA << "main container" << RESET << std::endl;
+	printContainer(main, 0);
+	std::cout << MAGENTA << "original container" << RESET << std::endl;
+	printContainer(original, 0);
 
-	std::move(BlockJakobStartIt, BlockJakobEndIt, std::back_inserter(pend));
-	ref.erase(BlockJakobStartIt, BlockJakobEndIt);
+	return BlockTwoEndIt;
 
-	printContainer(pend);
-	
-
-
-
-
-
-
-
-	this->_jakobNumberIdx++;
 }
 
 
-template <typename T> void PmergeMe::pairing(T& ref, size_t amountOfElements)
+template <typename T> void PmergeMe::fillOddContainer(T& odd, T& original, T& main)
 {
-	size_t nbrsInElement = ref.size() / amountOfElements;
-	if(nbrsInElement % 2 != 0)
-		nbrsInElement--;
-	if(nbrsInElement < 2)
-		return;
-	this->_levelOfRecursion++;
-	std::cout << RED << "_levelOfRecursion " << _levelOfRecursion << RESET << std::endl;
-	std::cout << "amountOfElements " << amountOfElements << CYAN << " - nbrsInElement " << nbrsInElement << RESET << std::endl;
-	// get Start and End Iterator
-	auto startIt = ref.begin();
-	auto endIt = std::next(startIt, amountOfElements * nbrsInElement);
-	if (nbrsInElement % 2 == 1) 
-	endIt = std::next(startIt, amountOfElements * (nbrsInElement - 1));
+	auto ItIterOriginal = std::next(original.begin(), main.size());
+	auto EndItOriginal = std::next(ItIterOriginal, this->_SizeOfGroup);
+
+	printIterators<T>("ItIter <-> EndItOriginal	", ItIterOriginal, EndItOriginal);
+
+	odd.insert(odd.end(), ItIterOriginal, EndItOriginal);
+}
+
+template <typename T> void PmergeMe::fillRestContainer(T& rest ,T& odd, T& original, T& main)
+{
+	auto ItIterOriginal = std::next(original.begin(), (main.size() + odd.size()));
+	auto EndItOriginal = original.end();
+
+	printIterators<T>("ItIter <-> EndItOriginal	", ItIterOriginal, EndItOriginal);
+
+	rest.insert(rest.end(), ItIterOriginal, EndItOriginal);
+}
+
+template <typename T> void PmergeMe::fillPendContainer(T& pend, T& main)
+{
+	std::cout << GREEN << "take all bs and set it to pend" << RESET << std::endl;
+
+	// auto StartMainIt = main.begin();
+	auto StartMainIt = std::next(main.begin(), this->_SizeOfGroup * 2);
+	auto EndMainIt = std::next(StartMainIt, this->_SizeOfGroup);
+
+	int iteration = 0;
+
+	while (EndMainIt != main.end())
+	{  
+
+		if (iteration % 2 == 0)  // Send to pend on every second iteration
+		{
+			std::cout << "INSERTING TO PEND" << std::endl;
+			pend.insert(pend.end(), StartMainIt, EndMainIt);
+			StartMainIt = main.erase(StartMainIt, EndMainIt); // Update StartMainIt to new position
+		}
+		else
+		{
+			std::advance(StartMainIt, this->_SizeOfGroup);
+		}
+
+		if (StartMainIt == main.end()) break;
+
+		EndMainIt = std::next(StartMainIt, this->_SizeOfGroup);
+		if (EndMainIt > main.end()) 
+			EndMainIt = main.end();
+
+		iteration++;
+	}
+}
+
+template <typename T>	void PmergeMe::printFillContainers(T& pend ,T& odd, T& rest, T& main)
+{
+	std::cout << MAGENTA << "P E N D Container" << RESET << std::endl;
+	printContainer(pend, 0);
+	std::cout << MAGENTA << "O D D Container" << RESET << std::endl;
+	printContainer(odd, 0);
+	std::cout << MAGENTA << "R E S T Container" << RESET << std::endl;
+	printContainer(rest, 0);
+	std::cout << MAGENTA << "M A I N Container" << RESET << std::endl;
+	printContainer(main, 0);
+}
+
+
+
+template <typename T>	void PmergeMe::fillMainContainerWithOdd(T& odd, T& main)
+{
+	std::cout << BG_BLUE << "fillMainContainerWithPend" << RESET << std::endl;
+	auto OddStart = odd.begin();
+	auto OddEnd = odd.end();
+	auto Oddlast = std::prev(OddEnd);
+
+	auto PrevEnd = std::next(main.begin(), this->_SizeOfGroup);
+	auto MainStart = main.begin();
+
+	int i = 0;
+
+	while(odd.size())
+	{
+		MainStart = std::next(main.begin(), this->_SizeOfGroup * i);
+		auto MainEnd = std::next(MainStart, this->_SizeOfGroup);
+		auto MainLastNbr = std::prev(MainEnd);
+
+
+		// std::cout << "*Oddlast < *MainLastNbr "<< *Oddlast << " < " << *MainLastNbr << std::endl;
+
+		this->_compareCounter++;
+		if(*Oddlast < *MainLastNbr)
+		{
+			main.insert(PrevEnd, OddStart, OddEnd);
+			// std::cout << MAGENTA << "Odd Container" << RESET << std::endl;
+			// printContainer(odd, 0);
+
+			odd.erase(OddStart, OddEnd);
+
+			// std::cout << MAGENTA << "Odd Container" << RESET << std::endl;
+			// printContainer(odd, 0);
+			// std::cout <<"------> Odd is inserted to main" << std::endl;
+		}	
+		PrevEnd = MainEnd;
+		i++;
+	}
+	std::cout << BG_BLUE << "fillMainContainerWithPend END" << RESET << std::endl;
+}
+
+
+template <typename T>	void PmergeMe::fillMainContainerWithRest(T& rest, T& main)
+{
+	std::cout << BG_CYAN << "fillMainContainerWithRest" << RESET << std::endl;
+
+	auto RestStart = rest.begin();
+	auto RestEnd = rest.end();
+		
+	main.insert(main.end(), RestStart, RestEnd);
+	rest.erase(RestStart, RestEnd);
+
+	std::cout << BG_CYAN << "fillMainContainerWithRest END" << RESET << std::endl;
+}
+
+
+template <typename T> void PmergeMe::fillingMain(T& main, T& original)
+{
+	std::cout << UNDERLINE << RED << "fillingMain" << RESET << std::endl;
+	std::cout << CYAN << "this->_SizeOfGroup " << this->_SizeOfGroup << RESET << std::endl;
 	
-	sortToPairs<T>(startIt, endIt, amountOfElements);
-	pairing(ref, amountOfElements * 2);
-	printContainer<T>(ref);
-	this->_levelOfRecursion--;
+	size_t lengthMain = main.size();
+	size_t lengthOriginal = original.size();
+
+	size_t diff = lengthOriginal - lengthMain;
+
+	std::cout << GREEN << "diff " << diff << std::endl;
+
+	// not enough elements to fit in the size of group so fill it up to main
+	if(diff < this->_SizeOfGroup)
+	{
+		std::cout << YELLOW << "Rest is too small for a group so fill it up" << RESET << std::endl;
+		auto ItIter = std::next(original.begin(), main.size());
+		auto EndItOriginal = original.end();
+
+		printIterators<T>("ItIter <-> EndItOriginal	", ItIter, EndItOriginal);
+
+		main.insert(main.end(),ItIter, EndItOriginal);
+	}
+	else
+	{
+		T pend;
+		T odd;
+		T rest;
+
+		// at least once there are enough elements to fit in a group so put these elements to odd container
+		std::cout << YELLOW << "HERE COMES THE ODD PART" << RESET << std::endl;
+		//  get start and end Iterator of rest that fits in the current groupsize
+		fillOddContainer(odd, original, main);
+		fillRestContainer(rest, odd, original, main);
+		fillPendContainer(pend, main);
+
+	printFillContainers(pend , odd,  rest,main);
+		fillMainContainerWithPend(pend, main);
+	printFillContainers(pend , odd,  rest,main);
+		fillMainContainerWithOdd(odd, main);
+	printFillContainers(pend , odd,  rest,main);
+		fillMainContainerWithRest(rest, main);		
+	printFillContainers(pend , odd,  rest,main);
+	}
+
+	// std::cout << MAGENTA << "main container" << RESET << std::endl;
+	// printContainer(main, 0);
+	std::cout << UNDERLINE << RED << "fillingMain done" << RESET << std::endl;
+}
+
+template <typename T> void PmergeMe::fillMainContainerWithPend(T& pend, T& main)
+{
+	std::cout << BG_GREEN << "fillMainContainerWithPend" << RESET << std::endl;
+
+	this->_jakobNumber = jakobsthal_recursive(this->_jakobNumberIdx);
+	std::cout << YELLOW << "JakobIDX " << this->_jakobNumberIdx << ":" << this->_jakobNumber << RESET << std::endl;
+	size_t currentIndex = this->_jakobNumber;
+
+	while(pend.size())
+	{
+		auto PendStart = pend.begin();
+		if(currentIndex != 1) // Not tested yet
+			PendStart = std::next(pend.begin(), this->_SizeOfGroup * currentIndex);
+		
+		auto PendEnd = std::next(PendStart, this->_SizeOfGroup);
+		auto PendLastNbr = std::prev(PendEnd);
+
+		// std::cout << "PEND	" << "Start " << *PendStart << " Last " << *PendLastNbr << " End " << *PendEnd << std::endl;
+		if (PendEnd != pend.end()) {
+			std::cout << "PEND " << "Start " << *PendStart << " Last " << *PendLastNbr << " End " << *PendEnd << std::endl;
+		} else {
+			std::cout << "PEND reached end of container!" << std::endl;
+		}
+		int i = 0;
+		auto MainStart = main.begin();
+		auto PrevEnd = std::next(MainStart, this->_SizeOfGroup);
+		while(MainStart != main.end())
+		{
+			MainStart = std::next(main.begin(), this->_SizeOfGroup * i);
+			
+			// not sure if needed or good?!!!?!?
+			if (MainStart == main.end()) {
+				std::cout << "Reached end of main container!" << std::endl;
+				break;
+			}
+
+			auto MainEnd = std::next(MainStart, this->_SizeOfGroup);
+			if (MainEnd > main.end()) 
+				MainEnd = main.end();
+
+			auto MainLastNbr = std::prev(MainEnd);
+			// std::cout << "Main	"<< "Start " << *MainStart << " Last " << *MainLastNbr << " End " << *MainEnd << std::endl;
+			// std::cout << "*PendLastNbr < *MainLastNbr "<< *PendLastNbr << " < " << *MainLastNbr << std::endl;
+			this->_compareCounter++;
+			if(*PendLastNbr < *MainLastNbr)
+			{
+				main.insert(PrevEnd, PendStart, PendEnd);
+				// std::cout << MAGENTA << "PEND Container" << RESET << std::endl;
+				// printContainer(pend, 0);
+
+				this->_bCounter++;
+
+				pend.erase(PendStart, PendEnd);
+
+				// std::cout << MAGENTA << "PEND Container" << RESET << std::endl;
+				// printContainer(pend, 0);
+
+				std::cout <<"------> Pend is inserted to main" << std::endl;
+				this->_jakobNumberIdx++;
+				break;
+			}
+			i++;
+			PrevEnd = MainEnd;
+		}
+		currentIndex--;
+		std::cout << "currentIndex "<< currentIndex << std::endl;
+	}
+	std::cout << YELLOW << "JakobIDX " << this->_jakobNumberIdx << ":" << this->_jakobNumber << RESET << std::endl;
+
+	std::cout << BG_GREEN << "fillMainContainerWithPend END" << RESET << std::endl;
+}
+
+
+template <typename T> void PmergeMe::sortWithInsertion(T& original, size_t nbrsInEachGroup, size_t amountOfGroups)
+{
+	std::cout << "amountOfGroups " << amountOfGroups << CYAN << " - nbrsInEachGroup " << nbrsInEachGroup << RESET << std::endl;
+	std::cout << CYAN << "this->_SizeOfGroup " << this->_SizeOfGroup << RESET << std::endl;
+
+	// if(nbrsInEachGroup <= 2) // if numbers in block is 2 or less no compare necessary because already sorted in sortToPairs
+	// if(this->_SizeOfGroup <= 2) // if numbers in block is 2 or less no compare necessary because already sorted in sortToPairs
+	// {
+	// 	std::cout << GREEN << "Group of 2 already sorted in sortToPairs" << RESET << std::endl;
+	// 	return;
+	// }
+	
+	T main;
+
+
+		// issue
+		// 				|
+		// 				v
+
+	auto iter = original.begin();
+	for ( size_t i = 0; i < nbrsInEachGroup / 2; i++)
+	{
+		iter = sortFirstTwoPairsToMain(iter, main, original, nbrsInEachGroup, amountOfGroups);
+	}
+
+	if(std::prev(original.end()) != std::prev(main.end()))
+		fillingMain(main, original);
+	original = main; //delete original ?? valgrind?!?!
+	
+}
+
+
+template <typename T> void PmergeMe::pairing(T& original, size_t amountOfGroups)
+{
+	size_t nbrsInEachGroup = original.size() / amountOfGroups;
+	if(nbrsInEachGroup < 2)
+		return;
+	
+	this->_SizeOfGroup = this->_SizeOfGroup * 2;
+	this->_levelOfRecursion++;
+	// std::cout << RED << "_levelOfRecursion " << _levelOfRecursion << RESET << std::endl;
+	std::cout << "amountOfGroups " << amountOfGroups << CYAN << " - nbrsInEachGroup " << nbrsInEachGroup << RESET << std::endl;
+
+
+	// Get start and end Iterator of each Group depending on the size of the Group
+	auto startIt = original.begin();
+	auto endIt = std::next(startIt, amountOfGroups * nbrsInEachGroup);
+	if (nbrsInEachGroup % 2 == 1) 
+	endIt = std::next(startIt, amountOfGroups * (nbrsInEachGroup - 1));
+
+
+	std::cout << YELLOW << "-----------------------------------------" << RESET << std::endl;
+
+	std::cout << CYAN << "this->_SizeOfGroup " << this->_SizeOfGroup << RESET << std::endl;
+	sortToPairs<T>(startIt, endIt, amountOfGroups, nbrsInEachGroup);
+	pairing(original, amountOfGroups * 2);
+
+
+	std::cout << GREEN << "------------------------ PAIRING DONE ------------------------" << RESET << std::endl;
+	std::cout << MAGENTA << "original container" << RESET << std::endl;
+	printContainer<T>(original, amountOfGroups);
+
+
 	std::cout << RED << "Start sortWithInsertion " << "_levelOfRecursion " << _levelOfRecursion << RESET << std::endl;
-	sortWithInsertion(ref, nbrsInElement, amountOfElements);
+	sortWithInsertion(original, nbrsInEachGroup, amountOfGroups);
+	this->_levelOfRecursion--;
+	this->_SizeOfGroup = this->_SizeOfGroup / 2;
 }
 
 
@@ -224,3 +540,12 @@ const char* PmergeMe::WrongInputException::what() const noexcept
 {
 	return "PmergeMe Wrong Input";
 }
+
+
+
+
+
+// 2 11 0 16 6 15 8 17 9 18 14 19 3 10 1 21 5 12 4 20 7 13 
+// 2 11 0 16 6 15 8 17 9 18 14 19 5 12 4 20 3 10 1 21 7 13
+
+// ./PmergeMe 11 2 17 0 16 8 6 15 10 3 21 1 18 9 14 19 12 5 4 20 13 7

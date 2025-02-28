@@ -8,18 +8,6 @@
 
 
 
-/****************************************/
-/*			Text Colors 				*/
-/****************************************/
-
-#define BLACK   "\033[30m"
-#define RED     "\033[31m"
-#define GREEN   "\033[32m"
-#define YELLOW  "\033[33m"
-#define BLUE    "\033[34m"
-#define MAGENTA "\033[35m"
-#define CYAN    "\033[36m"
-#define RESET   "\033[0m" 
 
 
 
@@ -33,6 +21,7 @@ int main(int argc, char** argv)
 	try
 	{
 		PmergeMe pm;
+		std::cout << GREEN << "-------- START --------" << RESET << std::endl;
 		pm.run(argc, argv);
 	}
 	catch(const std::exception& e)
@@ -43,3 +32,4 @@ int main(int argc, char** argv)
 
 }
 
+// 11 2 17 0 16 8 6 15 10 3 21 1 18 9 14 19 12 5 4 20 13 7
