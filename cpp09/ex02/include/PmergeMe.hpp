@@ -19,10 +19,11 @@ class PmergeMe
 		std::deque<int>		_deque;
 		int					_compareCounter;
 		int					_jakobNumber;
+		int					_jakobNumberOld;
 		int					_jakobNumberIdx;
 		size_t				_levelOfRecursion;
 		size_t				_SizeOfGroup;
-		size_t				_bCounter;
+		int				_bCounter;
 	
 
 

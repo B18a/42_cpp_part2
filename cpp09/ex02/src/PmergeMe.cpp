@@ -81,6 +81,7 @@ template <typename T> void PmergeMe::sorting(T& original)
 	this->_compareCounter = 0;
 	this->_levelOfRecursion = 0;
 	this->_jakobNumber = 1;
+	this->_jakobNumberOld = 1;
 	this->_jakobNumberIdx = 2;
 	this->_SizeOfGroup = 1;
 	this->_bCounter = 0;
@@ -277,7 +278,7 @@ template <typename T>	void PmergeMe::printFillContainers(T& pend ,T& odd, T& res
 
 template <typename T>	void PmergeMe::fillMainContainerWithOdd(T& odd, T& main)
 {
-	std::cout << BG_BLUE << "fillMainContainerWithPend" << RESET << std::endl;
+	std::cout << BG_BLUE << "fillMainContainerWithOdd" << RESET << std::endl;
 	auto OddStart = odd.begin();
 	auto OddEnd = odd.end();
 	auto Oddlast = std::prev(OddEnd);
@@ -312,7 +313,7 @@ template <typename T>	void PmergeMe::fillMainContainerWithOdd(T& odd, T& main)
 		PrevEnd = MainEnd;
 		i++;
 	}
-	std::cout << BG_BLUE << "fillMainContainerWithPend END" << RESET << std::endl;
+	std::cout << BG_BLUE << "fillMainContainerWithPenOdd END" << RESET << std::endl;
 }
 
 
@@ -368,6 +369,7 @@ template <typename T> void PmergeMe::fillingMain(T& main, T& original)
 
 	printFillContainers(pend , odd,  rest,main);
 		fillMainContainerWithPend(pend, main);
+		pend.erase(pend.begin(), pend.end());
 	printFillContainers(pend , odd,  rest,main);
 		fillMainContainerWithOdd(odd, main);
 	printFillContainers(pend , odd,  rest,main);
@@ -380,75 +382,92 @@ template <typename T> void PmergeMe::fillingMain(T& main, T& original)
 	std::cout << UNDERLINE << RED << "fillingMain done" << RESET << std::endl;
 }
 
+#include<unistd.h>
+
+/*
+if((pend.size() / this->_SizeOfGroup) != 1) //if there are more elements in pend and not only one the start of the insertion must be calculated due to jakob
+		{
+			std::cout << "MORE THAN ONE ELEMENT IN THIS ITERATION " << std::endl;
+			// std::cout << "_jakobNumber" << " " << " - 1 - " << "insertions" <<" < " << "_jakobNumberOld" << std::endl;
+			// std::cout << _jakobNumber << " " << " - 1 - " << insertions <<" < " << _jakobNumberOld << std::endl;
+			// std::cout << _jakobNumber -1- insertions <<" < " << _jakobNumberOld << std::endl;
+
+			// if((_jakobNumber - 1 - insertions) < _jakobNumberOld)
+			if((jakob[idx] - 1 - insertions) < jakob[idx - 1])
+			{
+				std::cout << "UPDATE JAKOB" << std::endl;
+				// printContainer(pend, 0);
+
+				// this->_jakobNumberOld = this->_jakobNumber;
+				// this->_jakobNumberIdx++;
+				// this->_jakobNumber = jakobsthal_recursive(this->_jakobNumberIdx);
+				idx++;
+				// std::cout << YELLOW << "JakobIDX " << this->_jakobNumberIdx << ":" << this->_jakobNumber << " old " << this->_jakobNumberOld << RESET << std::endl;
+				std::cout << YELLOW << "insertions " << insertions << RESET << std::endl;
+			}
+			// PendStart = std::next(pend.begin(), this->_SizeOfGroup * (this->_jakobNumber - insertions - this->_jakobNumberOld));
+			PendStart = std::next(pend.begin(), this->_SizeOfGroup * (jakob[idx] - insertions - jakob[idx-1]));
+		}
+*/
+
 template <typename T> void PmergeMe::fillMainContainerWithPend(T& pend, T& main)
 {
 	std::cout << BG_GREEN << "fillMainContainerWithPend" << RESET << std::endl;
 
-	this->_jakobNumber = jakobsthal_recursive(this->_jakobNumberIdx);
-	std::cout << YELLOW << "JakobIDX " << this->_jakobNumberIdx << ":" << this->_jakobNumber << RESET << std::endl;
-	size_t currentIndex = this->_jakobNumber;
 
-	while(pend.size())
+	// this->_jakobNumberIdx = 2;
+	// this->_jakobNumber = 1;
+
+	// int jakob[] = {0, 1, 1, 3, 5, 11, 21, 43, 85, 171, 341, 683, 1365, 2731, 5461};
+	// int	idx = 2;
+	int insertions = 0;
+
+	// std::cout << YELLOW << "JakobIDX " << this->_jakobNumberIdx << ":" << this->_jakobNumber << " old " << this->_jakobNumberOld << RESET << std::endl;
+
+	size_t size = pend.size();
+
+	while(size)
 	{
 		auto PendStart = pend.begin();
-		if(currentIndex != 1) // Not tested yet
-			PendStart = std::next(pend.begin(), this->_SizeOfGroup * currentIndex);
+
+		if((pend.size() / this->_SizeOfGroup) != 1) //if there are more elements in pend and not only one the start of the insertion must be calculated due to jakob
+		{
+			// PendStart = std::next(pend.begin(), this->_SizeOfGroup * (jakob[idx] - insertions - jakob[idx - 1]));
+			PendStart = std::next(pend.begin(), this->_SizeOfGroup * (insertions));
+		}
+
 		
 		auto PendEnd = std::next(PendStart, this->_SizeOfGroup);
 		auto PendLastNbr = std::prev(PendEnd);
 
-		// std::cout << "PEND	" << "Start " << *PendStart << " Last " << *PendLastNbr << " End " << *PendEnd << std::endl;
 		if (PendEnd != pend.end()) {
-			std::cout << "PEND " << "Start " << *PendStart << " Last " << *PendLastNbr << " End " << *PendEnd << std::endl;
+			std::cout << BG_BRIGHT_RED << "PEND " << "Start " << *PendStart << " Last " << *PendLastNbr << " End " << *PendEnd << RESET << std::endl;
 		} else {
 			std::cout << "PEND reached end of container!" << std::endl;
 		}
-		int i = 0;
+
+
 		auto MainStart = main.begin();
-		auto PrevEnd = std::next(MainStart, this->_SizeOfGroup);
 		while(MainStart != main.end())
 		{
-			MainStart = std::next(main.begin(), this->_SizeOfGroup * i);
-			
-			// not sure if needed or good?!!!?!?
-			if (MainStart == main.end()) {
-				std::cout << "Reached end of main container!" << std::endl;
-				break;
-			}
-
 			auto MainEnd = std::next(MainStart, this->_SizeOfGroup);
-			if (MainEnd > main.end()) 
-				MainEnd = main.end();
-
 			auto MainLastNbr = std::prev(MainEnd);
-			// std::cout << "Main	"<< "Start " << *MainStart << " Last " << *MainLastNbr << " End " << *MainEnd << std::endl;
-			// std::cout << "*PendLastNbr < *MainLastNbr "<< *PendLastNbr << " < " << *MainLastNbr << std::endl;
+
 			this->_compareCounter++;
+
 			if(*PendLastNbr < *MainLastNbr)
 			{
-				main.insert(PrevEnd, PendStart, PendEnd);
-				// std::cout << MAGENTA << "PEND Container" << RESET << std::endl;
-				// printContainer(pend, 0);
-
-				this->_bCounter++;
-
-				pend.erase(PendStart, PendEnd);
-
-				// std::cout << MAGENTA << "PEND Container" << RESET << std::endl;
-				// printContainer(pend, 0);
-
+				main.insert(MainStart, PendStart, PendEnd);
 				std::cout <<"------> Pend is inserted to main" << std::endl;
-				this->_jakobNumberIdx++;
+				std::cout << CYAN << "main CONTAINER after insertion" << RESET << std::endl;
+				printContainer(main, 0);
+				insertions++;
+				size -= this->_SizeOfGroup;
 				break;
 			}
-			i++;
-			PrevEnd = MainEnd;
+			std::advance(MainStart, this->_SizeOfGroup);
 		}
-		currentIndex--;
-		std::cout << "currentIndex "<< currentIndex << std::endl;
 	}
-	std::cout << YELLOW << "JakobIDX " << this->_jakobNumberIdx << ":" << this->_jakobNumber << RESET << std::endl;
-
 	std::cout << BG_GREEN << "fillMainContainerWithPend END" << RESET << std::endl;
 }
 
@@ -481,7 +500,10 @@ template <typename T> void PmergeMe::sortWithInsertion(T& original, size_t nbrsI
 	if(std::prev(original.end()) != std::prev(main.end()))
 		fillingMain(main, original);
 	original = main; //delete original ?? valgrind?!?!
-	
+
+
+	// 	// Update the main sequence of elements
+	// std::copy( mainChain.begin(), mainChain.end(), data.begin() );
 }
 
 
