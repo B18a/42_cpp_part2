@@ -117,12 +117,12 @@ void 	PmergeMe::sortToPairs(typename T::iterator startIt, typename T::iterator e
 			auto BlockOneStartIt = newIt;
 			auto BlockOneEndIt = std::next(BlockOneStartIt, amountOfGroups);
 			// printIterators<T>("Before ONE", BlockOneStartIt, BlockOneEndIt);
+			_compareCounter++;
 			if(*BlockOneStartIt > *BlockOneEndIt)
 			{
 				// std::cout << "Swap " << *BlockOneStartIt << " > " << *BlockOneEndIt << std::endl;
 				std::iter_swap(BlockOneStartIt, BlockOneEndIt);
 			}
-			_compareCounter++;
 			// printIterators<T>("After ONE", BlockOneStartIt, BlockOneEndIt);
 		}
 		else
@@ -140,18 +140,18 @@ void 	PmergeMe::sortToPairs(typename T::iterator startIt, typename T::iterator e
 			// if (BlockTwoStartIt >= endIt || BlockTwoEndIt > endIt) // or line below?!?!? 
 			if (BlockTwoStartIt >= endIt || BlockTwoEndIt > endIt || nbrsInEachGroup <= 2) 
 			{
-				std::cout << RED << "              break\n" << RESET;
+				std::cout << YELLOW << "              break\n" << RESET;
 				this->_SizeOfGroup = this->_SizeOfGroup / 2;
 				break;
 			}
-			std::cout << RED << "                  no break\n" << RESET;
+			std::cout << YELLOW << "                  no break\n" << RESET;
 			std::cout << "Comparison " << *BlockOneEndIt << " > " << *BlockTwoEndIt << std::endl;
+			_compareCounter++;
 			if(*BlockOneEndIt > *BlockTwoEndIt)
 			{
 				std::cout << "Swap " << *BlockOneEndIt << " > " << *BlockTwoEndIt << std::endl;
 				std::swap_ranges(BlockOneStartIt, BlockTwoStartIt, BlockTwoStartIt);
 			}
-			_compareCounter++;
 			printIterators<T>("After ONE", BlockOneStartIt, BlockOneEndIt);
 			printIterators<T>("After TWO", BlockTwoStartIt, BlockTwoEndIt);
 		}	
@@ -231,7 +231,18 @@ template <typename T> void PmergeMe::fillRestContainer(T& rest ,T& odd, T& origi
 
 	printIterators<T>("ItIter <-> EndItOriginal	", ItIterOriginal, EndItOriginal);
 
-	rest.insert(rest.end(), ItIterOriginal, EndItOriginal);
+	std::cout << "Trying to insert from " 
+		<< std::distance(original.begin(), ItIterOriginal) 
+		<< " to " 
+		<< std::distance(original.begin(), EndItOriginal) 
+		<< std::endl;
+
+	if (ItIterOriginal < EndItOriginal) {
+		rest.insert(rest.end(), ItIterOriginal, EndItOriginal);
+	} else {
+		std::cerr << "Skipping insert: No elements left to insert in rest\n";
+	}
+	
 }
 
 template <typename T> void PmergeMe::fillPendContainer(T& pend, T& main)
@@ -309,9 +320,9 @@ template <typename T>	void PmergeMe::fillMainContainerWithOdd(T& odd, T& main)
 			main.insert(PrevEnd, OddStart, OddEnd);
 			// std::cout << MAGENTA << "Odd Container" << RESET << std::endl;
 			// printContainer(odd, 0);
-
+			
 			odd.erase(OddStart, OddEnd);
-
+			
 			// std::cout << MAGENTA << "Odd Container" << RESET << std::endl;
 			// printContainer(odd, 0);
 			// std::cout <<"------> Odd is inserted to main" << std::endl;
@@ -339,7 +350,7 @@ template <typename T>	void PmergeMe::fillMainContainerWithRest(T& rest, T& main)
 
 template <typename T> void PmergeMe::fillingMain(T& main, T& original)
 {
-	std::cout << UNDERLINE << RED << "fillingMain" << RESET << std::endl;
+	std::cout << UNDERLINE << YELLOW << "fillingMain" << RESET << std::endl;
 	std::cout << CYAN << "this->_SizeOfGroup " << this->_SizeOfGroup << RESET << std::endl;
 	
 	size_t lengthMain = main.size();
@@ -350,7 +361,7 @@ template <typename T> void PmergeMe::fillingMain(T& main, T& original)
 	std::cout << GREEN << "diff " << diff << std::endl;
 
 	// not enough elements to fit in the size of group so fill it up to main
-	if(diff < this->_SizeOfGroup)
+	if(this->_SizeOfGroup != 1 && diff < this->_SizeOfGroup)
 	{
 		std::cout << YELLOW << "Rest is too small for a group so fill it up" << RESET << std::endl;
 		auto ItIter = std::next(original.begin(), main.size());
@@ -385,7 +396,7 @@ template <typename T> void PmergeMe::fillingMain(T& main, T& original)
 
 	// std::cout << MAGENTA << "main container" << RESET << std::endl;
 	// printContainer(main, 0);
-	std::cout << UNDERLINE << RED << "fillingMain done" << RESET << std::endl;
+	std::cout << UNDERLINE << YELLOW << "fillingMain done" << RESET << std::endl;
 }
 
 
@@ -420,10 +431,10 @@ template <typename T> void PmergeMe::fillMainContainerWithPend(T& pend, T& main)
 
 		// Not needed !?!?!
 		if (PendEnd != pend.end()) {
-			std::cout << BG_BRIGHT_RED << "PEND " << "Start " << *PendStart << " Last " << *PendLastNbr << " End " << *PendEnd << RESET << std::endl;
+			std::cout << BG_BRIGHT_YELLOW << "PEND " << "Start " << *PendStart << " Last " << *PendLastNbr << " End " << *PendEnd << RESET << std::endl;
 		} else {
 			std::cout << "PEND reached end of container!" << std::endl;
-			std::cout << BG_BRIGHT_RED << "PEND " << "Start " << *PendStart << " Last " << *PendLastNbr << " End " << *PendEnd << RESET << std::endl;
+			std::cout << BG_BRIGHT_YELLOW << "PEND " << "Start " << *PendStart << " Last " << *PendLastNbr << " End " << *PendEnd << RESET << std::endl;
 		}
 
 
@@ -433,8 +444,8 @@ template <typename T> void PmergeMe::fillMainContainerWithPend(T& pend, T& main)
 			auto MainEnd = std::next(MainStart, this->_SizeOfGroup);
 			auto MainLastNbr = std::prev(MainEnd);
 
+			
 			this->_compareCounter++;
-
 			if(*PendLastNbr <= *MainLastNbr)
 			{
 				main.insert(MainStart, PendStart, PendEnd);
@@ -470,7 +481,9 @@ template <typename T> void PmergeMe::sortWithInsertion(T& original, size_t nbrsI
 		// issue
 		// 				|
 		// 				v
+		// issue solved -> NAMING!!!!!!
 
+	// Copying full elements to main to be able to work with main.size() <- maybe change and make with variable length instead of a container?!?!?!
 	auto iter = original.begin();
 	for ( size_t i = 0; i < nbrsInEachGroup / 2; i++)
 	{
@@ -496,7 +509,7 @@ template <typename T> void PmergeMe::pairing(T& original, size_t amountOfGroups)
 	
 	this->_SizeOfGroup = this->_SizeOfGroup * 2;
 	this->_levelOfRecursion++;
-	// std::cout << RED << "_levelOfRecursion " << _levelOfRecursion << RESET << std::endl;
+	// std::cout << YELLOW << "_levelOfRecursion " << _levelOfRecursion << RESET << std::endl;
 	std::cout << "amountOfGroups " << amountOfGroups << CYAN << " - nbrsInEachGroup " << nbrsInEachGroup << RESET << std::endl;
 
 
@@ -519,7 +532,7 @@ template <typename T> void PmergeMe::pairing(T& original, size_t amountOfGroups)
 	printContainer<T>(original, amountOfGroups);
 
 
-	std::cout << RED << "Start sortWithInsertion " << "_levelOfRecursion " << _levelOfRecursion << RESET << std::endl;
+	std::cout << YELLOW << "Start sortWithInsertion " << "_levelOfRecursion " << _levelOfRecursion << RESET << std::endl;
 	sortWithInsertion(original, nbrsInEachGroup, amountOfGroups);
 	this->_levelOfRecursion--;
 	this->_SizeOfGroup = this->_SizeOfGroup / 2;
