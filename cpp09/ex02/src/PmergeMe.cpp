@@ -217,6 +217,7 @@ template <typename T> typename T::iterator PmergeMe::sortFirstTwoPairsToMain(typ
 template <typename T> void PmergeMe::fillOddContainer(T& odd, T& original, T& main)
 {
 	std::cout << BG_MAGENTA << "fillOddContainer" << RESET << std::endl;
+
 	auto ItIterOriginal = std::next(original.begin(), main.size());
 	auto EndItOriginal = std::next(ItIterOriginal, this->_SizeOfGroup);
 	
@@ -232,8 +233,6 @@ template <typename T> void PmergeMe::fillOddContainer(T& odd, T& original, T& ma
 		std::cerr << "Skipping insert: No elements left to insert in ODD\n";
 	}
 	
-	// old approach
-	// odd.insert(odd.end(), ItIterOriginal, EndItOriginal);
 	std::cout << BG_MAGENTA << "fillOddContainer END" << RESET << std::endl;
 }
 
@@ -463,6 +462,7 @@ template <typename T> void PmergeMe::fillMainContainerWithPend(T& pend, T& main)
 
 			
 			this->_compareCounter++;
+			std::cout << "PendLastNbr " << *PendLastNbr << " MainLastNbr " << *MainLastNbr << std::endl;
 			if(*PendLastNbr <= *MainLastNbr)
 			{
 				main.insert(MainStart, PendStart, PendEnd);
