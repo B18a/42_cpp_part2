@@ -210,18 +210,31 @@ template <typename T> typename T::iterator PmergeMe::sortFirstTwoPairsToMain(typ
 
 	std::cout << BG_MAGENTA << "sortFirstTwoPairsToMain END" << RESET << std::endl;
 	return BlockTwoEndIt;
-
+	
 }
 
 
 template <typename T> void PmergeMe::fillOddContainer(T& odd, T& original, T& main)
 {
+	std::cout << BG_MAGENTA << "fillOddContainer" << RESET << std::endl;
 	auto ItIterOriginal = std::next(original.begin(), main.size());
 	auto EndItOriginal = std::next(ItIterOriginal, this->_SizeOfGroup);
-
+	
 	printIterators<T>("ItIter <-> EndItOriginal	", ItIterOriginal, EndItOriginal);
-
-	odd.insert(odd.end(), ItIterOriginal, EndItOriginal);
+	
+	std::cout << &(*original.end()) << " " << (*original.end()) << std::endl;
+	if(ItIterOriginal == original.end())
+		return;
+	// Maybe!?!?!?
+	if (ItIterOriginal < EndItOriginal) {
+		odd.insert(odd.end(), ItIterOriginal, EndItOriginal);
+	} else {
+		std::cerr << "Skipping insert: No elements left to insert in ODD\n";
+	}
+	
+	// old approach
+	// odd.insert(odd.end(), ItIterOriginal, EndItOriginal);
+	std::cout << BG_MAGENTA << "fillOddContainer END" << RESET << std::endl;
 }
 
 template <typename T> void PmergeMe::fillRestContainer(T& rest ,T& odd, T& original, T& main)
@@ -242,7 +255,6 @@ template <typename T> void PmergeMe::fillRestContainer(T& rest ,T& odd, T& origi
 	} else {
 		std::cerr << "Skipping insert: No elements left to insert in rest\n";
 	}
-	
 }
 
 template <typename T> void PmergeMe::fillPendContainer(T& pend, T& main)
@@ -330,7 +342,7 @@ template <typename T>	void PmergeMe::fillMainContainerWithOdd(T& odd, T& main)
 		PrevEnd = MainEnd;
 		i++;
 	}
-	std::cout << BG_BLUE << "fillMainContainerWithPenOdd END" << RESET << std::endl;
+	std::cout << BG_BLUE << "fillMainContainerWithOdd END" << RESET << std::endl;
 }
 
 
@@ -376,12 +388,17 @@ template <typename T> void PmergeMe::fillingMain(T& main, T& original)
 		T pend;
 		T odd;
 		T rest;
+		
+	printFillContainers(pend , odd,  rest,main);
 
 		// at least once there are enough elements to fit in a group so put these elements to odd container
 		std::cout << YELLOW << "HERE COMES THE ODD PART" << RESET << std::endl;
 		//  get start and end Iterator of rest that fits in the current groupsize
+	printFillContainers(pend , odd,  rest,main);
 		fillOddContainer(odd, original, main);
+	printFillContainers(pend , odd,  rest,main);
 		fillRestContainer(rest, odd, original, main);
+	printFillContainers(pend , odd,  rest,main);
 		fillPendContainer(pend, main);
 
 	printFillContainers(pend , odd,  rest,main);
