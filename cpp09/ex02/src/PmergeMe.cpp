@@ -134,8 +134,8 @@ void 	PmergeMe::sortToPairs(typename T::iterator startIt, typename T::iterator e
 			auto BlockTwoStartIt = std::next(BlockOneStartIt, amountOfGroups);
 			auto BlockTwoEndIt = std::next(BlockTwoStartIt, amountOfGroups - 1);
 		
-			// printIterators<T>("Before ONE", BlockOneStartIt, BlockOneEndIt);
-			// printIterators<T>("Before TWO", BlockTwoStartIt, BlockTwoEndIt);
+			printIterators<T>("Before ONE", BlockOneStartIt, BlockOneEndIt);
+			printIterators<T>("Before TWO", BlockTwoStartIt, BlockTwoEndIt);
 
 			// if (BlockTwoStartIt >= endIt || BlockTwoEndIt > endIt) // or line below?!?!? 
 			if (BlockTwoStartIt >= endIt || BlockTwoEndIt > endIt || nbrsInEachGroup <= 2) 
@@ -145,15 +145,15 @@ void 	PmergeMe::sortToPairs(typename T::iterator startIt, typename T::iterator e
 				break;
 			}
 			std::cout << RED << "                  no break\n" << RESET;
-			// std::cout << "Comparison " << *BlockOneEndIt << " > " << *BlockTwoEndIt << std::endl;
+			std::cout << "Comparison " << *BlockOneEndIt << " > " << *BlockTwoEndIt << std::endl;
 			if(*BlockOneEndIt > *BlockTwoEndIt)
 			{
-				// std::cout << "Swap " << *BlockOneEndIt << " > " << *BlockTwoEndIt << std::endl;
+				std::cout << "Swap " << *BlockOneEndIt << " > " << *BlockTwoEndIt << std::endl;
 				std::swap_ranges(BlockOneStartIt, BlockTwoStartIt, BlockTwoStartIt);
 			}
 			_compareCounter++;
-			// printIterators<T>("After ONE", BlockOneStartIt, BlockOneEndIt);
-			// printIterators<T>("After TWO", BlockTwoStartIt, BlockTwoEndIt);
+			printIterators<T>("After ONE", BlockOneStartIt, BlockOneEndIt);
+			printIterators<T>("After TWO", BlockTwoStartIt, BlockTwoEndIt);
 		}	
 		std::advance(newIt, 2 * amountOfGroups);
 	}
@@ -169,8 +169,12 @@ unsigned long long PmergeMe::jakobsthal_recursive(int n)
 
 
 
-template <typename T> typename T::iterator PmergeMe::sortFirstTwoPairsToMain(typename T::iterator startIt, T& main, T& original, size_t nbrsInEachGroup, size_t amountOfGroups)
+template <typename T> typename T::iterator PmergeMe::sortFirstTwoPairsToMain(typename T::iterator startIt, T& main, T& original, size_t amountOfGroups)
 {
+
+	std::cout << BG_MAGENTA << "sortFirstTwoPairsToMain" << RESET << std::endl;
+
+
 	auto BlockOneStartIt = startIt; // StartIt - Start Element of Group
 	auto BlockOneEndIt = std::next(BlockOneStartIt, amountOfGroups); //EndIt - Content of End Iterator is NOT included in Group
 	auto BlockTwoStartIt = std::next(BlockOneStartIt, amountOfGroups); // StartIt - Start Element of Group
@@ -183,26 +187,28 @@ template <typename T> typename T::iterator PmergeMe::sortFirstTwoPairsToMain(typ
 	printIterators<T>("Second Pair	", BlockTwoStartIt, BlockTwoEndIt);
 	printIterators<T>("BlockLastIt	", BlockOneLastIt, BlockTwoLastIt);
 
-	(void)nbrsInEachGroup;
+	// (void)nbrsInEachGroup;
 
-	if(*BlockOneLastIt > *BlockTwoLastIt)
-	{
-		std::cout << *BlockOneLastIt << " > " << *BlockTwoLastIt << std::endl;
-		main.insert(main.end(),BlockTwoStartIt, std::next(BlockTwoLastIt));
-		main.insert(main.end(), BlockOneStartIt, std::next(BlockOneLastIt));
-	}
-	else
-	{
-		std::cout << *BlockOneLastIt << " < " << *BlockTwoLastIt << std::endl;
+	// if(*BlockOneLastIt > *BlockTwoLastIt)
+	// {
+	// 	std::cout << *BlockOneLastIt << " > > >" << *BlockTwoLastIt << std::endl;
+	// 	main.insert(main.end(),BlockTwoStartIt, std::next(BlockTwoLastIt));
+	// 	main.insert(main.end(), BlockOneStartIt, std::next(BlockOneLastIt));
+	// }
+	// else
+	// {
+		// std::cout << *BlockOneLastIt << " < < < " << *BlockTwoLastIt << std::endl;
 		main.insert(main.end(),BlockOneStartIt, std::next(BlockOneLastIt));
 		main.insert(main.end() ,BlockTwoStartIt, std::next(BlockTwoLastIt));
-	}
-	this->_compareCounter++;
+	// }
+	// this->_compareCounter++;
 	std::cout << MAGENTA << "main container" << RESET << std::endl;
 	printContainer(main, 0);
 	std::cout << MAGENTA << "original container" << RESET << std::endl;
 	printContainer(original, 0);
 
+
+	std::cout << BG_MAGENTA << "sortFirstTwoPairsToMain END" << RESET << std::endl;
 	return BlockTwoEndIt;
 
 }
@@ -382,33 +388,7 @@ template <typename T> void PmergeMe::fillingMain(T& main, T& original)
 	std::cout << UNDERLINE << RED << "fillingMain done" << RESET << std::endl;
 }
 
-#include<unistd.h>
 
-/*
-if((pend.size() / this->_SizeOfGroup) != 1) //if there are more elements in pend and not only one the start of the insertion must be calculated due to jakob
-		{
-			std::cout << "MORE THAN ONE ELEMENT IN THIS ITERATION " << std::endl;
-			// std::cout << "_jakobNumber" << " " << " - 1 - " << "insertions" <<" < " << "_jakobNumberOld" << std::endl;
-			// std::cout << _jakobNumber << " " << " - 1 - " << insertions <<" < " << _jakobNumberOld << std::endl;
-			// std::cout << _jakobNumber -1- insertions <<" < " << _jakobNumberOld << std::endl;
-
-			// if((_jakobNumber - 1 - insertions) < _jakobNumberOld)
-			if((jakob[idx] - 1 - insertions) < jakob[idx - 1])
-			{
-				std::cout << "UPDATE JAKOB" << std::endl;
-				// printContainer(pend, 0);
-
-				// this->_jakobNumberOld = this->_jakobNumber;
-				// this->_jakobNumberIdx++;
-				// this->_jakobNumber = jakobsthal_recursive(this->_jakobNumberIdx);
-				idx++;
-				// std::cout << YELLOW << "JakobIDX " << this->_jakobNumberIdx << ":" << this->_jakobNumber << " old " << this->_jakobNumberOld << RESET << std::endl;
-				std::cout << YELLOW << "insertions " << insertions << RESET << std::endl;
-			}
-			// PendStart = std::next(pend.begin(), this->_SizeOfGroup * (this->_jakobNumber - insertions - this->_jakobNumberOld));
-			PendStart = std::next(pend.begin(), this->_SizeOfGroup * (jakob[idx] - insertions - jakob[idx-1]));
-		}
-*/
 
 template <typename T> void PmergeMe::fillMainContainerWithPend(T& pend, T& main)
 {
@@ -455,7 +435,7 @@ template <typename T> void PmergeMe::fillMainContainerWithPend(T& pend, T& main)
 
 			this->_compareCounter++;
 
-			if(*PendLastNbr < *MainLastNbr)
+			if(*PendLastNbr <= *MainLastNbr)
 			{
 				main.insert(MainStart, PendStart, PendEnd);
 				std::cout <<"------> Pend is inserted to main" << std::endl;
@@ -494,14 +474,15 @@ template <typename T> void PmergeMe::sortWithInsertion(T& original, size_t nbrsI
 	auto iter = original.begin();
 	for ( size_t i = 0; i < nbrsInEachGroup / 2; i++)
 	{
-		iter = sortFirstTwoPairsToMain(iter, main, original, nbrsInEachGroup, amountOfGroups);
+		iter = sortFirstTwoPairsToMain(iter, main, original, amountOfGroups);
 	}
 
 	if(std::prev(original.end()) != std::prev(main.end()))
 		fillingMain(main, original);
+
+
+
 	original = main; //delete original ?? valgrind?!?!
-
-
 	// 	// Update the main sequence of elements
 	// std::copy( mainChain.begin(), mainChain.end(), data.begin() );
 }
