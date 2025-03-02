@@ -295,10 +295,10 @@ template <typename T>	void PmergeMe::fillMainContainerWithOdd(T& odd, T& main)
 		auto MainLastNbr = std::prev(MainEnd);
 
 
-		// std::cout << "*Oddlast < *MainLastNbr "<< *Oddlast << " < " << *MainLastNbr << std::endl;
+		std::cout << "*Oddlast < *MainLastNbr "<< *Oddlast << " < " << *MainLastNbr << std::endl;
 
 		this->_compareCounter++;
-		if(*Oddlast < *MainLastNbr)
+		if(*Oddlast <= *MainLastNbr)
 		{
 			main.insert(PrevEnd, OddStart, OddEnd);
 			// std::cout << MAGENTA << "Odd Container" << RESET << std::endl;
@@ -429,21 +429,21 @@ template <typename T> void PmergeMe::fillMainContainerWithPend(T& pend, T& main)
 	while(size)
 	{
 		auto PendStart = pend.begin();
-
-		if((pend.size() / this->_SizeOfGroup) != 1) //if there are more elements in pend and not only one the start of the insertion must be calculated due to jakob
-		{
-			// PendStart = std::next(pend.begin(), this->_SizeOfGroup * (jakob[idx] - insertions - jakob[idx - 1]));
-			PendStart = std::next(pend.begin(), this->_SizeOfGroup * (insertions));
-		}
-
+		
+		//if there are more elements in pend and not only one the start of the insertion must be calculated due to jakob
+		if((pend.size() / this->_SizeOfGroup) != 1) 
+		PendStart = std::next(pend.begin(), this->_SizeOfGroup * (insertions));
 		
 		auto PendEnd = std::next(PendStart, this->_SizeOfGroup);
 		auto PendLastNbr = std::prev(PendEnd);
 
+
+		// Not needed !?!?!
 		if (PendEnd != pend.end()) {
 			std::cout << BG_BRIGHT_RED << "PEND " << "Start " << *PendStart << " Last " << *PendLastNbr << " End " << *PendEnd << RESET << std::endl;
 		} else {
 			std::cout << "PEND reached end of container!" << std::endl;
+			std::cout << BG_BRIGHT_RED << "PEND " << "Start " << *PendStart << " Last " << *PendLastNbr << " End " << *PendEnd << RESET << std::endl;
 		}
 
 
