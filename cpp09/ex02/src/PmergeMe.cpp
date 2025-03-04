@@ -169,10 +169,10 @@ unsigned long long PmergeMe::jakobsthal_recursive(int n)
 
 
 
-template <typename T> typename T::iterator PmergeMe::sortFirstTwoPairsToMain(typename T::iterator startIt, T& main, T& original, size_t amountOfGroups)
+template <typename T> typename T::iterator PmergeMe::fillMainBlockWise(typename T::iterator startIt, T& main, T& original, size_t amountOfGroups)
 {
 
-	std::cout << BG_MAGENTA << "sortFirstTwoPairsToMain" << RESET << std::endl;
+	std::cout << BG_MAGENTA << "fillMainBlockWise" << RESET << std::endl;
 
 
 	auto BlockOneStartIt = startIt; // StartIt - Start Element of Group
@@ -187,28 +187,16 @@ template <typename T> typename T::iterator PmergeMe::sortFirstTwoPairsToMain(typ
 	printIterators<T>("Second Pair	", BlockTwoStartIt, BlockTwoEndIt);
 	printIterators<T>("BlockLastIt	", BlockOneLastIt, BlockTwoLastIt);
 
-	// (void)nbrsInEachGroup;
+	main.insert(main.end(),BlockOneStartIt, std::next(BlockOneLastIt));
+	main.insert(main.end() ,BlockTwoStartIt, std::next(BlockTwoLastIt));
 
-	// if(*BlockOneLastIt > *BlockTwoLastIt)
-	// {
-	// 	std::cout << *BlockOneLastIt << " > > >" << *BlockTwoLastIt << std::endl;
-	// 	main.insert(main.end(),BlockTwoStartIt, std::next(BlockTwoLastIt));
-	// 	main.insert(main.end(), BlockOneStartIt, std::next(BlockOneLastIt));
-	// }
-	// else
-	// {
-		// std::cout << *BlockOneLastIt << " < < < " << *BlockTwoLastIt << std::endl;
-		main.insert(main.end(),BlockOneStartIt, std::next(BlockOneLastIt));
-		main.insert(main.end() ,BlockTwoStartIt, std::next(BlockTwoLastIt));
-	// }
-	// this->_compareCounter++;
 	std::cout << MAGENTA << "main container" << RESET << std::endl;
 	printContainer(main, 0);
 	std::cout << MAGENTA << "original container" << RESET << std::endl;
 	printContainer(original, 0);
 
 
-	std::cout << BG_MAGENTA << "sortFirstTwoPairsToMain END" << RESET << std::endl;
+	std::cout << BG_MAGENTA << "fillMainBlockWise END" << RESET << std::endl;
 	return BlockTwoEndIt;
 	
 }
@@ -359,9 +347,9 @@ template <typename T>	void PmergeMe::fillMainContainerWithRest(T& rest, T& main)
 }
 
 
-template <typename T> void PmergeMe::fillingMain(T& main, T& original)
+template <typename T> void PmergeMe::extraordinarySorting(T& main, T& original)
 {
-	std::cout << UNDERLINE << YELLOW << "fillingMain" << RESET << std::endl;
+	std::cout << UNDERLINE << YELLOW << "extraordinarySorting" << RESET << std::endl;
 	std::cout << CYAN << "this->_SizeOfGroup " << this->_SizeOfGroup << RESET << std::endl;
 	
 	size_t lengthMain = main.size();
@@ -412,7 +400,7 @@ template <typename T> void PmergeMe::fillingMain(T& main, T& original)
 
 	// std::cout << MAGENTA << "main container" << RESET << std::endl;
 	// printContainer(main, 0);
-	std::cout << UNDERLINE << YELLOW << "fillingMain done" << RESET << std::endl;
+	std::cout << UNDERLINE << YELLOW << "extraordinarySorting done" << RESET << std::endl;
 }
 
 
@@ -484,37 +472,19 @@ template <typename T> void PmergeMe::sortWithInsertion(T& original, size_t nbrsI
 {
 	std::cout << "amountOfGroups " << amountOfGroups << CYAN << " - nbrsInEachGroup " << nbrsInEachGroup << RESET << std::endl;
 	std::cout << CYAN << "this->_SizeOfGroup " << this->_SizeOfGroup << RESET << std::endl;
-
-	// if(nbrsInEachGroup <= 2) // if numbers in block is 2 or less no compare necessary because already sorted in sortToPairs
-	// if(this->_SizeOfGroup <= 2) // if numbers in block is 2 or less no compare necessary because already sorted in sortToPairs
-	// {
-	// 	std::cout << GREEN << "Group of 2 already sorted in sortToPairs" << RESET << std::endl;
-	// 	return;
-	// }
 	
 	T main;
 
-
-		// issue
-		// 				|
-		// 				v
-		// issue solved -> NAMING!!!!!!
-
-	// Copying full elements to main to be able to work with main.size() <- maybe change and make with variable length instead of a container?!?!?!
 	auto iter = original.begin();
 	for ( size_t i = 0; i < nbrsInEachGroup / 2; i++)
 	{
-		iter = sortFirstTwoPairsToMain(iter, main, original, amountOfGroups);
+		iter = fillMainBlockWise(iter, main, original, amountOfGroups);
 	}
 
-	if(std::prev(original.end()) != std::prev(main.end()))
-		fillingMain(main, original);
+	// if(std::prev(original.end()) != std::prev(main.end()))
+		extraordinarySorting(main, original);
 
-
-
-	// original = main; //delete original ?? valgrind?!?!
-	// 	// Update the main sequence of elements
-	std::copy( main.begin(), main.end(), original.begin() );
+	std::copy(main.begin(), main.end(), original.begin());
 }
 
 

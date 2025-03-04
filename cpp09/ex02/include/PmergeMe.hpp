@@ -41,8 +41,8 @@ class PmergeMe
 		template <typename T>	void pairing(T& original, size_t amountOfElements);
 		template <typename T>	void sortToPairs(typename T::iterator startIt, typename T::iterator endIt, size_t amountOfElements, size_t nbrsInElement);
 		template <typename T>	void sortWithInsertion(T& original, size_t nbrsInEachGroup, size_t amountOfGroups);
-		template <typename T>	typename T::iterator sortFirstTwoPairsToMain(typename T::iterator startIt, T& main, T& original, size_t amountOfGroups);
-		template <typename T>	void fillingMain(T& main, T& original);
+		template <typename T>	typename T::iterator fillMainBlockWise(typename T::iterator startIt, T& main, T& original, size_t amountOfGroups);
+		template <typename T>	void extraordinarySorting(T& main, T& original);
 		template <typename T>	void fillOddContainer(T& odd, T& original, T& main);
 		template <typename T>	void fillRestContainer(T& rest ,T& odd, T& original, T& main);
 		template <typename T>	void fillPendContainer(T& pend, T& main);
