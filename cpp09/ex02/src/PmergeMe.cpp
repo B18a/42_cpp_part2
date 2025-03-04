@@ -77,7 +77,7 @@ void PmergeMe::fillContainer(int argc, char** argv)
 
 template <typename T> void PmergeMe::sorting(T& original)
 {
-	T main;
+	// T main;
 	this->_compareCounter = 0;
 	this->_levelOfRecursion = 0;
 	this->_jakobNumber = 1;
@@ -93,7 +93,7 @@ template <typename T> void PmergeMe::sorting(T& original)
 	// std::cout << "Compares : " << this->_compareCounter << std::endl;
 
 	std::cout << CYAN << "Main Container" << RESET << std::endl;
-	printContainer<T>(main, 0);
+	printContainer<T>(original, 0);
 	std::cout << BG_CYAN << "_compareCounter " << this->_compareCounter << RESET << std::endl;
 
 }
@@ -512,9 +512,9 @@ template <typename T> void PmergeMe::sortWithInsertion(T& original, size_t nbrsI
 
 
 
-	original = main; //delete original ?? valgrind?!?!
+	// original = main; //delete original ?? valgrind?!?!
 	// 	// Update the main sequence of elements
-	// std::copy( mainChain.begin(), mainChain.end(), data.begin() );
+	std::copy( main.begin(), main.end(), original.begin() );
 }
 
 
