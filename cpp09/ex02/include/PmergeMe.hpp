@@ -41,6 +41,7 @@ class PmergeMe
 		template <typename T>	void pairing(T& original, size_t amountOfElements);
 		template <typename T>	void sortToPairs(typename T::iterator startIt, typename T::iterator endIt, size_t amountOfElements, size_t nbrsInElement);
 		template <typename T>	void sortWithInsertion(T& original, size_t nbrsInEachGroup, size_t amountOfGroups);
+		template <typename T>	void retrySorting(T& original, size_t nbrsInEachGroup, size_t amountOfGroups);
 		template <typename T>	typename T::iterator fillMainBlockWise(typename T::iterator startIt, T& main, T& original, size_t amountOfGroups);
 		template <typename T>	void extraordinarySorting(T& main, T& original);
 		template <typename T>	void fillOddContainer(T& odd, T& original, T& main);
@@ -50,6 +51,10 @@ class PmergeMe
 		template <typename T>	void fillMainContainerWithOdd(T& odd, T& main);
 		template <typename T>	void fillMainContainerWithRest(T& rest, T& main);
 		template <typename T>	void printFillContainers(T& rest ,T& odd, T& original, T& main);
+
+
+		template <typename T>	bool validateIterator(typename T::iterator BeginIt, typename T::iterator EndIt, size_t position);
+		template <typename T>	void first(T& main, T& rest, T& odd, T& pend);
 
 
 		class WrongInputException : public std::exception {

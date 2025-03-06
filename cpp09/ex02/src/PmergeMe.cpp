@@ -108,6 +108,7 @@ void 	PmergeMe::sortToPairs(typename T::iterator startIt, typename T::iterator e
 	auto newIt = startIt;
 	while (newIt != endIt)
 	{
+
 		// if(amountOfGroups * 2 == 2)
 		if(this->_SizeOfGroup == 2)
 		{
@@ -116,14 +117,14 @@ void 	PmergeMe::sortToPairs(typename T::iterator startIt, typename T::iterator e
 			// std::cout << "Update Iterators 2\n";
 			auto BlockOneStartIt = newIt;
 			auto BlockOneEndIt = std::next(BlockOneStartIt, amountOfGroups);
-			// printIterators<T>("Before ONE", BlockOneStartIt, BlockOneEndIt);
+			printIterators<T>("Before ONE", BlockOneStartIt, BlockOneEndIt);
 			_compareCounter++;
 			if(*BlockOneStartIt > *BlockOneEndIt)
 			{
 				// std::cout << "Swap " << *BlockOneStartIt << " > " << *BlockOneEndIt << std::endl;
 				std::iter_swap(BlockOneStartIt, BlockOneEndIt);
 			}
-			// printIterators<T>("After ONE", BlockOneStartIt, BlockOneEndIt);
+			printIterators<T>("After ONE", BlockOneStartIt, BlockOneEndIt);
 		}
 		else
 		{
@@ -137,8 +138,9 @@ void 	PmergeMe::sortToPairs(typename T::iterator startIt, typename T::iterator e
 			printIterators<T>("Before ONE", BlockOneStartIt, BlockOneEndIt);
 			printIterators<T>("Before TWO", BlockTwoStartIt, BlockTwoEndIt);
 
-			// if (BlockTwoStartIt >= endIt || BlockTwoEndIt > endIt) // or line below?!?!? 
-			if (BlockTwoStartIt >= endIt || BlockTwoEndIt > endIt || nbrsInEachGroup <= 2) 
+			// if ( BlockTwoStartIt >= endIt || BlockTwoEndIt > endIt || nbrsInEachGroup <= 2) 
+			(void)nbrsInEachGroup;
+			if (BlockTwoStartIt >= endIt || BlockTwoEndIt > endIt) // or line below?!?!? 
 			{
 				std::cout << YELLOW << "              break\n" << RESET;
 				this->_SizeOfGroup = this->_SizeOfGroup / 2;
@@ -205,19 +207,44 @@ template <typename T> typename T::iterator PmergeMe::fillMainBlockWise(typename 
 template <typename T> void PmergeMe::fillOddContainer(T& odd, T& original, T& main)
 {
 	std::cout << BG_MAGENTA << "fillOddContainer" << RESET << std::endl;
-
+	std::cout << BG_MAGENTA << "original size " << original.size() << " main size " << main.size()  << RESET << std::endl;
+	std::cout << BG_MAGENTA << "this->_SizeOfGroup " << this->_SizeOfGroup << RESET << std::endl;
+	
+	// if(original.size() - main.size() < this->_SizeOfGroup)
+	// {
+	// 	std::cout << BG_MAGENTA << "No full group available to fit in odd" << RESET << std::endl;
+	// 	return;
+	// }
+	
+	// check start and end iterator!?!?!?!?!?!?!??! for ./PmergeMe 11 2 17 0 16 8 6 15 10 3 21 1 18 9 14 19 12 5 4 20 13 7
+	
 	auto ItIterOriginal = std::next(original.begin(), main.size());
 	auto EndItOriginal = std::next(ItIterOriginal, this->_SizeOfGroup);
+	if(EndItOriginal > original.end())
+	{
+		return;
+		// EndItOriginal = original.end();
+	}
+	std::cout << BG_MAGENTA << "ItIterOriginal == EndItOriginal" << RESET << std::endl;
+	if(ItIterOriginal == EndItOriginal)
+	{
+		std::cout << BG_MAGENTA << "ItIterOriginal == EndItOriginal" << RESET << std::endl;
+		return;
+	}
 	
-	printIterators<T>("ItIter <-> EndItOriginal	", ItIterOriginal, EndItOriginal);
+	
+	printIterators<T>("ItIterOriginal <-> EndItOriginal	", ItIterOriginal, EndItOriginal);
 	
 	std::cout << &(*original.end()) << " " << (*original.end()) << std::endl;
 	if(ItIterOriginal == original.end())
 		return;
 	// Maybe!?!?!?
-	if (ItIterOriginal < EndItOriginal) {
+	if (ItIterOriginal < EndItOriginal)
+	{
 		odd.insert(odd.end(), ItIterOriginal, EndItOriginal);
-	} else {
+	}
+	else
+	{
 		std::cerr << "Skipping insert: No elements left to insert in ODD\n";
 	}
 	
@@ -247,33 +274,43 @@ template <typename T> void PmergeMe::fillRestContainer(T& rest ,T& odd, T& origi
 template <typename T> void PmergeMe::fillPendContainer(T& pend, T& main)
 {
 	std::cout << GREEN << "take all bs and set it to pend" << RESET << std::endl;
-
+	std::cout << BG_GREEN << "this->_SizeOfGroup " << RESET << this->_SizeOfGroup << std::endl;
+	std::cout << BG_GREEN << "main.size() " << RESET << main.size() << std::endl;
+	
 	// auto StartMainIt = main.begin();
+	int iteration = 0;
 	auto StartMainIt = std::next(main.begin(), this->_SizeOfGroup * 2);
 	auto EndMainIt = std::next(StartMainIt, this->_SizeOfGroup);
-
-	int iteration = 0;
-
+	
+	printIterators<T>("bs", StartMainIt, EndMainIt);
+	
+	std::cout << BG_GREEN << "this->_SizeOfGroup <= main.size() " << this->_SizeOfGroup << " <= " << main.size()<< RESET << std::endl;
+	if(this->_SizeOfGroup <= main.size())
+	{
+		std::cout << BG_GREEN << "return" << RESET << std::endl;
+		return;
+	}
+	
+	std::cout << BG_GREEN << "(EndMainIt != main.end())" << RESET << std::endl;
 	while (EndMainIt != main.end())
 	{  
-
+		
+		std::cout << BG_GREEN << "(iteration % 2 == 0)" << RESET << std::endl;
 		if (iteration % 2 == 0)  // Send to pend on every second iteration
 		{
+			std::cout << BG_GREEN << "(iteration % 2 == 0)" << RESET << std::endl;
 			std::cout << "INSERTING TO PEND" << std::endl;
 			pend.insert(pend.end(), StartMainIt, EndMainIt);
 			StartMainIt = main.erase(StartMainIt, EndMainIt); // Update StartMainIt to new position
 		}
 		else
 		{
+			std::cout << BG_GREEN << "else" << RESET << std::endl;
 			std::advance(StartMainIt, this->_SizeOfGroup);
 		}
-
-		if (StartMainIt == main.end()) break;
-
 		EndMainIt = std::next(StartMainIt, this->_SizeOfGroup);
 		if (EndMainIt > main.end()) 
 			EndMainIt = main.end();
-
 		iteration++;
 	}
 }
@@ -298,16 +335,34 @@ template <typename T>	void PmergeMe::fillMainContainerWithOdd(T& odd, T& main)
 	auto OddStart = odd.begin();
 	auto OddEnd = odd.end();
 	auto Oddlast = std::prev(OddEnd);
-
+	
 	auto PrevEnd = std::next(main.begin(), this->_SizeOfGroup);
 	auto MainStart = main.begin();
-
+	
 	int i = 0;
-
+	
 	while(odd.size())
 	{
+		std::cout << BG_RED << "odd.size() " << odd.size() << RESET << std::endl;
 		MainStart = std::next(main.begin(), this->_SizeOfGroup * i);
 		auto MainEnd = std::next(MainStart, this->_SizeOfGroup);
+		
+		if(MainEnd > main.end())
+		{
+			
+			std::cout << BG_RED << "main.insert(main.end(), OddStart, OddEnd);" << RESET << std::endl;
+			main.insert(main.end(), OddStart, OddEnd);
+			odd.erase(OddStart, OddEnd);
+			return;
+		}
+
+		if(i == 0)
+		{
+			std::cout << BG_BLUE << "(i == 0)" << RESET << std::endl;
+			MainStart = main.begin();
+			MainEnd = std::next(MainStart, 1);
+			PrevEnd = main.begin();
+		}
 		auto MainLastNbr = std::prev(MainEnd);
 
 
@@ -359,16 +414,21 @@ template <typename T> void PmergeMe::extraordinarySorting(T& main, T& original)
 
 	std::cout << GREEN << "diff " << diff << std::endl;
 
-	// not enough elements to fit in the size of group so fill it up to main
-	if(this->_SizeOfGroup != 1 && diff < this->_SizeOfGroup)
+	if(this->_SizeOfGroup == 2 && diff == 1)
 	{
-		std::cout << YELLOW << "Rest is too small for a group so fill it up" << RESET << std::endl;
+		T odd;
+		
+		std::cout << BG_YELLOW << "One is left" << RESET << std::endl;
 		auto ItIter = std::next(original.begin(), main.size());
 		auto EndItOriginal = original.end();
-
+		odd.insert(odd.end(), ItIter, EndItOriginal);
 		printIterators<T>("ItIter <-> EndItOriginal	", ItIter, EndItOriginal);
-
-		main.insert(main.end(),ItIter, EndItOriginal);
+		
+		fillMainContainerWithOdd(odd, main);
+		std::cout << MAGENTA << "O D D Container" << RESET << std::endl;
+		printContainer(odd, 0);
+		std::cout << MAGENTA << "M A I N Container" << RESET << std::endl;
+		printContainer(main, 0);
 	}
 	else
 	{
@@ -377,30 +437,263 @@ template <typename T> void PmergeMe::extraordinarySorting(T& main, T& original)
 		T rest;
 		
 	printFillContainers(pend , odd,  rest,main);
+	
+	// at least once there are enough elements to fit in a group so put these elements to odd container
+	std::cout << YELLOW << "HERE COMES THE ODD PART" << RESET << std::endl;
+	//  get start and end Iterator of rest that fits in the current groupsize
+	printFillContainers(pend , odd,  rest,main);
+	fillOddContainer(odd, original, main);
+	printFillContainers(pend , odd,  rest,main);
+	fillRestContainer(rest, odd, original, main);
+	printFillContainers(pend , odd,  rest,main);
+	fillPendContainer(pend, main);
+	
+	printFillContainers(pend , odd,  rest,main);
+	fillMainContainerWithPend(pend, main);
+	pend.erase(pend.begin(), pend.end());
+	printFillContainers(pend , odd,  rest,main);
+	fillMainContainerWithOdd(odd, main);
+	printFillContainers(pend , odd,  rest,main);
+	fillMainContainerWithRest(rest, main);		
+	printFillContainers(pend , odd,  rest,main);
+}
 
-		// at least once there are enough elements to fit in a group so put these elements to odd container
-		std::cout << YELLOW << "HERE COMES THE ODD PART" << RESET << std::endl;
-		//  get start and end Iterator of rest that fits in the current groupsize
-	printFillContainers(pend , odd,  rest,main);
-		fillOddContainer(odd, original, main);
-	printFillContainers(pend , odd,  rest,main);
-		fillRestContainer(rest, odd, original, main);
-	printFillContainers(pend , odd,  rest,main);
-		fillPendContainer(pend, main);
+// std::cout << MAGENTA << "main container" << RESET << std::endl;
+// printContainer(main, 0);
+std::cout << UNDERLINE << YELLOW << "extraordinarySorting done" << RESET << std::endl;
+}
 
-	printFillContainers(pend , odd,  rest,main);
-		fillMainContainerWithPend(pend, main);
-		pend.erase(pend.begin(), pend.end());
-	printFillContainers(pend , odd,  rest,main);
-		fillMainContainerWithOdd(odd, main);
-	printFillContainers(pend , odd,  rest,main);
-		fillMainContainerWithRest(rest, main);		
-	printFillContainers(pend , odd,  rest,main);
+
+template <typename T> bool PmergeMe::validateIterator(typename T::iterator BeginIt, typename T::iterator EndIt, size_t position)
+{
+	auto totalSizeIt = std::distance(BeginIt, EndIt);  // Total elements in main
+	auto positionIt = position;  // Position we want to move to
+	if (positionIt >= static_cast<size_t>(totalSizeIt))
+	{
+		return false;
 	}
+	else
+	{
+		return true;
+	}
+}
 
-	// std::cout << MAGENTA << "main container" << RESET << std::endl;
-	// printContainer(main, 0);
-	std::cout << UNDERLINE << YELLOW << "extraordinarySorting done" << RESET << std::endl;
+template <typename T> void PmergeMe::first(T& main, T& rest, T& odd, T& pend)
+{
+	// check if 2 elements with the size of Group are available in main if yes fill to pend
+	int iteration = 2;
+	while(true)
+	{
+		std::cout << BG_BRIGHT_BLACK << "Iteration " << iteration << RESET << std::endl;
+		auto StartIt = main.begin();
+		auto EndItOfTwoElements = main.begin();
+		auto EndIt = main.end();
+
+		// check if b2 is available - set StartIt to b2
+		if(validateIterator<T>(main.begin(), main.end(), this->_SizeOfGroup * iteration))
+		{
+			StartIt = std::next(main.begin(), this->_SizeOfGroup * iteration);
+		}
+		else
+		{
+			std::cout << "out of range Start" << std::endl;
+			return ;
+		}				
+		// check if 2 full elements are available from bx
+		if(validateIterator<T>(StartIt, main.end(), this->_SizeOfGroup * 2))
+		{
+			std::cout << "EndItOfTwoElements available" << std::endl;
+			EndItOfTwoElements = std::next(StartIt, this->_SizeOfGroup * 2);
+			EndIt = std::next(StartIt, this->_SizeOfGroup);
+			pend.insert(pend.end(), StartIt, EndIt );
+			main.erase(StartIt, EndIt);
+			
+			// full element is available
+			// check size of rest. if rest is bigger than sizeofgroup do nothing.else do below
+			if (static_cast<size_t>(std::distance(EndIt, main.end())) < this->_SizeOfGroup)
+			{
+				if(validateIterator<T>(EndItOfTwoElements, main.end(), this->_SizeOfGroup))
+				{
+					auto OddEndIt = std::next(EndItOfTwoElements, this->_SizeOfGroup);
+					odd.insert(odd.end(), EndItOfTwoElements, OddEndIt);
+					main.erase(EndItOfTwoElements, OddEndIt);
+				}
+				
+				// rest is available
+				if(EndItOfTwoElements != main.end())
+				{
+					rest.insert(rest.end(), EndItOfTwoElements, main.end());
+					main.erase(EndItOfTwoElements, main.end());
+				}
+			}
+		}
+		else
+		{
+			std::cout << "out of range EndItOfTwoElements" << std::endl;
+			// check if StartIt to EndIt fits to odd elements - odd elements are a full standalone element
+			if(validateIterator<T>(StartIt, main.end(), this->_SizeOfGroup))
+			{
+				std::cout << "Insert to odd" << std::endl;
+				EndIt = std::next(StartIt, this->_SizeOfGroup);
+				std::cout << "ENDIT " << &(*EndIt) << " " << (*EndIt) << std::endl;
+				odd.insert(odd.end(), StartIt, EndIt);
+				main.erase(StartIt, EndIt);
+			}
+			else //no full element available so put numbers to rest
+			{
+				std::cout << "Insert to rest" << std::endl;
+				std::cout << "StartIt " << &(*StartIt) << " " << (*StartIt) << std::endl;
+				std::cout << "ENDIT " << &(*EndIt) << " " << (*EndIt) << std::endl;
+				rest.insert(rest.end(), StartIt, EndIt);
+				main.erase(StartIt, EndIt);
+			}
+		}
+		
+		printFillContainers(pend , odd,  rest,main);
+		iteration += 2;
+	}
+	return ;
+}
+
+#include <unistd.h>
+
+
+template <typename T> void PmergeMe::retrySorting(T& original, size_t nbrsInEachGroup, size_t amountOfGroups)
+{
+	std::cout << BG_BRIGHT_GREEN << "RETRYSORTING" << RESET << std::endl;
+	T pend;
+	T odd;
+	T rest;
+	T main = original;
+	
+	std::cout << BG_BRIGHT_YELLOW << "_SizeOfGroup " << this->_SizeOfGroup << RESET << std::endl;
+	printFillContainers(pend , odd,  rest,main);
+	
+	first(main, rest, odd, pend);
+	
+	
+	printFillContainers(pend , odd,  rest,main);
+	std::cout << BG_BRIGHT_RED << "Start TO FILL " << RESET << std::endl;
+	{
+		std::cout << "-------- Start PEND --------" << std::endl;
+		// fill PEND elements to proper place
+		auto MainStartIt = main.begin();
+		auto MainEndIt = std::next(MainStartIt, this->_SizeOfGroup);
+		auto MainElementToCheck = std::prev(MainEndIt);
+		// int flag = 1;
+		while(true)
+		{
+			if(pend.size())
+			{
+				auto PendStartIt = pend.begin();
+				auto PendEndIt = std::next(PendStartIt, this->_SizeOfGroup);
+				auto PendElementToCheck = std::prev(PendEndIt);
+				
+				// std::cout << "PendStartIt			" << &(*PendStartIt) << " " << (*PendStartIt) << std::endl;
+				// std::cout << "PendEndIt			" << &(*PendEndIt) << " " << (*PendEndIt) << std::endl;
+				// std::cout << "PendElementToCheck	" << &(*PendElementToCheck) << " " << BG_BRIGHT_BLUE << (*PendElementToCheck) << RESET << std::endl;
+				// std::cout << "MainStartIt		" << &(*MainStartIt) << " " << BG_BRIGHT_BLUE << (*MainStartIt) << RESET << std::endl;
+				// std::cout << "MainElementToCheck		" << &(*MainElementToCheck) << " " << BG_BRIGHT_BLUE << (*MainElementToCheck) << RESET << std::endl;
+				
+				
+				this->_compareCounter++;
+				std::cout << BG_BRIGHT_BLUE << "MainElementToCheck > PendElementToCheck " << (*MainElementToCheck) << " > " << (*PendElementToCheck) << RESET << std::endl;
+				if(*MainElementToCheck > *PendElementToCheck)
+				{
+					main.insert(MainStartIt, PendStartIt, PendEndIt);
+					pend.erase(PendStartIt, PendEndIt);
+				}
+
+			}
+			if(pend.size() <= 0)
+				break;
+			// check out of range!?!?!?!?
+			std::advance(MainStartIt, this->_SizeOfGroup);
+			MainEndIt = std::next(MainStartIt, this->_SizeOfGroup);
+			MainElementToCheck = std::prev(MainEndIt);
+			sleep(2);
+		}
+	}
+	printFillContainers(pend , odd, rest, main);
+	{
+		sleep(2);
+		std::cout << "Start ODD" << std::endl;
+		// fill Odd elements to proper place
+		auto MainStartIt = main.begin();
+		auto MainEndIt = std::next(MainStartIt, this->_SizeOfGroup);
+		auto MainElementToCheck = std::prev(MainEndIt);
+		while(true)
+		{
+			if(odd.size())
+			{
+				auto OddStartIt = odd.begin();
+				auto OddEndIt = std::next(OddStartIt, this->_SizeOfGroup);
+				auto OddElementToCheck = std::prev(OddEndIt);
+				
+				std::cout << "StartIt " << &(*OddStartIt) << " " << (*OddStartIt) << std::endl;
+				std::cout << "EndIt " << &(*OddEndIt) << " " << (*OddEndIt) << std::endl;
+				std::cout << "OddElementToCheck " << &(*OddElementToCheck) << " " << (*OddElementToCheck) << std::endl;
+				
+				// First Iteration begin of main has to be checked
+				this->_compareCounter++;
+				if(*MainStartIt > *OddElementToCheck)
+				{
+					main.insert(main.begin(), OddStartIt, OddEndIt);
+					odd.erase(OddStartIt, OddEndIt);
+				}
+
+			}
+			if(odd.size() <= 0)
+				break;
+			// check out of range!?!?!?!?
+			MainStartIt = std::next(main.begin(), this->_SizeOfGroup);
+			MainEndIt = std::next(MainStartIt, this->_SizeOfGroup);
+			MainElementToCheck = std::prev(MainEndIt);
+		}
+	}
+	printFillContainers(pend , odd, rest, main);
+	{
+		std::cout << "Start REST" << std::endl;
+		// fill REST elements to proper place
+		main.insert(main.end(), rest.begin(), rest.end());
+		rest.erase(rest.begin(), rest.end());
+		// auto MainStartIt = main.begin();
+		// auto MainEndIt = std::next(MainStartIt, this->_SizeOfGroup);
+		// auto MainElementToCheck = std::prev(MainEndIt);
+		// while(true)
+		// {
+		// 	if(rest.size())
+		// 	{
+		// 		auto RestStartIt = rest.begin();
+		// 		auto RestEndIt = std::next(RestStartIt, 1);
+		// 		auto RestElementToCheck = std::prev(RestEndIt);
+				
+		// 		std::cout << "StartIt " << &(*RestStartIt) << " " << (*RestStartIt) << std::endl;
+		// 		std::cout << "EndIt " << &(*RestEndIt) << " " << (*RestEndIt) << std::endl;
+		// 		std::cout << "ElementToCheck " << &(*RestElementToCheck) << " " << (*RestElementToCheck) << std::endl;
+				
+		// 		// First Iteration begin of main has to be checked
+		// 		if(*MainStartIt > *RestElementToCheck)
+		// 		{
+		// 			main.insert(main.begin(), RestStartIt, RestEndIt);
+		// 			rest.erase(RestStartIt, RestEndIt);
+		// 		}
+
+		// 	}
+		// 	if(rest.size() <= 0)
+		// 		break;
+		// 	// check out of range!?!?!?!?
+		// 	MainStartIt = std::next(main.begin(), this->_SizeOfGroup);
+		// 	MainEndIt = std::next(MainStartIt, this->_SizeOfGroup);
+		// 	MainElementToCheck = std::prev(MainEndIt);
+		// }
+	}
+	printFillContainers(pend , odd, rest, main);
+
+	(void)nbrsInEachGroup;
+	(void)amountOfGroups;
+	original = main;
+	std::cout << BG_BRIGHT_GREEN << "RETRYSORTING END" << RESET << std::endl;
 }
 
 
@@ -468,18 +761,26 @@ template <typename T> void PmergeMe::fillMainContainerWithPend(T& pend, T& main)
 }
 
 
+
 template <typename T> void PmergeMe::sortWithInsertion(T& original, size_t nbrsInEachGroup, size_t amountOfGroups)
 {
 	std::cout << "amountOfGroups " << amountOfGroups << CYAN << " - nbrsInEachGroup " << nbrsInEachGroup << RESET << std::endl;
 	std::cout << CYAN << "this->_SizeOfGroup " << this->_SizeOfGroup << RESET << std::endl;
 	
 	T main;
-
+	
 	auto iter = original.begin();
-	for ( size_t i = 0; i < nbrsInEachGroup / 2; i++)
+	for (size_t i = 0; i < nbrsInEachGroup / 2; i++)
 	{
-		iter = fillMainBlockWise(iter, main, original, amountOfGroups);
+			iter = fillMainBlockWise(iter, main, original, amountOfGroups);
 	}
+		
+		
+
+	// main.insert(main.end(),original.begin(),original.size());
+
+	// main.assign(original.begin(),original.end());
+
 
 	// if(std::prev(original.end()) != std::prev(main.end()))
 		extraordinarySorting(main, original);
@@ -503,24 +804,31 @@ template <typename T> void PmergeMe::pairing(T& original, size_t amountOfGroups)
 	// Get start and end Iterator of each Group depending on the size of the Group
 	auto startIt = original.begin();
 	auto endIt = std::next(startIt, amountOfGroups * nbrsInEachGroup);
-	if (nbrsInEachGroup % 2 == 1) 
-	endIt = std::next(startIt, amountOfGroups * (nbrsInEachGroup - 1));
+	if (nbrsInEachGroup % 2 == 1)
+	{
+		endIt = std::next(startIt, amountOfGroups * (nbrsInEachGroup - 1));
+	}
 
 
 	std::cout << YELLOW << "-----------------------------------------" << RESET << std::endl;
 
 	std::cout << CYAN << "this->_SizeOfGroup " << this->_SizeOfGroup << RESET << std::endl;
 	sortToPairs<T>(startIt, endIt, amountOfGroups, nbrsInEachGroup);
+
+	std::cout << BG_MAGENTA << "O R I G I N A L Container" << RESET << std::endl;
+	printContainer(original, 0);
+
 	pairing(original, amountOfGroups * 2);
 
 
 	std::cout << GREEN << "------------------------ PAIRING DONE ------------------------" << RESET << std::endl;
-	std::cout << MAGENTA << "original container" << RESET << std::endl;
-	printContainer<T>(original, amountOfGroups);
+	// std::cout << MAGENTA << "original container" << RESET << std::endl;
+	// printContainer<T>(original, amountOfGroups);
 
 
 	std::cout << YELLOW << "Start sortWithInsertion " << "_levelOfRecursion " << _levelOfRecursion << RESET << std::endl;
-	sortWithInsertion(original, nbrsInEachGroup, amountOfGroups);
+	// sortWithInsertion(original, nbrsInEachGroup, amountOfGroups);
+	retrySorting(original, nbrsInEachGroup, amountOfGroups);
 	this->_levelOfRecursion--;
 	this->_SizeOfGroup = this->_SizeOfGroup / 2;
 }
