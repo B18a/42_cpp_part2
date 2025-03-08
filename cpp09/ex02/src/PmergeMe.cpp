@@ -10,8 +10,8 @@ void 	PmergeMe::run(int argc, char** argv)
 	if(parseInput(argc, argv))
 		throw WrongInputException();
 	fillContainer(argc, argv);
-	// sorting(this->_vector);
-	sorting(this->_deque);
+	sorting(this->_vector);
+	// sorting(this->_deque);
 
 }
 
@@ -451,6 +451,58 @@ template <typename T> void PmergeMe::prepareContainer(T& main, T& rest, T& odd, 
 
 
 
+// std::vector<int>::iterator custom_lower_bound(std::vector<int>::iterator begin, 
+// 	std::vector<int>::iterator end, 
+// 	int value, int step, int& compareCount) {
+// 		(void)step;
+// auto left = begin;
+// auto right = end;
+
+// while (left < right) {
+// auto dist = std::distance(left, right);
+// auto mid = left + dist / 2;  // TRUE Binary Search: always pick middle
+
+// ++compareCount;
+
+// std::cout << "*mid < value: " << *mid << " vs " << value << std::endl;
+
+// if (*mid < value)
+// left = mid + 1; // Move right
+// else
+// right = mid; // Move left
+// }
+
+// std::cout << "Total Comparisons: " << compareCount << std::endl;
+// return left; // First position where !(value > *it)
+// }
+
+std::vector<int>::iterator custom_lower_bound(std::vector<int>::iterator begin, 
+	std::vector<int>::iterator end, 
+	int value, int step, int& compareCount) {
+auto left = begin;
+auto right = end;
+
+while (std::distance(left, right) > step) { // Ensure meaningful step distance
+auto dist = std::distance(left, right);
+auto mid = left + (dist / (2 * step)) * step + 1; // Select step-aligned midpoint
+
+if (mid >= right) // Prevent overshooting
+mid = right - step;
+
+++compareCount;
+std::cout << "*mid < value: " << *mid << " vs " << value << std::endl;
+
+if (*mid < value)
+left = mid + step; // Move right by step
+else
+right = mid; // Move left
+}
+
+std::cout << "Total Comparisons: " << compareCount << std::endl;
+return left; // First position where !(value > *it)
+}
+
+
 template <typename T> void PmergeMe::retrySorting(T& original)
 {
 	std::cout << BG_BRIGHT_GREEN << "RETRYSORTING" << RESET << std::endl;
@@ -467,7 +519,7 @@ template <typename T> void PmergeMe::retrySorting(T& original)
 	printFillContainers(pend , odd,  rest,main);
 	std::cout << BG_BRIGHT_RED << "Start TO FILL " << RESET << std::endl;
 	std::cout << BG_BRIGHT_RED << "this->_SizeOfGroup " << this->_SizeOfGroup << RESET << std::endl;
-	// sleep(1);
+	sleep(1);
 	{
 		std::cout << "-------- Start PEND --------" << std::endl;
 		this->_jakobNumberOld = 1;
@@ -531,56 +583,66 @@ template <typename T> void PmergeMe::retrySorting(T& original)
 				// Binary insert here
 				{
 					auto SearchRangeStart = main.begin();
-					auto SearchRangeStartInit = main.begin();
+					// auto SearchRangeStartInit = main.begin();
 					auto SearchRangeEnd = std::next(SearchRangeStart, this->_searchRange * this->_SizeOfGroup);
-					auto SearchRangeEndInit = std::next(SearchRangeStart, this->_searchRange * this->_SizeOfGroup);
+					// auto SearchRangeEndInit = std::next(SearchRangeStart, this->_searchRange * this->_SizeOfGroup);
 					auto SearchRangelast = std::prev(SearchRangeEnd);
-					int range = this->_searchRange;
+					// int range = this->_searchRange;
 					std::cout << "SearchRangeStart " << *SearchRangeStart << std::endl;
 					std::cout << "SearchRangeEnd " << *SearchRangeEnd << std::endl;
 					std::cout << "SearchRangeLast " << *SearchRangelast << std::endl;
 					std::cout << BG_BRIGHT_BLUE << "MainElementToCheck < PendElementToCheck " << (*MainElementToCheck) << " < " << (*PendElementToCheck) << RESET << std::endl;
-					while(!InsertionFlag)
-					{
-						range = range / 2;
-						std::cout << "SearchRangeStart " << * SearchRangeStart << std::endl;
-						std::cout << "SearchRangeEnd " << * SearchRangeEnd << std::endl;
-						this->_compareCounter++;
-						if(*MainElementToCheck < *PendElementToCheck)
-						{
-							SearchRangeStart = MainElementToCheck;
-							if(MainElementToCheck == SearchRangeEndInit)
-							{
-								main.insert(SearchRangeEnd, PendStartIt, PendEndIt);
-								insertCount++;
-								InsertionFlag = true;
-							}
-							else
-							{
-								MainStartIt = std::next(SearchRangeStart, (range) * this->_SizeOfGroup);
-								MainEndIt = std::next(MainStartIt, this->_SizeOfGroup);
-								MainElementToCheck = std::prev(MainEndIt);
-							}
-						}
-						else
-						{
-							SearchRangeEnd = MainElementToCheck;
-							if(MainElementToCheck == SearchRangeStartInit)
-							{
-								main.insert(SearchRangeStartInit, PendStartIt, PendEndIt);
-								insertCount++;
-								InsertionFlag = true;
-							}
-							else
-							{
-								MainStartIt = std::next(SearchRangeStart, (range) * this->_SizeOfGroup);
-								MainEndIt = std::next(MainStartIt, this->_SizeOfGroup);
-								MainElementToCheck = std::prev(MainEndIt);
-							}
-						}
-						sleep(2);
 
-					}
+					int test = 0;
+					auto Hello = custom_lower_bound(SearchRangeStart, SearchRangeEnd, *PendElementToCheck, this->_SizeOfGroup, test);
+					std::cout << "Insert place " << *Hello << std::endl;
+					// check if possible 
+					Hello = std::prev(Hello, this->_SizeOfGroup);
+					std::cout << "Insert place " << *Hello << std::endl;
+					std::cout << "test " << test << std::endl;
+
+
+					// while(!InsertionFlag)
+					// {
+					// 	range = range / 2;
+					// 	std::cout << "SearchRangeStart " << * SearchRangeStart << std::endl;
+					// 	std::cout << "SearchRangeEnd " << * SearchRangeEnd << std::endl;
+					// 	this->_compareCounter++;
+					// 	if(*MainElementToCheck < *PendElementToCheck)
+					// 	{
+					// 		SearchRangeStart = MainElementToCheck;
+					// 		if(MainElementToCheck == SearchRangeEndInit)
+					// 		{
+					// 			main.insert(SearchRangeEnd, PendStartIt, PendEndIt);
+					// 			insertCount++;
+					// 			InsertionFlag = true;
+					// 		}
+					// 		else
+					// 		{
+					// 			MainStartIt = std::next(SearchRangeStart, (range) * this->_SizeOfGroup);
+					// 			MainEndIt = std::next(MainStartIt, this->_SizeOfGroup);
+					// 			MainElementToCheck = std::prev(MainEndIt);
+					// 		}
+					// 	}
+					// 	else
+					// 	{
+					// 		SearchRangeEnd = MainElementToCheck;
+					// 		if(MainElementToCheck == SearchRangeStartInit)
+					// 		{
+					// 			main.insert(SearchRangeStartInit, PendStartIt, PendEndIt);
+					// 			insertCount++;
+					// 			InsertionFlag = true;
+					// 		}
+					// 		else
+					// 		{
+					// 			MainStartIt = std::next(SearchRangeStart, (range) * this->_SizeOfGroup);
+					// 			MainEndIt = std::next(MainStartIt, this->_SizeOfGroup);
+					// 			MainElementToCheck = std::prev(MainEndIt);
+					// 		}
+					// 	}
+					// 	sleep(2);
+
+					// }
 
 
 				}
