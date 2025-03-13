@@ -12,6 +12,16 @@
 #ifndef PMERGEME_HPP
 #define PMERGEME_HPP
 
+// template <typename Iterator>
+// struct s_iterators
+// {
+// 	Iterator start;
+// 	Iterator end;
+// 	Iterator last;
+
+// }				t_iterators;
+
+
 class PmergeMe
 {
 	private:
@@ -43,6 +53,10 @@ class PmergeMe
 		template <typename T>	void fillRestToMain(T&main, T&rest);
 		
 		void	fillPendToMain_StartIndexUpdate(int& StartIndex, int& insertCount);
+		template <typename T>	void fillPendToMain_binarySearch(T& main, typename T::iterator& PendStartIt, typename T::iterator& PendEndIt);
+		template <typename T>	void fillSearchContainer(T& main, std::deque<int>& SearchContainer);
+
+
 
 		unsigned long long	jakobsthal_recursive(int n);
 

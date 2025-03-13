@@ -75,7 +75,6 @@ void PmergeMe::fillContainer(int argc, char** argv)
 	int i = 1;
 	while(i < argc)
 	{
-		// std::cout << "[-> " << atoi(argv[i]) << " <-]" << std::endl;
 		if(atol(argv[i]) > INT_MAX)
 		{
 			throw WrongOutofRangeException();
@@ -91,7 +90,6 @@ void PmergeMe::fillContainer(int argc, char** argv)
 
 template <typename T> void PmergeMe::sorting(T& original)
 {
-	// T main;
 	this->_compareCounter = 0;
 	this->_levelOfRecursion = 0;
 	this->_jakobNumber = 3;
@@ -229,9 +227,6 @@ template <typename T> bool PmergeMe::validateIterator(typename T::iterator Begin
 }
 
 
-#include <unistd.h>
-
-
 template <typename T> void PmergeMe::prepareContainer(T& main, T& rest, T& odd, T& pend)
 {
 	// check if 2 elements with the size of Group are available in main if yes fill to pend
@@ -299,7 +294,7 @@ template <typename T> void PmergeMe::prepareContainer(T& main, T& rest, T& odd, 
 			// check if StartIt to EndIt fits to odd elements - odd elements are a full standalone element
 			std::cout << BG_BRIGHT_CYAN << "StartIt " << &(*StartIt) << " " << (*StartIt) << RESET << std::endl;
 			std::cout << BG_BRIGHT_CYAN  << "main.end() " << &(*main.end()) << " " << (*main.end()) << RESET << std::endl;
-			if(remainingElements)
+			if(remainingElements) // Insert to Odd
 			{
 				std::cout << "Insert to odd" << std::endl;
 				EndIt = std::next(StartIt, this->_SizeOfGroup);
@@ -398,6 +393,78 @@ void	PmergeMe::fillPendToMain_StartIndexUpdate(int& StartIndex, int& insertCount
 	this->_searchRange = this->_jakobNumber + insertCount;
 }
 
+
+template <typename T> void PmergeMe::fillSearchContainer(T& main, std::deque<int>& SearchContainer)
+{
+			std::cout << "SearchContainer " << std::endl;
+			auto Iter = std::next(main.begin(), this->_SizeOfGroup - 1);
+			SearchContainer.push_back(*Iter);
+
+			int amountOfGroups = main.size()/this->_SizeOfGroup;
+			if(amountOfGroups > this->_searchRange)
+				amountOfGroups--;
+			
+			int i = 1;
+			while(i < amountOfGroups && Iter != std::prev(main.end()))
+			{
+				std::advance(Iter, this->_SizeOfGroup);
+				i++;
+				SearchContainer.push_back(*Iter);
+			}
+
+			std::cout << "SearchContainer END" << std::endl;
+} 
+
+
+template <typename T> 
+void	PmergeMe::fillPendToMain_binarySearch(T& main, typename T::iterator& PendStartIt, typename T::iterator& PendEndIt)
+{
+	std::deque<int> SearchContainer;
+	auto PendElementToCheck = std::prev(PendEndIt);
+	auto it = lowerB(SearchContainer, *PendElementToCheck, this->_compareCounter);
+	
+	fillSearchContainer(main, SearchContainer);
+	if(it == SearchContainer.end())
+	{
+		auto EndOfGroup = main.begin();
+		if(validateIterator<T>(main.begin(), main.end(), this->_SizeOfGroup * this->_searchRange) == false)
+		{
+			EndOfGroup = main.end();
+		}
+		else
+		{
+			EndOfGroup = std::next(main.begin(), this->_SizeOfGroup * this->_searchRange);
+		}
+		main.insert(EndOfGroup, PendStartIt, PendEndIt);
+	}
+	else
+	{
+		auto Found = std::find(main.begin(), main.end(), *it);
+		auto Insert = std::next(main.begin(), this->_SizeOfGroup - 1);
+		if(Insert == Found)
+		{
+			main.insert(main.begin(), PendStartIt, PendEndIt);
+		}
+		else
+		{	
+			while(Insert != Found)
+			{
+				auto test = std::next(Insert, this->_SizeOfGroup);
+				if(*test != *Found)
+				{
+					std::advance(Insert, this->_SizeOfGroup);
+				}
+				else
+				{
+					break;
+				}
+			}
+			Insert++;
+			main.insert(Insert, PendStartIt, PendEndIt);
+		}
+	}
+}
+
 template <typename T> void PmergeMe::fillPendToMain(T&main, T&pend)
 {
 	std::cout << "-------- Start PEND --------" << std::endl;
@@ -407,152 +474,36 @@ template <typename T> void PmergeMe::fillPendToMain(T&main, T&pend)
 	this->_searchRange = 2;
 
 	int	insertCount = 0;
-
-	auto MainStartIt = std::next(main.begin(), (this->_searchRange / 2) * this->_SizeOfGroup);
-	auto MainEndIt = std::next(MainStartIt, this->_SizeOfGroup);
-	auto MainElementToCheck = std::prev(MainEndIt);
-	int InsertionFlag = 0;
 	int StartIndex = this->_jakobNumber - this->_jakobNumberOld - 1;
-	while(true)
+	while(pend.size())
 	{
-		if(pend.size())
+		auto PendStartIt = pend.begin();
+
+		if(StartIndex < 0)
 		{
-			auto PendStartIt = pend.begin();
-
-			if(StartIndex < 0)
-			{
-				fillPendToMain_StartIndexUpdate(StartIndex, insertCount);
-			}
-			while (StartIndex >= 0) {
-				auto offset = StartIndex * this->_SizeOfGroup;
-				if (validateIterator<T>(pend.begin(), pend.end(), offset)) {
-					PendStartIt = std::next(pend.begin(), offset);
-					break;
-				}
-				StartIndex--;
-			}
-			// while(StartIndex >= 0)
-			// {
-			// 	if(validateIterator<T>(pend.begin(),pend.end(), StartIndex * this->_SizeOfGroup))
-			// 	{
-			// 		if(StartIndex * this->_SizeOfGroup == 0)
-			// 		{
-			// 			PendStartIt = pend.begin();
-			// 		}
-			// 		else
-			// 		{
-			// 			PendStartIt = std::next(pend.begin(), StartIndex * this->_SizeOfGroup);
-			// 		}
-			// 		break;			
-			// 	}
-			// 	StartIndex--;
-			// }
-			auto PendEndIt = std::next(PendStartIt, this->_SizeOfGroup);
-			auto PendElementToCheck = std::prev(PendEndIt);
-
-			// update MainElementToCheck
-			// Binary insert here
-			{
-
-
-			std::deque<int> SearchContainer;
-			{
-					std::cout << "SearchContainer " << std::endl;
-					std::cout << "this->_searchRange " << this->_searchRange << std::endl;
-					auto Iter = std::next(main.begin(), this->_SizeOfGroup - 1);
-					SearchContainer.push_back(*Iter);
-
-					int amountOfGroups = main.size()/this->_SizeOfGroup;
-					if(amountOfGroups > this->_searchRange)
-						amountOfGroups--;
-					
-					int i = 1;
-					while(i < amountOfGroups && Iter != std::prev(main.end()))
-					{
-						std::advance(Iter, this->_SizeOfGroup);
-						i++;
-						SearchContainer.push_back(*Iter);
-					}
-
-					// printContainer(SearchContainer,1);
-					std::cout << "SearchContainer END" << std::endl;
-			}
-				std::cout << BG_BRIGHT_BLUE << "PendElementToCheck " << (*PendElementToCheck) << RESET << std::endl;
-
-				auto it = lowerB(SearchContainer, *PendElementToCheck, this->_compareCounter);
-				if(it == SearchContainer.end())
-				{
-					std::cout << "END END END" << std::endl;
-
-					auto EndOfGroup = main.begin();
-					if(validateIterator<T>(main.begin(), main.end(), this->_SizeOfGroup * this->_searchRange) == false)
-					{
-						std::cout << "--------->	OFF " << std::endl;
-						EndOfGroup = main.end();
-					}
-					else
-					{
-						EndOfGroup = std::next(main.begin(), this->_SizeOfGroup * this->_searchRange);
-					}
-					std::cout << "EndOfGroup " << *EndOfGroup << std::endl;
-					main.insert(EndOfGroup, PendStartIt, PendEndIt);
-
-				}
-				else
-				{
-					auto Found = std::find(main.begin(), main.end(), *it);
-					auto Insert = std::next(main.begin(), this->_SizeOfGroup - 1);
-					
-					if(Insert == Found)
-					{
-						main.insert(main.begin(), PendStartIt, PendEndIt);
-					}
-					else
-					{	
-						while(Insert != Found)
-						{
-							auto test = std::next(Insert, this->_SizeOfGroup);
-							if(*test != *Found)
-							{
-								std::advance(Insert, this->_SizeOfGroup);
-							}
-							else
-							{
-								break;
-							}
-						}
-						Insert++;
-						std::cout << "Insert place " << *Insert << " it " << *it << std::endl;
-						main.insert(Insert, PendStartIt, PendEndIt);
-					}
-				}
-				{
-					pend.erase(PendStartIt, PendEndIt);
-					InsertionFlag = 1;
-					StartIndex--;
-					insertCount++;
-				}
-			}
+			fillPendToMain_StartIndexUpdate(StartIndex, insertCount);
 		}
-		if(pend.size() <= 0)
+		while (StartIndex >= 0)
 		{
-			break;
-		}
-		if(InsertionFlag)
-		{
-			InsertionFlag = 0;
-			MainStartIt = main.begin();				
-		}
-		else
-		{
-			std::advance(MainStartIt, this->_SizeOfGroup);
+			auto offset = StartIndex * this->_SizeOfGroup;
+			if (validateIterator<T>(pend.begin(), pend.end(), offset)) {
+				PendStartIt = std::next(pend.begin(), offset);
+				break;
+			}
+			StartIndex--;
 		}
 
-		// must be set to next half depending on > or < from last element
-		MainEndIt = std::next(MainStartIt, this->_SizeOfGroup);
-		MainElementToCheck = std::prev(MainEndIt);
+		auto PendEndIt = std::next(PendStartIt, this->_SizeOfGroup);
+		// auto PendElementToCheck = std::prev(PendEndIt);
+
+		fillPendToMain_binarySearch(main, PendStartIt, PendEndIt);
+		{
+			pend.erase(PendStartIt, PendEndIt);
+			StartIndex--;
+			insertCount++;
+		}
 	}
-std::cout << "-------- End PEND --------" << std::endl;
+	std::cout << "-------- End PEND --------" << std::endl;
 }
 
 template <typename T>	void PmergeMe::fillOddToMain(T&main, T&odd)
@@ -599,7 +550,6 @@ template <typename T>	void PmergeMe::fillRestToMain(T&main, T&rest)
 	std::cout << "-------- Start REST --------" << std::endl;
 	main.insert(main.end(), rest.begin(), rest.end());
 	rest.erase(rest.begin(), rest.end());
-	
 	std::cout << "-------- End REST --------" << std::endl;
 }
 
@@ -620,7 +570,7 @@ template <typename T> void PmergeMe::retrySorting(T& original)
 	fillPendToMain(main, pend);
 	fillOddToMain(main, odd);
 	fillRestToMain(main, rest);
-	printFillContainers(pend , odd, rest, main);
+		printFillContainers(pend , odd, rest, main);
 	original = main;
 	std::cout << BG_BRIGHT_GREEN << "RETRYSORTING END" << RESET << std::endl;
 }
@@ -693,3 +643,5 @@ const char* PmergeMe::WrongOutofRangeException::what() const noexcept
 
 
 // ./PmergeMe 11 2 17 0 16 8 6 15 10 3 21 99 18 9 14 19 12 5 4 100
+
+// ./PmergeMe `jot -r 3000 1 100000 | tr '\n' ' '`
