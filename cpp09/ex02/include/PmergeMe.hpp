@@ -12,16 +12,6 @@
 #ifndef PMERGEME_HPP
 #define PMERGEME_HPP
 
-// template <typename Iterator>
-// struct s_iterators
-// {
-// 	Iterator start;
-// 	Iterator end;
-// 	Iterator last;
-
-// }				t_iterators;
-
-
 class PmergeMe
 {
 	private:
@@ -42,49 +32,36 @@ class PmergeMe
 		void 	run(int argc, char** argv);
 		int 	parseInput(int argc, char** argv);
 		void	fillContainer(int argc, char** argv);
-		
-		template <typename T>	void sorting(T& original);
-		template <typename T>	void pairing(T& original, size_t amountOfElements);
-		template <typename T>	void sortToPairs(typename T::iterator startIt, typename T::iterator endIt, size_t amountOfGroups);
-		template <typename T>	void retrySorting(T& original);
-
-		template <typename T>	void fillPendToMain(T&main, T&pend);
-		template <typename T>	void fillOddToMain(T&main, T&odd);
-		template <typename T>	void fillRestToMain(T&main, T&rest);
-		
-		void	fillPendToMain_StartIndexUpdate(int& StartIndex, int& insertCount);
-		template <typename T>	void fillPendToMain_binarySearch(T& main, typename T::iterator& PendStartIt, typename T::iterator& PendEndIt);
-		template <typename T>	void fillSearchContainer(T& main, std::deque<int>& SearchContainer);
-
-
 
 		unsigned long long	jakobsthal_recursive(int n);
 
 		template <typename T>	void printContainer(const T& original, int seperator) const;
 		template <typename T>	void printIterators(const std::string message, typename T::iterator StartIt, typename T::iterator EndIt) const;
 
+		template <typename T>	void sorting(T& original);
+		template <typename T>	void pairing(T& original, size_t amountOfElements);
 		template <typename T>	void sortWithInsertion(T& original, size_t nbrsInEachGroup, size_t amountOfGroups);
+		template <typename T>	void retrySorting(T& original);
 		template <typename T>	typename T::iterator fillMainBlockWise(typename T::iterator startIt, T& main, T& original, size_t amountOfGroups);
+		template <typename T>	void extraordinarySorting(T& main, T& original);
+		template <typename T>	void fillOddContainer(T& odd, T& original, T& main);
+		template <typename T>	void fillRestContainer(T& rest ,T& odd, T& original, T& main);
+		template <typename T>	void fillPendContainer(T& pend, T& main);
+		template <typename T>	void fillMainContainerWithPend(T& pend, T& main);
+		template <typename T>	void fillMainContainerWithOdd(T& odd, T& main);
+		template <typename T>	void fillMainContainerWithRest(T& rest, T& main);
 		template <typename T>	void printFillContainers(T& rest ,T& odd, T& original, T& main);
 
 
 		template <typename T>	bool validateIterator(typename T::iterator BeginIt, typename T::iterator EndIt, size_t position);
 		template <typename T>	void prepareContainer(T& main, T& rest, T& odd, T& pend);
+		template <typename T>	void sortToPairs(typename T::iterator startIt, typename T::iterator endIt, size_t amountOfGroups);
 
 
 		class WrongInputException : public std::exception {
 			public:
 				const char *what() const noexcept override;
 		};
-
-		class WrongOutofRangeException : public std::exception {
-			public:
-				const char *what() const noexcept override;
-		};
-
-
-
-
 };
 
 #endif
